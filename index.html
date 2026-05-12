@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <title>Ankit — Creative Designer & Logical Developer</title>
+  <meta name="description" content="Portfolio of Ankit — a creative designer and logical developer crafting beautiful digital experiences." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== LOADER ===== -->
+  <div id="loader">
+    <div class="loader-content">
+      <div class="loader-ring"></div>
+      <div class="loader-text">
+        <span class="loader-char" style="--i:0">L</span>
+        <span class="loader-char" style="--i:1">o</span>
+        <span class="loader-char" style="--i:2">a</span>
+        <span class="loader-char" style="--i:3">d</span>
+        <span class="loader-char" style="--i:4">i</span>
+        <span class="loader-char" style="--i:5">n</span>
+        <span class="loader-char" style="--i:6">g</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CUSTOM CURSOR ===== -->
+  <div id="cursor">
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+    <div class="cursor-divider-hint"></div>
+  </div>
+
+  <!-- ===== SCROLL PROGRESS BAR ===== -->
+  <div id="scroll-progress"></div>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="logo-bracket">&lt;</span>
+        <span class="logo-name">ankit</span>
+        <span class="logo-bracket"> /&gt;</span>
+      </a>
+      <div class="nav-links">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
+          <i class="fas fa-moon"></i>
+          <i class="fas fa-sun"></i>
+        </button>
+        <button id="sound-toggle" class="icon-btn" aria-label="Toggle sound">
+          <i class="fas fa-volume-up"></i>
+          <i class="fas fa-volume-mute"></i>
+        </button>
+        <button class="nav-hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== MOBILE MENU ===== -->
+  <div id="mobile-menu">
+    <div class="mobile-menu-inner">
+      <a href="#about" class="mobile-link">About</a>
+      <a href="#skills" class="mobile-link">Skills</a>
+      <a href="#projects" class="mobile-link">Projects</a>
+      <a href="#experience" class="mobile-link">Experience</a>
+      <a href="#contact" class="mobile-link">Contact</a>
+    </div>
+  </div>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section id="hero" class="hero-section">
+    <!-- Background effects -->
+    <div class="hero-bg">
+      <div class="gradient-orb orb-1"></div>
+      <div class="gradient-orb orb-2"></div>
+    </div>
+    <div id="particles-canvas"></div>
+
+    <!-- Floating tech badges -->
+    <div class="floating-badges">
+      <span class="badge" style="--i:0">React</span>
+      <span class="badge" style="--i:1">Node.js</span>
+      <span class="badge" style="--i:2">HTML</span>
+      <span class="badge" style="--i:3">CSS</span>
+      <span class="badge" style="--i:4">JavaScript</span>
+      <span class="badge" style="--i:5">MongoDB</span>
+      <span class="badge" style="--i:6">Java</span>
+    </div>
+
+    <!-- Intro text (typing effect) -->
+    <div class="hero-intro">
+      <p class="hero-intro-line">Hi, I'm <span class="highlight-text">Ankit</span></p>
+      <p class="hero-intro-sub">
+        <span class="typing-text"></span><span class="typing-cursor">|</span>
+      </p>
+    </div>
+
+    <div class="hero-main">
+      <!-- Left text panel - Designer -->
+      <div class="text-panel text-left" id="textLeft">
+        <div class="text-panel-inner">
+          <span class="panel-tag">Designer</span>
+          <h2 class="panel-title">Creative</h2>
+          <p class="panel-desc">Passion for crafting beautiful visual experiences</p>
+          <div class="panel-stats">
+            <div class="stat"><span class="stat-num">2+</span><span class="stat-label">Years Design</span></div>
+            <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Projects</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Split face container -->
+      <div class="split-container" id="splitContainer">
+        <div class="split-inner">
+          <!-- Logic (developer) image - full width behind -->
+          <div class="split-face face-back" id="faceBack">
+            <img src="logic.png" alt="Logical Developer" />
+            <div class="face-overlay"></div>
+          </div>
+          <!-- Creative (designer) image - clipped from left -->
+          <div class="split-face face-front" id="faceFront">
+            <img src="creative.png" alt="Creative Designer" />
+            <div class="face-overlay"></div>
+          </div>
+          <!-- Divider line -->
+          <div class="split-divider" id="splitDivider">
+            <div class="divider-line"></div>
+            <div class="divider-handle">
+              <i class="fas fa-arrows-alt-h"></i>
+            </div>
+            <div class="divider-glow"></div>
+          </div>
+        </div>
+
+        <!-- Center overlay text -->
+        <div class="split-center-text" id="splitCenterText">
+          <span class="center-line">Creative Mind</span>
+          <span class="center-plus">+</span>
+          <span class="center-line">Logical Thinking</span>
+        </div>
+      </div>
+
+      <!-- Right text panel - Developer -->
+      <div class="text-panel text-right" id="textRight">
+        <div class="text-panel-inner">
+          <span class="panel-tag">Developer</span>
+          <h2 class="panel-title">Logical</h2>
+          <p class="panel-desc">Intense knowledge in modern web development</p>
+          <div class="panel-stats">
+            <div class="stat"><span class="stat-num">3+</span><span class="stat-label">Years Code</span></div>
+            <div class="stat"><span class="stat-num">30+</span><span class="stat-label">Repos</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero bottom bar -->
+    <div class="hero-bottom">
+      <div class="hero-socials">
+        <a href="#" class="social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+      <a href="#" class="resume-btn">
+        <i class="fas fa-download"></i> Resume
+      </a>
+      <div class="scroll-indicator">
+        <span class="scroll-text">Scroll</span>
+        <div class="scroll-line"></div>
+        <i class="fas fa-chevron-down scroll-arrow"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT SECTION ===== -->
+  <section id="about" class="section">
+    <div class="section-bg">
+      <div class="gradient-orb orb-3"></div>
+    </div>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">01</span>
+        <h2 class="section-title">About Me</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="about-grid">
+        <div class="about-content reveal">
+          <p class="about-text">
+            I'm a passionate <strong>Creative Designer</strong> and <strong>Full-Stack Developer</strong> 
+            who bridges the gap between aesthetics and functionality. With a keen eye for design 
+            and a love for clean code, I craft digital experiences that are both beautiful and performant.
+          </p>
+          <p class="about-text">
+            When I'm not coding or designing, you'll find me exploring new technologies, 
+            contributing to open-source, or mentoring aspiring developers.
+          </p>
+          <div class="about-info">
+            <div class="info-item">
+              <span class="info-label">Name</span>
+              <span class="info-value">Ankit</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Role</span>
+              <span class="info-value">Full-Stack Developer</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Location</span>
+              <span class="info-value">India</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Available</span>
+              <span class="info-value status-available">Freelance / Full-time</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-cards reveal">
+          <div class="about-card card-creative">
+            <div class="card-icon"><i class="fas fa-paint-brush"></i></div>
+            <h3>Creative Design</h3>
+            <p>UI/UX, Visual Design, Brand Identity, Prototyping</p>
+          </div>
+          <div class="about-card card-logical">
+            <div class="card-icon"><i class="fas fa-code"></i></div>
+            <h3>Logical Dev</h3>
+            <p>Full-Stack, Architecture, Optimization, APIs</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS SECTION ===== -->
+  <section id="skills" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">02</span>
+        <h2 class="section-title">Skills & Expertise</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-group reveal">
+          <h3 class="skill-group-title">Frontend</h3>
+          <div class="skill-bar-wrap"><div class="skill-info"><span>HTML</span><span class="skill-pct">95%</span></div><div class="skill-track"><div class="skill-fill" data-pct="95"></div></div></div>
+          <div class="skill-bar-wrap"><div class="skill-info"><span>CSS</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" data-pct="90"></div></div></div>
+          <div class="skill-bar-wrap"><div class="skill-info"><span>JavaScript</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" data-pct="85"></div></div></div>
+          <div class="skill-bar-wrap"><div class="skill-info"><span>React</span><span class="skill-pct">80%</span></div><div class="skill-track"><div class="skill-fill" data-pct="80"></div></div></div>
+        </div>
+        <div class="skill-group reveal">
+          <h3 class="skill-group-title">Backend & Other</h3>
+          <div class="skill-bar-wrap"><div class="skill-info"><span>Node.js</span><span class="skill-pct">78%</span></div><div class="skill-track"><div class="skill-fill" data-pct="78"></div></div></div>
+          <div class="skill-bar-wrap"><div class="skill-info"><span>MongoDB</span><span class="skill-pct">75%</span></div><div class="skill-track"><div class="skill-fill" data-pct="75"></div></div></div>
+          <div class="skill-bar-wrap"><div class="skill-info"><span>Java</span><span class="skill-pct">70%</span></div><div class="skill-track"><div class="skill-fill" data-pct="70"></div></div></div>
+          <div class="skill-bar-wrap"><div class="skill-info"><span>Git</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" data-pct="85"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS SECTION ===== -->
+  <section id="projects" class="section">
+    <div class="section-bg">
+      <div class="gradient-orb orb-4"></div>
+    </div>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">03</span>
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card reveal" data-delay="0">
+          <div class="project-preview" style="--grad: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+            <div class="project-preview-icon"><i class="fab fa-youtube"></i></div>
+          </div>
+          <div class="project-info">
+            <h3>FunTube</h3>
+            <p>YouTube clone with video streaming, user authentication, and real-time comments.</p>
+            <div class="project-tags">
+              <span>React</span><span>Node.js</span><span>MongoDB</span>
+            </div>
+            <div class="project-actions">
+              <a href="#" class="btn-sm"><i class="fab fa-github"></i> Code</a>
+              <a href="#" class="btn-sm btn-primary"><i class="fas fa-external-link-alt"></i> Live</a>
+            </div>
+          </div>
+        </div>
+        <div class="project-card reveal" data-delay="150">
+          <div class="project-preview" style="--grad: linear-gradient(135deg, #e84393, #fd79a8);">
+            <div class="project-preview-icon"><i class="fab fa-pinterest"></i></div>
+          </div>
+          <div class="project-info">
+            <h3>Pixtract</h3>
+            <p>Pinterest clone with image uploads, boards, and social features.</p>
+            <div class="project-tags">
+              <span>React</span><span>Express</span><span>PostgreSQL</span>
+            </div>
+            <div class="project-actions">
+              <a href="#" class="btn-sm"><i class="fab fa-github"></i> Code</a>
+              <a href="#" class="btn-sm btn-primary"><i class="fas fa-external-link-alt"></i> Live</a>
+            </div>
+          </div>
+        </div>
+        <div class="project-card reveal" data-delay="300">
+          <div class="project-preview" style="--grad: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+            <div class="project-preview-icon"><i class="fas fa-user-tie"></i></div>
+          </div>
+          <div class="project-info">
+            <h3>Portfolio</h3>
+            <p>This premium interactive portfolio with split-face concept and cinematic UI.</p>
+            <div class="project-tags">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span>
+            </div>
+            <div class="project-actions">
+              <a href="#" class="btn-sm"><i class="fab fa-github"></i> Code</a>
+              <a href="#" class="btn-sm btn-primary"><i class="fas fa-external-link-alt"></i> Live</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXPERIENCE SECTION ===== -->
+  <section id="experience" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">04</span>
+        <h2 class="section-title">Experience</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="timeline reveal">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">2024 — Present</div>
+          <div class="timeline-content">
+            <div class="timeline-content-inner">
+              <h3>Coding Mentor</h3>
+              <h4>Vidya Darshan School</h4>
+              <p>Mentoring students in web development, guiding them through HTML, CSS, JavaScript, and modern frameworks. Conducting workshops and code reviews to foster a love for programming.</p>
+              <div class="timeline-tags">
+                <span>Mentoring</span><span>Web Dev</span><span>JavaScript</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT SECTION ===== -->
+  <section id="contact" class="section">
+    <div class="section-bg">
+      <div class="gradient-orb orb-5"></div>
+    </div>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">05</span>
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <p class="contact-desc">Have a project in mind? Let's build something amazing together.</p>
+          <div class="contact-item">
+            <div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <span class="contact-item-label">Email</span>
+              <span class="contact-item-value">hello@ankit.dev</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <span class="contact-item-label">Location</span>
+              <span class="contact-item-value">India</span>
+            </div>
+          </div>
+          <div class="contact-socials">
+            <a href="#" class="contact-social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" class="contact-social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="contact-social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <form class="contact-form reveal" id="contactForm" novalidate>
+          <div class="form-group">
+            <input type="text" id="formName" class="form-input" required placeholder=" " />
+            <label for="formName" class="form-label">Your Name</label>
+            <span class="form-error">Please enter your name</span>
+          </div>
+          <div class="form-group">
+            <input type="email" id="formEmail" class="form-input" required placeholder=" " />
+            <label for="formEmail" class="form-label">Your Email</label>
+            <span class="form-error">Please enter a valid email</span>
+          </div>
+          <div class="form-group">
+            <textarea id="formMessage" class="form-input form-textarea" required placeholder=" " rows="4"></textarea>
+            <label for="formMessage" class="form-label">Your Message</label>
+            <span class="form-error">Please enter your message</span>
+          </div>
+          <button type="submit" class="form-submit">
+            <span class="submit-text">Send Message</span>
+            <span class="submit-icon"><i class="fas fa-paper-plane"></i></span>
+            <span class="submit-loading"><i class="fas fa-spinner fa-spin"></i></span>
+          </button>
+          <div class="form-success">
+            <i class="fas fa-check-circle"></i>
+            <span>Message sent successfully!</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">
+          <span class="logo-bracket">&lt;</span>
+          <span class="logo-name">ankit</span>
+          <span class="logo-bracket"> /&gt;</span>
+        </div>
+        <p class="footer-text">Creative Mind + Logical Thinking = Powerful Solutions</p>
+        <p class="footer-copy">&copy; <span id="footerYear"></span> Ankit. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== FLOATING SHAPES ===== -->
+  <div class="floating-shapes">
+    <div class="shape" style="--i:0"></div>
+    <div class="shape" style="--i:1"></div>
+    <div class="shape" style="--i:2"></div>
+    <div class="shape" style="--i:3"></div>
+    <div class="shape" style="--i:4"></div>
+    <div class="shape" style="--i:5"></div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

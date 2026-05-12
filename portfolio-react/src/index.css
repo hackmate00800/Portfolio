@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #0a0a0f;
+  --color-bg-secondary: #12121a;
+  --color-bg-card: rgba(255, 255, 255, 0.04);
+  --color-bg-glass: rgba(255, 255, 255, 0.06);
+  --color-border-glass: rgba(255, 255, 255, 0.08);
+  --color-text-primary: #f0f0f5;
+  --color-text-secondary: #8888a0;
+  --color-text-muted: #666680;
+  --color-accent-creative: #f472b6;
+  --color-accent-logical: #38bdf8;
+  --color-accent-creative-glow: rgba(244, 114, 182, 0.25);
+  --color-accent-logical-glow: rgba(56, 189, 248, 0.25);
+  --color-nav-bg: #0a0a0f;
+  --font-primary: "Space Grotesk", sans-serif;
+  --font-secondary: "Poppins", sans-serif;
+}
+
+[data-theme="light"] {
+  --color-bg-primary: #f8f8fc;
+  --color-bg-secondary: #eeeef4;
+  --color-bg-card: rgba(0, 0, 0, 0.03);
+  --color-bg-glass: rgba(255, 255, 255, 0.7);
+  --color-border-glass: rgba(0, 0, 0, 0.1);
+  --color-text-primary: #1a1a2e;
+  --color-text-secondary: #555570;
+  --color-text-muted: #9999aa;
+  --color-accent-creative: #e64980;
+  --color-accent-logical: #0c7fbe;
+  --color-accent-creative-glow: rgba(230, 73, 128, 0.2);
+  --color-accent-logical-glow: rgba(12, 127, 190, 0.2);
+  --color-nav-bg: #f8f8fc;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-primary);
+  }
+  body {
+    @apply bg-bg-primary text-text-primary overflow-x-hidden;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--color-bg-secondary); }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--color-accent-creative), var(--color-accent-logical));
+    border-radius: 3px;
+  }
+  ::selection {
+    background: var(--color-accent-creative);
+    color: #fff;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: var(--color-bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--color-border-glass);
+  }
+  .gradient-accent {
+    background: linear-gradient(135deg, var(--color-accent-creative), var(--color-accent-logical));
+  }
+  .text-gradient {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .noise-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    z-index: 3;
+  }
+  .reveal-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -30px) scale(1.1); }
+  50% { transform: translate(-20px, 20px) scale(0.95); }
+  75% { transform: translate(20px, 30px) scale(1.05); }
+}
+.animate-orb { animation: orbFloat 20s ease-in-out infinite; }
+
+@keyframes shapeFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(20px, -30px) scale(1.1); }
+  66% { transform: translate(-15px, 20px) scale(0.9); }
+}
+.animate-shape { animation: shapeFloat var(--dur, 20s) ease-in-out infinite; }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.animate-blink { animation: blink 0.7s step-end infinite; }
+
+@keyframes scroll-line {
+  0% { top: -100%; }
+  100% { top: 100%; }
+}
+.animate-scroll-line { animation: scroll-line 2s ease-in-out infinite; }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4); }
+  50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+}
+.animate-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+@keyframes badgeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+.animate-badge { animation: badgeFloat 12s ease-in-out infinite; }
+
+@keyframes loaderBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-8px); opacity: 1; }
+}
+.animate-loader-char { animation: loaderBounce 1.4s ease-in-out infinite; }
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(4px); opacity: 1; }
+}
+.animate-scroll-bounce { animation: scrollBounce 2s ease-in-out infinite; }
