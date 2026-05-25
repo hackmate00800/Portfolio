@@ -3,6 +3,7 @@ import Cursor from './components/Cursor'
 import Loader from './components/Loader'
 import ScrollProgress from './components/ScrollProgress'
 import Navbar from './components/Navbar'
+import Banner from './components/Banner'
 import FloatingShapes from './components/FloatingShapes'
 import SocialDock from './components/SocialDock'
 import Footer from './components/Footer'
@@ -23,6 +24,7 @@ export default function App() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="relative min-h-screen bg-bg-primary text-text-primary font-primary overflow-x-hidden">
+      <Banner />
       <Loader />
       <Cursor />
       <ScrollProgress />
