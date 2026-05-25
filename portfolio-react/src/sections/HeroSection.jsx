@@ -34,7 +34,7 @@ export default function HeroSection() {
         {...fadeInUp}
         transition={{ ...fadeInUp.transition, delay: 0.8 }}>
         <p className="font-secondary text-base font-normal text-text-secondary mb-2 max-sm:text-sm">
-          Hi, I&apos;m <span className="gradient-accent text-gradient font-bold">Ankit</span>
+          Ram Ram I am <span className="gradient-accent text-gradient font-bold">Ankit</span>
         </p>
         <p className="text-[1.6rem] font-semibold min-h-[2rem] max-sm:text-lg">
           <TypingEffect />
