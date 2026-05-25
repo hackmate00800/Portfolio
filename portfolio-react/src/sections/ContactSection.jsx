@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiSend, FiCheckCircle, FiMail, FiMapPin, FiCopy } from 'react-icons/fi'
+import emailjs from '@emailjs/browser'
 import SocialIcon from '../components/SocialIcon'
 
 const fields = [
@@ -35,18 +36,28 @@ export default function ContactSection() {
   const handleChange = (key, val) => setValues(prev => ({ ...prev, [key]: val }))
   const isFloating = (key) => focused[key] || values[key]
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const fd = new FormData(formRef.current)
     if (!fd.get('name') || !fd.get('email') || !fd.get('message')) return
     setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
+    try {
+      await emailjs.sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
       setSuccess(true)
       formRef.current.reset()
       setValues({})
       setTimeout(() => setSuccess(false), 4000)
-    }, 1500)
+    } catch (err) {
+      alert('Failed to send. Check console for details.')
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const copyEmail = () => {
