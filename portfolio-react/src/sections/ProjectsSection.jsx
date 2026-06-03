@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FiGithub, FiExternalLink, FiUser, FiPackage, FiBriefcase, FiCheckCircle } from 'react-icons/fi'
+import { FiGithub, FiExternalLink, FiUser } from 'react-icons/fi'
 import { FaYoutube, FaPinterest } from 'react-icons/fa'
 
 const projects = [
@@ -23,30 +23,6 @@ const projects = [
     tags: ['HTML', 'CSS', 'JavaScript'],
     icon: FiUser,
     gradient: 'from-[#6c5ce7] to-[#a29bfe]',
-  },
-  {
-    title: 'Mitra Packer Mover',
-    desc: 'Full-featured packers & movers website with AI cost estimator, real-time tracking, and WhatsApp integration.',
-    tags: ['React', 'Tailwind CSS', 'Framer Motion'],
-    icon: FiPackage,
-    gradient: 'from-[#0A3D91] to-[#1a6bff]',
-    freelance: true,
-    links: {
-      github: 'https://github.com/hackmate00800/mitrapackermover',
-      live: 'https://mitrapackermover.com',
-    },
-  },
-  {
-    title: 'SR Industries',
-    desc: 'Professional industrial website for SR Industries showcasing manufacturing capabilities, products, and client portfolio.',
-    tags: ['React', 'Tailwind CSS', 'Framer Motion'],
-    icon: FiBriefcase,
-    gradient: 'from-[#dc2626] to-[#f97316]',
-    freelance: true,
-    links: {
-      github: 'https://github.com/hackmate00800/SRindustries',
-      live: 'https://srindustriesindia.org',
-    },
   },
 ]
 
@@ -78,12 +54,6 @@ export default function ProjectsSection() {
                 <div className={`h-[180px] flex items-center justify-center bg-gradient-to-br ${p.gradient} relative overflow-hidden`}>
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/5 transition-colors duration-400" />
                   <Icon className="text-5xl text-white/60 z-1 transition-all duration-400 group-hover:opacity-100 group-hover:scale-115" />
-                  {p.freelance && (
-                    <div className="absolute top-3 left-3 z-2 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm shadow-md">
-                      <FiCheckCircle size={11} className="text-green-600" />
-                      <span className="text-[0.6rem] font-bold text-gray-800 tracking-wide uppercase">Freelance</span>
-                    </div>
-                  )}
                 </div>
                 <div className="p-5">
                   <h3 className="text-lg font-bold mb-2">{p.title}</h3>
@@ -93,12 +63,6 @@ export default function ProjectsSection() {
                       <span key={j} className="px-2.5 py-1 rounded-md text-[0.7rem] font-semibold bg-bg-card text-text-muted border border-border-glass">{t}</span>
                     ))}
                   </div>
-                  {p.freelance && (
-                    <div className="flex items-center gap-1.5 mb-3 text-[0.65rem] font-semibold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2.5 py-1 rounded-md w-fit">
-                      <FiCheckCircle size={12} />
-                      Client Fully Satisfied
-                    </div>
-                  )}
                   <div className="flex gap-2">
                     <a href="#" className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-bg-card text-text-secondary border border-border-glass transition-all duration-300 hover:bg-glass hover:text-text-primary">
                       <FiGithub size={13} /> Code
