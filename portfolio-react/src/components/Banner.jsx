@@ -233,7 +233,7 @@ export default function Banner() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.01 }}
           >
-            <motion.div
+            <div
               ref={logoRef}
               className="logo-gradient h-36 sm:h-40 md:h-48 lg:h-64 xl:h-96 max-w-full"
               style={{
@@ -247,9 +247,6 @@ export default function Banner() {
                 maskRepeat: 'no-repeat',
                 maskPosition: 'center',
               }}
-              initial={{ opacity: 0, y: 60, scale: 0.6 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.4, ease: [0.17, 0.85, 0.45, 1.2] }}
             />
           </motion.h1>
 
