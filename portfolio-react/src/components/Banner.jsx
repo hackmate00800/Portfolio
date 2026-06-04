@@ -195,7 +195,7 @@ export default function Banner() {
   }
 
   return (
-    <section className="relative w-full h-dvh overflow-hidden bg-bg-primary flex items-center contain-layout">
+    <section className="relative w-full h-dvh overflow-x-hidden overflow-y-auto md:overflow-hidden bg-bg-primary flex items-start md:items-center contain-layout">
       {/* Deep background layers */}
       <div ref={blobRef} className="absolute inset-0 transition-transform duration-200 ease-out pointer-events-none will-change-transform">
         <div className="absolute w-[1000px] h-[1000px] rounded-full bg-[#6d28d9]/10 blur-[180px] -top-64 -left-48 animate-pulse-slow" />
@@ -273,12 +273,12 @@ export default function Banner() {
       <div className="animate-ring-reverse absolute w-[350px] h-[350px] rounded-full border border-fuchsia-500/5 pointer-events-none" style={{ top: '25%', left: '58%', '--dur': '30s' }} />
 
       {/* Main content - two column layout */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 flex flex-col-reverse md:flex-row items-center gap-6 md:gap-20 pt-16 pb-10 md:py-0">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 flex flex-col-reverse md:flex-row items-center gap-2 md:gap-20 pt-24 pb-4 md:py-0">
 
         {/* Left column - Introduction text */}
         <motion.div
           ref={textGradientRef}
-          className="flex-1 text-center md:text-left max-md:mt-4"
+          className="flex-1 text-center md:text-left"
           style={{ '--text-h1': 270, '--text-h2': 320, '--text-h3': 300 }}
           initial={{ opacity: 0, x: -80 }}
           animate={{ opacity: 1, x: 0 }}
@@ -444,7 +444,7 @@ export default function Banner() {
 
         {/* Right column - Glassmorphism card with image */}
         <motion.div
-          className="flex-shrink-0 w-[45%] max-w-[320px] md:max-w-[380px] lg:max-w-[420px] flex justify-center max-md:mt-12"
+          className="flex-shrink-0 w-[45%] max-w-[320px] md:max-w-[380px] lg:max-w-[420px] flex justify-center max-md:mt-6"
           initial={{ opacity: 0, x: 80, scale: 0.95 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ duration: 1, ease: 'easeOut' }}
