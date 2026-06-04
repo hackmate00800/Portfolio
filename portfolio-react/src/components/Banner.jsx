@@ -195,7 +195,7 @@ export default function Banner() {
 
           <motion.div className="relative inline-block">
             <motion.p
-              className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-scroll-gradient leading-tight relative"
+              className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-scroll-gradient leading-tight relative mt-6"
               initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
