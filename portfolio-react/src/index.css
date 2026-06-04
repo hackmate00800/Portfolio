@@ -356,6 +356,57 @@ html:not(.is-transitioning) body::after {
   transition: opacity 0.35s ease;
 }
 
+/* ── AI Futuristic Loader Animations ── */
+@keyframes core-pulse {
+  0%, 100% { transform: scale(0.95); opacity: 0.6; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+.animate-core-pulse { animation: core-pulse 4s ease-in-out infinite; will-change: transform, opacity; }
+
+@keyframes core-breath {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.15); opacity: 0.8; }
+}
+.animate-core-breath { animation: core-breath 6s ease-in-out infinite; will-change: transform, opacity; }
+
+@keyframes core-glow {
+  0%, 100% { opacity: 0.3; transform: scale(0.95); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+.animate-core-glow { animation: core-glow 3s ease-in-out infinite; will-change: transform, opacity; }
+
+@keyframes ring-1 {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.animate-ring-1 { animation: ring-1 20s linear infinite; will-change: transform; }
+
+@keyframes ring-2 {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+.animate-ring-2 { animation: ring-2 14s linear infinite; will-change: transform; }
+
+@keyframes ring-3 {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.animate-ring-3 { animation: ring-3 3s linear infinite; will-change: transform; }
+
+/* Scan beam sweeps top→bottom inside the ring area */
+@keyframes scan-beam {
+  0%, 5% { transform: translateY(-100%); opacity: 0; }
+  8% { opacity: 0.08; }
+  45% { transform: translateY(400%); opacity: 0.08; }
+  50%, 100% { opacity: 0; transform: translateY(400%); }
+}
+.animate-scan-beam { animation: scan-beam 4s ease-in-out infinite; will-change: transform, opacity; }
+
+/* Completion phase — rings speed up via shorter animation-duration override */
+.loader-completion .animate-ring-1 { animation-duration: 4s !important; }
+.loader-completion .animate-ring-2 { animation-duration: 3s !important; }
+.loader-completion .animate-ring-3 { animation-duration: 0.8s !important; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

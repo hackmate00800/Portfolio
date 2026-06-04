@@ -17,7 +17,7 @@ const socials = [
   { icon: FaInstagram, href: 'https://www.instagram.com/_hack_mate_', label: 'Instagram' },
 ]
 
-export default function Navbar() {
+export default function Navbar({ loaded = false }) {
   const { theme, toggle } = useTheme()
   const [menuOpen, setMenuOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
@@ -56,7 +56,12 @@ export default function Navbar() {
   }
 
   return (
-    <>
+    <div style={{
+      opacity: loaded ? 1 : 0,
+      transform: loaded ? 'translateY(0)' : 'translateY(-20px)',
+      transition: 'opacity 0.5s ease, transform 0.5s ease',
+      willChange: 'transform, opacity',
+    }}>
       <nav className={`fixed top-0 left-0 right-0 z-[1000] px-6 bg-nav-bg/85 backdrop-blur-xl transition-transform duration-300 ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
         <div className="max-w-[1280px] mx-auto flex items-center justify-between h-16">
           <button onClick={() => scrollTo('#hero')} className="text-lg font-bold flex items-center gap-0 tracking-tight">
@@ -133,6 +138,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }

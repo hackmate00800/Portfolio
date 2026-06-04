@@ -35,7 +35,7 @@ export default function App() {
         <Banner loaded={loaded} />
         <Cursor />
         <ScrollProgress />
-        <Navbar />
+        <Navbar loaded={loaded} />
         <FloatingShapes />
         <Atmosphere />
         <SocialDock />
