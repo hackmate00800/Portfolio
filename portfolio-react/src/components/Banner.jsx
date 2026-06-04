@@ -47,7 +47,7 @@ export default function Banner() {
             <motion.img
               src={creativeSrc}
               alt="Ankit"
-              className="relative z-10 w-[85%] h-[85%] object-cover rounded-full border-4 border-white/40 shadow-lg"
+              className="absolute inset-0 z-10 w-full h-full object-cover rounded-full border-[5px] border-white/40 shadow-lg"
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
             />
