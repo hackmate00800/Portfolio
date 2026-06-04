@@ -406,9 +406,6 @@ html:not(.is-transitioning) body::after {
 .loader-completion .animate-ring-1 { animation-duration: 4s !important; }
 .loader-completion .animate-ring-2 { animation-duration: 3s !important; }
 .loader-completion .animate-ring-3 { animation-duration: 0.8s !important; }
-.loader-completion .animate-inf-dot { animation-duration: 0.5s !important; }
-.loader-completion .animate-inf-trail { animation-duration: 0.5s !important; }
-
 /* CSS-only orbiting particles (no Canvas) */
 @keyframes orbit-particle {
   from { transform: rotate(0deg) translateX(var(--r)); }
@@ -418,27 +415,6 @@ html:not(.is-transitioning) body::after {
   animation: orbit-particle var(--s, 10s) linear infinite;
   animation-delay: var(--d, 0s);
   will-change: transform;
-}
-
-/* ── Minimalist Infinity Loop Animations ── */
-/* Trail layers: start at path position 0, extend forward behind the dot */
-@keyframes inf-trail {
-  0% { stroke-dashoffset: 400; }
-  100% { stroke-dashoffset: 0; }
-}
-.animate-inf-trail {
-  animation: inf-trail 2.5s linear infinite;
-  will-change: stroke-dashoffset;
-}
-
-/* Dot: 80 units ahead of trail start, so trail is BEHIND in direction of travel */
-@keyframes inf-dot {
-  0% { stroke-dashoffset: 320; }
-  100% { stroke-dashoffset: -80; }
-}
-.animate-inf-dot {
-  animation: inf-dot 2.5s linear infinite;
-  will-change: stroke-dashoffset;
 }
 
 @media (prefers-reduced-motion: reduce) {
