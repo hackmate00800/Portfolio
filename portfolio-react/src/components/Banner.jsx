@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import creativeSrc from '../assets/creative.png'
 
 export default function Banner() {
   const blobRef = useRef(null)
@@ -44,7 +45,7 @@ export default function Banner() {
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.15 }}
             />
             <motion.img
-              src="/creative.png"
+              src={creativeSrc}
               alt="Ankit"
               className="relative z-10 w-[85%] h-[85%] object-cover rounded-full border-4 border-white/40 shadow-lg"
               animate={{ y: [0, -10, 0] }}
