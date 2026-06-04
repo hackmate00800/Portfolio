@@ -33,7 +33,7 @@ const orbitDroplets = [
 export default function Banner() {
   const blobRef = useRef(null)
   const cardRef = useRef(null)
-  const headingRef = useRef(null)
+  const textGradientRef = useRef(null)
   const ticking = useRef(false)
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function Banner() {
   }, [])
 
   useEffect(() => {
-    const el = headingRef.current
+    const el = textGradientRef.current
     if (!el) return
     const update = () => {
       const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1)
@@ -160,13 +160,14 @@ export default function Banner() {
 
         {/* Left column - Introduction text */}
         <motion.div
+          ref={textGradientRef}
           className="flex-1 text-center md:text-left max-md:mt-4"
           initial={{ opacity: 0, x: -80 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: 'easeOut' }}
         >
           <motion.p
-            className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-text-primary/90 leading-tight drop-shadow-[0_0_20px_rgba(168,85,247,0.15)]"
+            className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-scroll-gradient leading-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -175,9 +176,7 @@ export default function Banner() {
           </motion.p>
 
           <motion.h1
-            ref={headingRef}
             className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-scroll-gradient tracking-wide mt-1 leading-none"
-            style={{ textShadow: '0 0 60px rgba(168,85,247,0.3), 0 0 120px rgba(168,85,247,0.15), 2px 2px 0px rgba(0,0,0,0.3), 4px 4px 0px rgba(120,80,200,0.2)' }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}

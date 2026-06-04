@@ -235,6 +235,7 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  transition: background 0.3s ease;
   -webkit-box-reflect: below -8px linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.15) 100%);
 }
 
