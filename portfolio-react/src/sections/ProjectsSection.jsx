@@ -17,7 +17,7 @@ const projects = [
     tags: ['React', 'Express', 'PostgreSQL'],
     icon: FaPinterest,
     gradient: 'from-[#e84393] to-[#fd79a8]',
-    link: 'https://pixtract.onrender.com/login',
+    link: 'https://pixtract.onrender.com',
   },
   {
     title: 'Portfolio',
@@ -43,7 +43,7 @@ const projects = [
     icon: FaIndustry,
     gradient: 'from-[#2d3436] to-[#636e72]',
     label: 'Freelancing',
-    link: 'https://srindustriesinida.org',
+    link: 'https://srindustriesindia.org',
   },
 ]
 
