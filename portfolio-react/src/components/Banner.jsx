@@ -216,10 +216,9 @@ export default function Banner() {
               <motion.span
                 key={i}
                 className="inline-block"
-                initial={{ opacity: 0, y: 60, rotateX: -90, filter: 'blur(8px)' }}
-                animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.5, delay: 0.5 + i * 0.06, ease: [0.2, 0.9, 0.3, 1] }}
-                style={{ transformStyle: 'preserve-3d', perspective: '600px' }}
+                initial={{ opacity: 0, y: 60, scale: 0.3 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.45, delay: 0.5 + i * 0.06, ease: [0.17, 0.85, 0.45, 1.2] }}
               >
                 {char === ' ' ? '\u00A0' : char}
               </motion.span>
