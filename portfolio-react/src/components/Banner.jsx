@@ -115,14 +115,14 @@ export default function Banner() {
           <div ref={bubbleRef} className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 flex items-center justify-center transition-transform duration-200 ease-out">
             {/* Deep purple ambient glow */}
             <motion.div
-              className="absolute w-72 h-72 md:w-88 md:h-88 lg:w-104 lg:h-104 rounded-full bg-purple-700/20 blur-3xl"
+              className="absolute w-[18rem] h-[18rem] md:w-[22rem] md:h-[22rem] lg:w-[26rem] lg:h-[26rem] rounded-full bg-purple-700/20 blur-3xl"
               animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.5, 0.2] }}
               transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
             />
 
             {/* Main glass bubble sphere */}
             <motion.div
-              className="absolute w-60 h-60 md:w-76 md:h-76 lg:w-90 lg:h-90 rounded-full bg-gradient-to-br from-white/[0.08] via-purple-500/[0.04] to-fuchsia-500/[0.06] backdrop-blur-xl border border-white/[0.10] shadow-2xl shadow-purple-900/50"
+              className="absolute w-[15rem] h-[15rem] md:w-[19rem] md:h-[19rem] lg:w-[22.5rem] lg:h-[22.5rem] rounded-full bg-gradient-to-br from-white/[0.08] via-purple-500/[0.04] to-fuchsia-500/[0.06] backdrop-blur-xl border border-white/[0.10] shadow-2xl shadow-purple-900/50"
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
             />
