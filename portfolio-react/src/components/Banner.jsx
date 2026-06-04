@@ -216,18 +216,24 @@ export default function Banner() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.01 }}
           >
-            <div className="relative inline-flex">
-              <motion.img
-                ref={logoRef}
-                src={logoAnkit}
-                alt="I'M ANKIT"
-                className="h-24 md:h-28 lg:h-32 xl:h-36 w-auto object-contain"
-                initial={{ opacity: 0, y: 40, scale: 0.8 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.4, ease: [0.17, 0.85, 0.45, 1.2] }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-400 via-fuchsia-400 to-cyan-400 mix-blend-color pointer-events-none" />
-            </div>
+            <motion.div
+              ref={logoRef}
+              className="bg-gradient-to-br from-purple-400 via-fuchsia-500 to-cyan-400 h-24 md:h-28 lg:h-32 xl:h-36"
+              style={{
+                aspectRatio: '1536/1024',
+                WebkitMaskImage: `url(${logoAnkit})`,
+                WebkitMaskSize: 'contain',
+                WebkitMaskRepeat: 'no-repeat',
+                WebkitMaskPosition: 'center',
+                maskImage: `url(${logoAnkit})`,
+                maskSize: 'contain',
+                maskRepeat: 'no-repeat',
+                maskPosition: 'center',
+              }}
+              initial={{ opacity: 0, y: 40, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.4, ease: [0.17, 0.85, 0.45, 1.2] }}
+            />
           </motion.h1>
 
           {/* Role badges */}
