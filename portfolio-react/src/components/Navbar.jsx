@@ -57,7 +57,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-[1000] px-6 bg-nav-bg/85 backdrop-blur-xl border-b border-border-glass transition-transform duration-300 ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-[1000] px-6 bg-nav-bg/85 backdrop-blur-xl transition-transform duration-300 ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
         <div className="max-w-[1280px] mx-auto flex items-center justify-between h-16">
           <button onClick={() => scrollTo('#hero')} className="text-lg font-bold flex items-center gap-0 tracking-tight">
             <span className="text-accent-logical/60 font-light">&lt;</span>

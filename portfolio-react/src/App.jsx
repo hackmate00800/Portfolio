@@ -16,6 +16,8 @@ import GitHubStats from './components/GitHubStats'
 import LinkedInCard from './components/LinkedInCard'
 import InstagramShowcase from './components/InstagramShowcase'
 import ContactSection from './sections/ContactSection'
+import SectionConnector from './components/SectionConnector'
+import Atmosphere from './components/Atmosphere'
 
 export default function App() {
   return (
@@ -30,17 +32,26 @@ export default function App() {
       <ScrollProgress />
       <Navbar />
       <FloatingShapes />
+      <Atmosphere />
       <SocialDock />
 
       <main>
         <HeroSection />
+        <SectionConnector fromColor="bg-bg-primary" toColor="bg-bg-secondary" />
         <AboutSection />
+        <SectionConnector fromColor="bg-bg-secondary" toColor="bg-bg-primary" />
         <SkillsSection />
+        <SectionConnector fromColor="bg-bg-primary" toColor="bg-bg-secondary" />
         <ProjectsSection />
+        <SectionConnector fromColor="bg-bg-secondary" toColor="bg-bg-primary" />
         <GitHubStats />
+        <SectionConnector fromColor="bg-bg-primary" toColor="bg-bg-secondary" />
         <LinkedInCard />
+        <SectionConnector fromColor="bg-bg-secondary" toColor="bg-bg-primary" />
         <InstagramShowcase />
+        <SectionConnector fromColor="bg-bg-primary" toColor="bg-bg-primary" />
         <ExperienceSection />
+        <SectionConnector fromColor="bg-bg-primary" toColor="bg-bg-secondary" />
         <ContactSection />
       </main>
 

@@ -232,7 +232,7 @@ export default function Banner() {
 
         {/* Right column - Glassmorphism card with image */}
         <motion.div
-          className="flex-shrink-0 w-[45%] max-w-[320px] md:max-w-[380px] lg:max-w-[420px] flex justify-center"
+          className="flex-shrink-0 w-[45%] max-w-[320px] md:max-w-[380px] lg:max-w-[420px] flex justify-center max-md:mt-12"
           initial={{ opacity: 0, x: 80, scale: 0.95 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ duration: 1, ease: 'easeOut' }}

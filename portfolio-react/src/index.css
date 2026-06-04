@@ -191,3 +191,30 @@
   50% { opacity: 0.4; }
 }
 .animate-pulse-opacity { animation: pulse-opacity var(--dur, 5s) ease-in-out infinite; will-change: opacity; }
+
+/* Section transition animations */
+@keyframes wave-flow {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-wave-flow { animation: wave-flow 8s linear infinite; will-change: transform; }
+
+@keyframes blob-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: var(--opacity-from, 0.15); }
+  25% { transform: translate(var(--drift-x, 30px), var(--drift-y, -30px)) scale(1.08); }
+  50% { transform: translate(calc(var(--drift-x, 30px) * -0.8), calc(var(--drift-y, -30px) * 0.6)) scale(0.92); opacity: var(--opacity-to, 0.3); }
+  75% { transform: translate(calc(var(--drift-x, 30px) * 0.4), calc(var(--drift-y, -30px) * -0.3)) scale(1.04); }
+}
+.animate-blob-drift { animation: blob-drift var(--dur, 20s) ease-in-out infinite; will-change: transform; }
+
+@keyframes section-glow-pulse {
+  0%, 100% { opacity: 0.06; transform: scale(1); }
+  50% { opacity: 0.15; transform: scale(1.1); }
+}
+.animate-section-glow { animation: section-glow-pulse 6s ease-in-out infinite; will-change: transform; }
+
+/* Scroll-linked parallax container */
+.section-parallax {
+  transform: translateY(var(--parallax-y, 0px));
+  will-change: transform;
+}
