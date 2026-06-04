@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import creativeSrc from '../assets/bannerimg.png'
 import logoAnkit from '../assets/im_ankit_logo.png'
@@ -31,7 +31,8 @@ const orbitDroplets = [
   { size: 'w-7 h-7', bottom: '35%', left: '-6%', dx: -12, dy: -14, delay: 3.2, dur: 5.5 },
 ]
 
-export default function Banner() {
+export default function Banner({ loaded = false }) {
+  const [visible, setVisible] = useState(false)
   const blobRef = useRef(null)
   const cardRef = useRef(null)
   const textGradientRef = useRef(null)
@@ -41,6 +42,13 @@ export default function Banner() {
   const glowTimeoutRef = useRef(null)
   const glowTicking = useRef(false)
   const card3dRef = useRef(null)
+
+  useEffect(() => {
+    if (loaded && !visible) {
+      const t = setTimeout(() => setVisible(true), 120)
+      return () => clearTimeout(t)
+    }
+  }, [loaded, visible])
 
 
   useEffect(() => {
@@ -287,7 +295,7 @@ export default function Banner() {
           className="flex-1 text-center md:text-left"
           style={{ '--text-h1': 270, '--text-h2': 320, '--text-h3': 300 }}
           initial={{ opacity: 0, x: -80 }}
-          animate={{ opacity: 1, x: 0 }}
+          animate={visible ? { opacity: 1, x: 0 } : { opacity: 0, x: -80 }}
           transition={{ duration: 1, ease: 'easeOut' }}
         >
           {/* Decorative sparkles */}
@@ -296,8 +304,8 @@ export default function Banner() {
             viewBox="0 0 24 24"
             fill="currentColor"
             initial={{ opacity: 0, scale: 0, rotate: -180 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+            animate={visible ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0, rotate: -180 }}
+            transition={{ duration: 0.8, delay: visible ? 0.2 : 0, ease: 'easeOut' }}
           >
             <path d="M12 0l1.5 9.5L23 7l-6.5 6 5.5 9.5L12 18l-10 4.5L7.5 13 1 7l9.5 2.5z" />
           </motion.svg>
@@ -306,8 +314,8 @@ export default function Banner() {
             viewBox="0 0 24 24"
             fill="currentColor"
             initial={{ opacity: 0, scale: 0, rotate: 45 }}
-            animate={{ opacity: 1, scale: 1, rotate: 45 }}
-            transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}
+            animate={visible ? { opacity: 1, scale: 1, rotate: 45 } : { opacity: 0, scale: 0, rotate: 45 }}
+            transition={{ duration: 0.8, delay: visible ? 0.7 : 0, ease: 'easeOut' }}
           >
             <path d="M12 0l1.5 9.5L23 7l-6.5 6 5.5 9.5L12 18l-10 4.5L7.5 13 1 7l9.5 2.5z" />
           </motion.svg>
@@ -317,8 +325,8 @@ export default function Banner() {
               <motion.p
                 className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-scroll-gradient leading-tight relative"
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
+                animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.8, delay: visible ? 0.3 : 0, ease: 'easeOut' }}
               >
                 Ram Ram!
                 <motion.span
@@ -339,8 +347,8 @@ export default function Banner() {
             <motion.div
               className="relative"
               initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.4, ease: [0.17, 0.85, 0.45, 1.2] }}
+              animate={visible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+              transition={{ duration: 1, delay: visible ? 0.4 : 0, ease: [0.17, 0.85, 0.45, 1.2] }}
             >
             <div
               ref={glowRef}
@@ -380,21 +388,21 @@ export default function Banner() {
           <motion.div
             className="flex flex-wrap gap-3 mt-4 justify-center md:justify-start"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
+            animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: visible ? 0.8 : 0 }}
           >
             <motion.span
               initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
+              animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={{ duration: 0.5, delay: visible ? 0.8 : 0 }}
               className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide bg-bg-glass/40 border-border-glass bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent"
             >
               Full Stack Developer
             </motion.span>
             <motion.span
               initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.0 }}
+              animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={{ duration: 0.5, delay: visible ? 1.0 : 0 }}
               className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide bg-bg-glass/40 border-border-glass bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
             >
               Cybersecurity Enthusiast
@@ -405,8 +413,8 @@ export default function Banner() {
           <motion.p
             className="font-['Poppins',sans-serif] text-sm md:text-base lg:text-lg text-text-secondary mt-4 md:mt-5 font-light leading-relaxed max-w-xl mx-auto md:mx-0"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1, ease: 'easeOut' }}
+            animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.8, delay: visible ? 1.1 : 0, ease: 'easeOut' }}
           >
             Passionate about crafting clean, scalable web experiences and securing digital ecosystems. I turn complex problems into elegant, user-friendly solutions.
           </motion.p>
@@ -415,16 +423,16 @@ export default function Banner() {
           <motion.div
             className="w-20 h-[3px] bg-gradient-to-r from-purple-400 via-fuchsia-500 to-purple-400 rounded-full mt-5 md:mt-6 mx-auto md:mx-0 shadow-[0_0_15px_rgba(168,85,247,0.4),0_0_30px_rgba(168,85,247,0.2)]"
             initial={{ width: 0, opacity: 0 }}
-            animate={{ width: 80, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 1.2 }}
+            animate={visible ? { width: 80, opacity: 1 } : { width: 0, opacity: 0 }}
+            transition={{ duration: 0.7, delay: visible ? 1.2 : 0 }}
           />
 
           {/* CTA Buttons */}
           <motion.div
             className="flex flex-wrap gap-4 mt-6 md:mt-8 justify-center md:justify-start"
             initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.4, ease: 'easeOut' }}
+            animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+            transition={{ duration: 0.6, delay: visible ? 1.4 : 0, ease: 'easeOut' }}
           >
             <a href="#projects" onClick={scrollTo('#projects')} className="relative inline-flex items-center gap-2 px-7 py-3 rounded-full font-['Poppins',sans-serif] text-sm font-semibold tracking-wide transition-all duration-300 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-lg shadow-purple-600/25 hover:shadow-purple-600/40 hover:scale-105 active:scale-95 will-change-transform">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
@@ -452,7 +460,7 @@ export default function Banner() {
         <motion.div
           className="flex-shrink-0 w-[45%] max-w-[320px] md:max-w-[380px] lg:max-w-[420px] flex justify-center max-md:mt-6"
           initial={{ opacity: 0, x: 80, scale: 0.95 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
+          animate={visible ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: 80, scale: 0.95 }}
           transition={{ duration: 1, ease: 'easeOut' }}
         >
           <div ref={cardRef} className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[24rem] lg:h-[24rem] flex items-center justify-center transition-transform duration-200 ease-out will-change-transform" style={{ transformStyle: 'preserve-3d' }}>
