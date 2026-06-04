@@ -216,24 +216,26 @@ export default function Banner() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.01 }}
           >
-            <motion.div
-              ref={logoRef}
-              className="logo-gradient h-20 md:h-28 lg:h-40 xl:h-52"
-              style={{
-                aspectRatio: '1536/1024',
-                WebkitMaskImage: `url(${logoAnkit})`,
-                WebkitMaskSize: 'contain',
-                WebkitMaskRepeat: 'no-repeat',
-                WebkitMaskPosition: 'center',
-                maskImage: `url(${logoAnkit})`,
-                maskSize: 'contain',
-                maskRepeat: 'no-repeat',
-                maskPosition: 'center',
-              }}
-              initial={{ opacity: 0, y: 40, scale: 0.8 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.4, ease: [0.17, 0.85, 0.45, 1.2] }}
-            />
+            <div className="logo-hover-ring">
+              <motion.div
+                ref={logoRef}
+                className="logo-gradient h-20 md:h-28 lg:h-48 xl:h-80"
+                style={{
+                  aspectRatio: '1536/1024',
+                  WebkitMaskImage: `url(${logoAnkit})`,
+                  WebkitMaskSize: 'contain',
+                  WebkitMaskRepeat: 'no-repeat',
+                  WebkitMaskPosition: 'center',
+                  maskImage: `url(${logoAnkit})`,
+                  maskSize: 'contain',
+                  maskRepeat: 'no-repeat',
+                  maskPosition: 'center',
+                }}
+                initial={{ opacity: 0, y: 60, scale: 0.6 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.7, delay: 0.4, ease: [0.17, 0.85, 0.45, 1.2] }}
+              />
+            </div>
           </motion.h1>
 
           {/* Role badges */}
