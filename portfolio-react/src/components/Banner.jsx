@@ -39,6 +39,7 @@ export default function Banner() {
   const logoRef = useRef(null)
   const glowRef = useRef(null)
   const glowTimeoutRef = useRef(null)
+  const card3dRef = useRef(null)
 
 
   useEffect(() => {
@@ -108,6 +109,83 @@ export default function Banner() {
       logo.removeEventListener('mousemove', handleMove)
       logo.removeEventListener('mouseleave', handleLeave)
       if (glowTimeoutRef.current) clearTimeout(glowTimeoutRef.current)
+    }
+  }, [])
+
+  useEffect(() => {
+    const wrapper = card3dRef.current
+    if (!wrapper) return
+
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+    if (!isTouch) return
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) return
+
+    const state = {
+      active: false, startX: 0, startY: 0,
+      rotX: 0, rotY: 0,
+      scale: 1, springId: null,
+    }
+
+    const apply = (rx, ry, s) => {
+      wrapper.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) scale(${s})`
+    }
+
+    const spring = () => {
+      const damp = 0.13
+      const thr = 0.05
+      state.rotX += (0 - state.rotX) * damp
+      state.rotY += (0 - state.rotY) * damp
+      state.scale += (1 - state.scale) * damp * 2
+      apply(state.rotX, state.rotY, state.scale)
+      if (Math.abs(state.rotX) > thr || Math.abs(state.rotY) > thr || Math.abs(state.scale - 1) > thr * 0.5) {
+        state.springId = requestAnimationFrame(spring)
+      } else {
+        apply(0, 0, 1)
+        state.springId = null
+      }
+    }
+
+    const onStart = (e) => {
+      const t = e.touches[0]
+      if (!t) return
+      if (state.springId) { cancelAnimationFrame(state.springId); state.springId = null }
+      state.active = true
+      state.startX = t.clientX
+      state.startY = t.clientY
+      state.scale = 1.04
+    }
+
+    const onMove = (e) => {
+      if (!state.active) return
+      e.preventDefault()
+      const t = e.touches[0]
+      if (!t) return
+      const dx = t.clientX - state.startX
+      const dy = t.clientY - state.startY
+      state.rotY = Math.max(-18, Math.min(18, dx * 0.22))
+      state.rotX = Math.max(-18, Math.min(18, -dy * 0.22))
+      apply(state.rotX, state.rotY, state.scale)
+    }
+
+    const onEnd = () => {
+      if (!state.active) return
+      state.active = false
+      state.springId = requestAnimationFrame(spring)
+    }
+
+    wrapper.addEventListener('touchstart', onStart, { passive: true })
+    wrapper.addEventListener('touchmove', onMove, { passive: false })
+    wrapper.addEventListener('touchend', onEnd, { passive: true })
+    wrapper.addEventListener('touchcancel', onEnd, { passive: true })
+
+    return () => {
+      wrapper.removeEventListener('touchstart', onStart)
+      wrapper.removeEventListener('touchmove', onMove)
+      wrapper.removeEventListener('touchend', onEnd)
+      wrapper.removeEventListener('touchcancel', onEnd)
+      if (state.springId) cancelAnimationFrame(state.springId)
     }
   }, [])
 
@@ -248,12 +326,16 @@ export default function Banner() {
             </motion.div>
           </div>
 
-          <motion.div
-            className="relative"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.17, 0.85, 0.45, 1.2] }}
+          <div
+            ref={card3dRef}
+            className="logo-3d-wrapper"
           >
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.4, ease: [0.17, 0.85, 0.45, 1.2] }}
+            >
             <div
               ref={glowRef}
               className="logo-glow absolute inset-0 z-0"
@@ -286,6 +368,7 @@ export default function Banner() {
               }}
             />
           </motion.div>
+          </div>
 
           {/* Role badges */}
           <motion.div

@@ -259,6 +259,17 @@
   );
 }
 
+/* 3D touch rotation wrapper for logo */
+.logo-3d-wrapper {
+  touch-action: none;
+  will-change: transform;
+}
+@media (hover: hover) and (pointer: fine) {
+  .logo-3d-wrapper {
+    touch-action: auto;
+  }
+}
+
 /* Glassy liquid mirror text effect */
 .text-liquid-glass {
   background: linear-gradient(
