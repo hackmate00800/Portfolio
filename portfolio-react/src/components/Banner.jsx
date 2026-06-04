@@ -36,6 +36,9 @@ export default function Banner() {
   const cardRef = useRef(null)
   const textGradientRef = useRef(null)
   const ticking = useRef(false)
+  const logoRef = useRef(null)
+  const glowRef = useRef(null)
+  const glowTimeoutRef = useRef(null)
 
 
   useEffect(() => {
@@ -74,7 +77,39 @@ export default function Banner() {
     return () => window.removeEventListener('scroll', update)
   }, [])
 
+  useEffect(() => {
+    const logo = logoRef.current
+    const glow = glowRef.current
+    if (!logo || !glow) return
 
+    const handleMove = (e) => {
+      const rect = logo.getBoundingClientRect()
+      const x = ((e.clientX - rect.left) / rect.width) * 100
+      const y = ((e.clientY - rect.top) / rect.height) * 100
+      glow.style.setProperty('--gx', `${x}%`)
+      glow.style.setProperty('--gy', `${y}%`)
+      glow.style.opacity = '1'
+      if (glowTimeoutRef.current) {
+        clearTimeout(glowTimeoutRef.current)
+        glowTimeoutRef.current = null
+      }
+    }
+
+    const handleLeave = () => {
+      glowTimeoutRef.current = setTimeout(() => {
+        if (glow) glow.style.opacity = '0'
+      }, 300)
+    }
+
+    logo.addEventListener('mousemove', handleMove, { passive: true })
+    logo.addEventListener('mouseleave', handleLeave, { passive: true })
+
+    return () => {
+      logo.removeEventListener('mousemove', handleMove)
+      logo.removeEventListener('mouseleave', handleLeave)
+      if (glowTimeoutRef.current) clearTimeout(glowTimeoutRef.current)
+    }
+  }, [])
 
   const scrollTo = (id) => (e) => {
     e.preventDefault()
@@ -195,10 +230,10 @@ export default function Banner() {
 
           <motion.div className="relative inline-block">
             <motion.p
-              className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-scroll-gradient leading-tight relative mt-16"
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
+              className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-scroll-gradient leading-tight relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
             >
               Ram Ram!
               <motion.span
@@ -211,16 +246,19 @@ export default function Banner() {
             </motion.p>
           </motion.div>
 
-          <motion.h1
-            className="relative mt-1"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.01 }}
+          <motion.div
+            className="relative"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.4, ease: [0.17, 0.85, 0.45, 1.2] }}
           >
             <div
-              className="logo-gradient h-36 sm:h-40 md:h-48 lg:h-64 xl:h-96 max-w-full"
+              ref={glowRef}
+              className="logo-glow absolute inset-0 z-0"
               style={{
-                aspectRatio: '1536/1024',
+                opacity: 0,
+                background: 'radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(168,85,247,0.45) 0%, rgba(217,70,239,0.2) 30%, transparent 60%)',
+                filter: 'blur(25px)',
                 WebkitMaskImage: `url(${logoAnkit})`,
                 WebkitMaskSize: 'contain',
                 WebkitMaskRepeat: 'no-repeat',
@@ -231,7 +269,21 @@ export default function Banner() {
                 maskPosition: 'center',
               }}
             />
-          </motion.h1>
+            <div
+              ref={logoRef}
+              className="logo-gradient logo-sizing mx-auto md:mx-0"
+              style={{
+                WebkitMaskImage: `url(${logoAnkit})`,
+                WebkitMaskSize: 'contain',
+                WebkitMaskRepeat: 'no-repeat',
+                WebkitMaskPosition: 'center',
+                maskImage: `url(${logoAnkit})`,
+                maskSize: 'contain',
+                maskRepeat: 'no-repeat',
+                maskPosition: 'center',
+              }}
+            />
+          </motion.div>
 
           {/* Role badges */}
           <motion.div
@@ -240,12 +292,22 @@ export default function Banner() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.8 }}
           >
-            <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide bg-bg-glass/40 border-border-glass bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
+            <motion.span
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide bg-bg-glass/40 border-border-glass bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent"
+            >
               Full Stack Developer
-            </span>
-            <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide bg-bg-glass/40 border-border-glass bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.0 }}
+              className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide bg-bg-glass/40 border-border-glass bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
+            >
               Cybersecurity Enthusiast
-            </span>
+            </motion.span>
           </motion.div>
 
           {/* Description */}
@@ -253,7 +315,7 @@ export default function Banner() {
             className="font-['Poppins',sans-serif] text-sm md:text-base lg:text-lg text-text-secondary mt-4 md:mt-5 font-light leading-relaxed max-w-xl mx-auto md:mx-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1 }}
+            transition={{ duration: 0.8, delay: 1.1, ease: 'easeOut' }}
           >
             Passionate about crafting clean, scalable web experiences and securing digital ecosystems. I turn complex problems into elegant, user-friendly solutions.
           </motion.p>
@@ -269,9 +331,9 @@ export default function Banner() {
           {/* CTA Buttons */}
           <motion.div
             className="flex flex-wrap gap-4 mt-6 md:mt-8 justify-center md:justify-start"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1.4 }}
+            transition={{ duration: 0.6, delay: 1.4, ease: 'easeOut' }}
           >
             <a href="#projects" onClick={scrollTo('#projects')} className="relative inline-flex items-center gap-2 px-7 py-3 rounded-full font-['Poppins',sans-serif] text-sm font-semibold tracking-wide transition-all duration-300 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-lg shadow-purple-600/25 hover:shadow-purple-600/40 hover:scale-105 active:scale-95 will-change-transform">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>

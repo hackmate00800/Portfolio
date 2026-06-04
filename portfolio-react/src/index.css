@@ -298,3 +298,37 @@
   background-size: 300% 300%;
   -webkit-box-reflect: below -8px linear-gradient(to bottom, transparent 50%, rgba(255,255,255,0.2) 100%);
 }
+
+/* Logo glow overlay */
+.logo-glow {
+  transition: opacity 0.5s ease;
+  will-change: opacity, background;
+  pointer-events: none;
+}
+
+/* Responsive logo sizing - larger on mobile */
+.logo-sizing {
+  width: min(90vw, 450px);
+  height: auto;
+  aspect-ratio: 1536/1024;
+}
+@media (min-width: 640px) {
+  .logo-sizing { width: min(65vw, 500px); }
+}
+@media (min-width: 768px) {
+  .logo-sizing { width: min(55vw, 550px); }
+}
+@media (min-width: 1024px) {
+  .logo-sizing { width: min(45vw, 600px); }
+}
+@media (min-width: 1280px) {
+  .logo-sizing { width: min(40vw, 700px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
