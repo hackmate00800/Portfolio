@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion'
 import { FiGithub, FiExternalLink, FiUser } from 'react-icons/fi'
 import { FaYoutube, FaPinterest, FaTruck, FaIndustry } from 'react-icons/fa'
+import mitraThumb from '../assets/mitrapackermover.png'
+import srThumb from '../assets/srindustries.png'
 
 const projects = [
   {
@@ -35,6 +37,7 @@ const projects = [
     gradient: 'from-[#f39c12] to-[#e67e22]',
     label: 'Freelancing',
     link: 'https://mitrapackermover.com',
+    image: mitraThumb,
   },
   {
     title: 'SR Industries',
@@ -44,6 +47,7 @@ const projects = [
     gradient: 'from-[#2d3436] to-[#636e72]',
     label: 'Freelancing',
     link: 'https://srindustriesindia.org',
+    image: srThumb,
   },
 ]
 
@@ -79,7 +83,11 @@ export default function ProjectsSection() {
                       {p.label}
                     </span>
                   )}
-                  <Icon className="text-5xl text-white/60 z-1 transition-all duration-400 group-hover:opacity-100 group-hover:scale-115" />
+                  {p.image ? (
+                    <img src={p.image} alt={p.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  ) : (
+                    <Icon className="text-5xl text-white/60 z-1 transition-all duration-400 group-hover:opacity-100 group-hover:scale-115" />
+                  )}
                 </div>
                 <div className="p-5">
                   <h3 className="text-lg font-bold mb-2">{p.title}</h3>
