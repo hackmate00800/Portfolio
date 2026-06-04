@@ -2,77 +2,69 @@ import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import creativeSrc from '../assets/bannerimg.png'
 
-const floatingBubbles = Array.from({ length: 18 }, (_, i) => ({
-  id: i,
+const floatingBubbles = Array.from({ length: 14 }, () => ({
   size: 20 + Math.random() * 60,
   x: Math.random() * 100,
   y: Math.random() * 100,
-  dur: 8 + Math.random() * 14,
+  dur: 10 + Math.random() * 12,
   delay: Math.random() * -10,
-  xDrift: (Math.random() - 0.5) * 40,
-  yDrift: (Math.random() - 0.5) * 40,
+  dx: (Math.random() - 0.5) * 40,
+  dy: (Math.random() - 0.5) * 40,
 }))
 
-const particles = Array.from({ length: 60 }, (_, i) => ({
-  id: i,
+const particles = Array.from({ length: 40 }, () => ({
   x: Math.random() * 100,
   y: Math.random() * 100,
   size: 1.5 + Math.random() * 3,
   delay: Math.random() * 12,
-  dur: 4 + Math.random() * 8,
-  yOff: -(30 + Math.random() * 20),
+  dur: 5 + Math.random() * 6,
+  yOff: -(25 + Math.random() * 25),
 }))
 
-const waveLines = [
-  { d: 'M0,50 Q50,0 100,50 T200,50 T300,50 T400,50', top: '15%', delay: 0, opacity: 0.06 },
-  { d: 'M0,30 Q40,60 80,30 T160,30 T240,30 T320,30', top: '30%', delay: 2, opacity: 0.04 },
-  { d: 'M0,70 Q60,20 120,70 T240,70 T360,70 T480,70', top: '55%', delay: 4, opacity: 0.05 },
-  { d: 'M0,40 Q30,80 60,40 T120,40 T180,40 T240,40', top: '75%', delay: 1, opacity: 0.03 },
-]
-
 const orbitDroplets = [
-  { size: 'w-11 h-11', top: '-3%', right: '2%', xOff: 12, yOff: -16, delay: 0.2 },
-  { size: 'w-8 h-8', bottom: '2%', left: '-2%', xOff: -10, yOff: 12, delay: 1.2 },
-  { size: 'w-6 h-6', top: '6%', left: '-5%', xOff: -6, yOff: -10, delay: 2.0 },
-  { size: 'w-9 h-9', bottom: '5%', right: '-3%', xOff: 8, yOff: -8, delay: 2.8 },
-  { size: 'w-5 h-5', top: '30%', right: '-5%', xOff: 14, yOff: 6, delay: 1.5 },
-  { size: 'w-7 h-7', bottom: '35%', left: '-6%', xOff: -12, yOff: -14, delay: 3.2 },
+  { size: 'w-11 h-11', top: '-3%', right: '2%', dx: 12, dy: -16, delay: 0.2, dur: 6 },
+  { size: 'w-8 h-8', bottom: '2%', left: '-2%', dx: -10, dy: 12, delay: 1.2, dur: 5.5 },
+  { size: 'w-6 h-6', top: '6%', left: '-5%', dx: -6, dy: -10, delay: 2.0, dur: 7 },
+  { size: 'w-9 h-9', bottom: '5%', right: '-3%', dx: 8, dy: -8, delay: 2.8, dur: 5 },
+  { size: 'w-5 h-5', top: '30%', right: '-5%', dx: 14, dy: 6, delay: 1.5, dur: 6.5 },
+  { size: 'w-7 h-7', bottom: '35%', left: '-6%', dx: -12, dy: -14, delay: 3.2, dur: 5.5 },
 ]
-
-const roles = [
-  { label: 'Full Stack Developer', gradient: 'from-purple-400 to-fuchsia-400' },
-  { label: 'Cybersecurity Enthusiast', gradient: 'from-cyan-400 to-blue-400' },
-]
-
-const btnClass = base => `${base} relative inline-flex items-center gap-2 px-7 py-3 rounded-full font-['Poppins',sans-serif] text-sm font-semibold tracking-wide transition-all duration-300`
 
 export default function Banner() {
   const blobRef = useRef(null)
   const cardRef = useRef(null)
-  const mouseRef = useRef({ x: 0.5, y: 0.5 })
+  const ticking = useRef(false)
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2
-      const y = (e.clientY / window.innerHeight - 0.5) * 2
-      mouseRef.current = { x, y }
-      if (blobRef.current) {
-        blobRef.current.style.transform = `translate(${x * 20}px, ${y * 20}px)`
-      }
-      if (cardRef.current) {
-        const rx = y * 8
-        const ry = x * -8
-        cardRef.current.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg)`
+      if (!ticking.current) {
+        ticking.current = true
+        requestAnimationFrame(() => {
+          const x = (e.clientX / window.innerWidth - 0.5) * 2
+          const y = (e.clientY / window.innerHeight - 0.5) * 2
+          if (blobRef.current) {
+            blobRef.current.style.transform = `translate(${x * 20}px, ${y * 20}px)`
+          }
+          if (cardRef.current) {
+            cardRef.current.style.transform = `perspective(1000px) rotateX(${y * 8}deg) rotateY(${x * -8}deg)`
+          }
+          ticking.current = false
+        })
       }
     }
-    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
+  const scrollTo = (id) => (e) => {
+    e.preventDefault()
+    document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
-    <section className="relative w-full h-dvh overflow-hidden bg-[#080012] flex items-center">
+    <section className="relative w-full h-dvh overflow-hidden bg-[#080012] flex items-center contain-layout">
       {/* Deep background layers */}
-      <div ref={blobRef} className="absolute inset-0 transition-transform duration-200 ease-out pointer-events-none">
+      <div ref={blobRef} className="absolute inset-0 transition-transform duration-200 ease-out pointer-events-none will-change-transform">
         <div className="absolute w-[1000px] h-[1000px] rounded-full bg-[#6d28d9]/10 blur-[180px] -top-64 -left-48 animate-pulse-slow" />
         <div className="absolute w-[800px] h-[800px] rounded-full bg-[#4c1d95]/15 blur-[150px] -bottom-40 -right-32 animate-pulse-slow" style={{ animationDelay: '6s' }} />
         <div className="absolute w-[600px] h-[600px] rounded-full bg-[#9333ea]/10 blur-[130px] top-1/3 left-1/3 animate-pulse-slow" style={{ animationDelay: '10s' }} />
@@ -85,48 +77,48 @@ export default function Banner() {
       <div className="absolute inset-0 bg-gradient-to-r from-[#080012]/30 via-transparent to-[#080012]/30 pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#080012]/60 to-transparent pointer-events-none z-10" />
 
-      {/* Floating transparent bubbles */}
+      {/* Floating transparent bubbles - CSS animated */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {floatingBubbles.map((b) => (
-          <motion.div
-            key={b.id}
-            className="absolute rounded-full bg-gradient-to-br from-white/[0.03] via-fuchsia-500/[0.02] to-purple-600/[0.03] backdrop-blur-[2px] border border-white/[0.04]"
-            style={{ width: b.size, height: b.size, left: `${b.x}%`, top: `${b.y}%` }}
-            animate={{ y: [0, b.yDrift, 0], x: [0, b.xDrift, 0], scale: [1, 1.08, 0.95, 1], opacity: [0.15, 0.4, 0.2, 0.15] }}
-            transition={{ duration: b.dur, repeat: Infinity, delay: b.delay, ease: 'easeInOut' }}
+        {floatingBubbles.map((b, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full bg-gradient-to-br from-white/[0.03] via-fuchsia-500/[0.02] to-purple-600/[0.03] border border-white/[0.04] animate-bubble"
+            style={{
+              width: b.size,
+              height: b.size,
+              left: `${b.x}%`,
+              top: `${b.y}%`,
+              '--dx': `${b.dx}px`,
+              '--dy': `${b.dy}px`,
+              '--dur': `${b.dur}s`,
+              '--delay': `${b.delay}s`,
+            }}
           />
         ))}
       </div>
 
-      {/* Floating particles */}
+      {/* Floating particles - CSS animated */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {particles.map((p) => (
-          <motion.div
-            key={p.id}
-            className="absolute rounded-full bg-white"
-            style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-            animate={{ y: [0, p.yOff, 0], opacity: [0.05, 0.35, 0.05], scale: [0.5, 1.2, 0.5] }}
-            transition={{ duration: p.dur, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }}
+        {particles.map((p, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full bg-white animate-particle"
+            style={{
+              width: p.size,
+              height: p.size,
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+              '--y-off': `${p.yOff}px`,
+              '--dur': `${p.dur}s`,
+              '--delay': `${p.delay}s`,
+            }}
           />
         ))}
       </div>
 
-      {/* Abstract 3D wave curves */}
+      {/* Decorative wave curves - SVG */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <svg className="absolute w-full h-full" viewBox="0 0 400 100" preserveAspectRatio="none">
-          {waveLines.map((w, i) => (
-            <motion.path
-              key={i}
-              d={w.d}
-              fill="none"
-              stroke="url(#waveGrad)"
-              strokeWidth="0.5"
-              vectorEffect="non-scaling-stroke"
-              style={{ position: 'absolute', top: w.top, left: 0, right: 0 }}
-              animate={{ opacity: [w.opacity, w.opacity * 2.5, w.opacity] }}
-              transition={{ duration: 6, repeat: Infinity, delay: w.delay, ease: 'easeInOut' }}
-            />
-          ))}
+        <svg className="absolute w-full h-full" viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true">
           <defs>
             <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="transparent" />
@@ -136,24 +128,18 @@ export default function Banner() {
               <stop offset="100%" stopColor="transparent" />
             </linearGradient>
           </defs>
+          <path d="M0,50 Q50,0 100,50 T200,50 T300,50 T400,50" fill="none" stroke="url(#waveGrad)" strokeWidth="0.5" vectorEffect="non-scaling-stroke" opacity="0.06" className="animate-pulse-opacity" style={{ top: '15%', position: 'absolute', '--dur': '6s' }} />
+          <path d="M0,30 Q40,60 80,30 T160,30 T240,30 T320,30" fill="none" stroke="url(#waveGrad)" strokeWidth="0.5" vectorEffect="non-scaling-stroke" opacity="0.04" className="animate-pulse-opacity" style={{ top: '30%', position: 'absolute', '--dur': '7s', animationDelay: '2s' }} />
+          <path d="M0,70 Q60,20 120,70 T240,70 T360,70 T480,70" fill="none" stroke="url(#waveGrad)" strokeWidth="0.5" vectorEffect="non-scaling-stroke" opacity="0.05" className="animate-pulse-opacity" style={{ top: '55%', position: 'absolute', '--dur': '8s', animationDelay: '4s' }} />
+          <path d="M0,40 Q30,80 60,40 T120,40 T180,40 T240,40" fill="none" stroke="url(#waveGrad)" strokeWidth="0.5" vectorEffect="non-scaling-stroke" opacity="0.03" className="animate-pulse-opacity" style={{ top: '75%', position: 'absolute', '--dur': '6s', animationDelay: '1s' }} />
         </svg>
       </div>
 
-      {/* Neon glow ring accents */}
-      <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full border border-purple-500/5 pointer-events-none"
-        style={{ top: '20%', left: '55%' }}
-        animate={{ rotate: [0, 360], scale: [1, 1.05, 1] }}
-        transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
-      />
-      <motion.div
-        className="absolute w-[350px] h-[350px] rounded-full border border-fuchsia-500/5 pointer-events-none"
-        style={{ top: '25%', left: '58%' }}
-        animate={{ rotate: [360, 0], scale: [1.05, 0.95, 1.05] }}
-        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-      />
+      {/* Neon glow ring accents - CSS animated */}
+      <div className="animate-ring absolute w-[500px] h-[500px] rounded-full border border-purple-500/5 pointer-events-none" style={{ top: '20%', left: '55%', '--dur': '40s', '--s': '1.05' }} />
+      <div className="animate-ring-reverse absolute w-[350px] h-[350px] rounded-full border border-fuchsia-500/5 pointer-events-none" style={{ top: '25%', left: '58%', '--dur': '30s' }} />
 
-      {/* Main content - two column layout: text left, image right */}
+      {/* Main content - two column layout */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 flex flex-col-reverse md:flex-row items-center gap-6 md:gap-20 py-10 md:py-0">
 
         {/* Left column - Introduction text */}
@@ -161,13 +147,13 @@ export default function Banner() {
           className="flex-1 text-center md:text-left max-md:mt-4"
           initial={{ opacity: 0, x: -80 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2, ease: 'easeOut' }}
+          transition={{ duration: 1, ease: 'easeOut' }}
         >
           <motion.p
             className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white/90 leading-tight drop-shadow-[0_0_20px_rgba(168,85,247,0.15)]"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
             Ram Ram!
           </motion.p>
@@ -177,7 +163,7 @@ export default function Banner() {
             style={{ textShadow: '0 0 60px rgba(168,85,247,0.2), 0 0 120px rgba(168,85,247,0.1), 2px 2px 0px rgba(0,0,0,0.3), 4px 4px 0px rgba(120,80,200,0.2)' }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
           >
             I&apos;M ANKIT
           </motion.h1>
@@ -187,16 +173,14 @@ export default function Banner() {
             className="flex flex-wrap gap-3 mt-4 justify-center md:justify-start"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.9 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
           >
-            {roles.map((r, i) => (
-              <span
-                key={i}
-                className={`px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide bg-white/[0.04] border border-white/[0.08] backdrop-blur-sm bg-gradient-to-r ${r.gradient} bg-clip-text text-transparent`}
-              >
-                {r.label}
-              </span>
-            ))}
+            <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide bg-white/[0.04] border border-white/[0.08] bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
+              Full Stack Developer
+            </span>
+            <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide bg-white/[0.04] border border-white/[0.08] bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              Cybersecurity Enthusiast
+            </span>
           </motion.div>
 
           {/* Description */}
@@ -204,7 +188,7 @@ export default function Banner() {
             className="font-['Poppins',sans-serif] text-sm md:text-base lg:text-lg text-white/60 mt-4 md:mt-5 font-light leading-relaxed max-w-xl mx-auto md:mx-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.1 }}
+            transition={{ duration: 0.5, delay: 1 }}
           >
             Passionate about crafting clean, scalable web experiences and securing digital ecosystems. I turn complex problems into elegant, user-friendly solutions.
           </motion.p>
@@ -214,7 +198,7 @@ export default function Banner() {
             className="w-20 h-[3px] bg-gradient-to-r from-purple-400 via-fuchsia-500 to-purple-400 rounded-full mt-5 md:mt-6 mx-auto md:mx-0 shadow-[0_0_15px_rgba(168,85,247,0.4),0_0_30px_rgba(168,85,247,0.2)]"
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: 80, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.3 }}
+            transition={{ duration: 0.7, delay: 1.2 }}
           />
 
           {/* CTA Buttons */}
@@ -222,34 +206,28 @@ export default function Banner() {
             className="flex flex-wrap gap-4 mt-6 md:mt-8 justify-center md:justify-start"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.5 }}
+            transition={{ duration: 0.5, delay: 1.4 }}
           >
-            <a href="#projects" className={`${btnClass('')} bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-lg shadow-purple-600/25 hover:shadow-purple-600/40 hover:scale-105 active:scale-95`}>
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
+            <a href="#projects" onClick={scrollTo('#projects')} className="relative inline-flex items-center gap-2 px-7 py-3 rounded-full font-['Poppins',sans-serif] text-sm font-semibold tracking-wide transition-all duration-300 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-lg shadow-purple-600/25 hover:shadow-purple-600/40 hover:scale-105 active:scale-95 will-change-transform">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
               View Projects
             </a>
-            <a href="#contact" className={`${btnClass('')} bg-white/[0.04] border border-white/[0.15] text-white/80 hover:bg-white/[0.08] hover:border-purple-400/40 hover:text-white hover:scale-105 active:scale-95`}>
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
+            <a href="#contact" onClick={scrollTo('#contact')} className="relative inline-flex items-center gap-2 px-7 py-3 rounded-full font-['Poppins',sans-serif] text-sm font-semibold tracking-wide transition-all duration-300 bg-white/[0.04] border border-white/[0.15] text-white/80 hover:bg-white/[0.08] hover:border-purple-400/40 hover:text-white hover:scale-105 active:scale-95 will-change-transform">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
               Contact Me
             </a>
           </motion.div>
 
-          {/* Decorative dots */}
-          <motion.div
-            className="flex gap-2 mt-6 justify-center md:justify-start"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.8 }}
-          >
+          {/* Decorative dots - CSS animated */}
+          <div className="flex gap-2 mt-6 justify-center md:justify-start">
             {[0, 1, 2].map((i) => (
-              <motion.div
+              <div
                 key={i}
-                className="w-1.5 h-1.5 rounded-full bg-purple-400/40"
-                animate={{ scale: [1, 1.6, 1], opacity: [0.3, 0.7, 0.3] }}
-                transition={{ duration: 2, repeat: Infinity, delay: i * 0.4 }}
+                className="w-1.5 h-1.5 rounded-full bg-purple-400/40 animate-pulse-opacity"
+                style={{ '--dur': '2s', animationDelay: `${i * 0.4}s` }}
               />
             ))}
-          </motion.div>
+          </div>
         </motion.div>
 
         {/* Right column - Glassmorphism card with image */}
@@ -257,79 +235,55 @@ export default function Banner() {
           className="flex-shrink-0 w-[45%] max-w-[320px] md:max-w-[380px] lg:max-w-[420px] flex justify-center"
           initial={{ opacity: 0, x: 80, scale: 0.95 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 1.2, ease: 'easeOut' }}
+          transition={{ duration: 1, ease: 'easeOut' }}
         >
-          <div ref={cardRef} className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[24rem] lg:h-[24rem] flex items-center justify-center transition-all duration-200 ease-out" style={{ transformStyle: 'preserve-3d' }}>
-            {/* Outer radial glow */}
-            <motion.div
-              className="absolute w-[20rem] h-[20rem] md:w-[25rem] md:h-[25rem] lg:w-[30rem] lg:h-[30rem] rounded-full bg-gradient-to-br from-purple-600/20 via-fuchsia-600/10 to-transparent blur-[100px]"
-              animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.5, 0.2] }}
-              transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-            />
+          <div ref={cardRef} className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[24rem] lg:h-[24rem] flex items-center justify-center transition-transform duration-200 ease-out will-change-transform" style={{ transformStyle: 'preserve-3d' }}>
+            {/* Outer radial glow - CSS animated */}
+            <div className="absolute w-[20rem] h-[20rem] md:w-[25rem] md:h-[25rem] lg:w-[30rem] lg:h-[30rem] rounded-full bg-gradient-to-br from-purple-600/20 via-fuchsia-600/10 to-transparent blur-[100px] animate-pulse-slow" style={{ animationDuration: '7s' }} />
 
-            {/* Orbital ring behind */}
-            <motion.div
-              className="absolute w-[18rem] h-[18rem] md:w-[22rem] md:h-[22rem] lg:w-[27rem] lg:h-[27rem] rounded-full border border-purple-500/10"
-              animate={{ rotate: [0, 360], scale: [1, 1.03, 1] }}
-              transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-            />
+            {/* Orbital ring behind - CSS animated */}
+            <div className="animate-ring absolute w-[18rem] h-[18rem] md:w-[22rem] md:h-[22rem] lg:w-[27rem] lg:h-[27rem] rounded-full border border-purple-500/10" style={{ '--dur': '25s', '--s': '1.03' }} />
 
-            {/* Abstract blob shapes behind card */}
-            <motion.div
-              className="absolute w-[14rem] h-[10rem] md:w-[18rem] md:h-[13rem] lg:w-[22rem] lg:h-[16rem] rounded-full bg-gradient-to-br from-purple-500/8 to-fuchsia-500/5 blur-[60px] -z-5"
-              style={{ top: '5%', left: '-10%' }}
-              animate={{ rotate: [0, 15, -10, 0], scale: [1, 1.1, 0.9, 1] }}
-              transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
-            />
-            <motion.div
-              className="absolute w-[12rem] h-[16rem] md:w-[15rem] md:h-[20rem] lg:w-[18rem] lg:h-[24rem] rounded-full bg-gradient-to-tr from-cyan-500/6 to-blue-500/4 blur-[70px] -z-5"
-              style={{ bottom: '5%', right: '-8%' }}
-              animate={{ rotate: [0, -12, 8, 0], scale: [1, 0.9, 1.1, 1] }}
-              transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-            />
+            {/* Abstract blob shapes behind card - CSS animated */}
+            <div className="animate-blob absolute w-[14rem] h-[10rem] md:w-[18rem] md:h-[13rem] lg:w-[22rem] lg:h-[16rem] rounded-full bg-gradient-to-br from-purple-500/8 to-fuchsia-500/5 blur-[60px]" style={{ top: '5%', left: '-10%', '--dur': '15s', zIndex: -1 }} />
+            <div className="animate-blob absolute w-[12rem] h-[16rem] md:w-[15rem] md:h-[20rem] lg:w-[18rem] lg:h-[24rem] rounded-full bg-gradient-to-tr from-cyan-500/6 to-blue-500/4 blur-[70px]" style={{ bottom: '5%', right: '-8%', '--dur': '18s', '--delay': '3s', zIndex: -1 }} />
 
             {/* Glassmorphism card */}
             <div className="absolute w-[16rem] h-[16rem] md:w-[20rem] md:h-[20rem] lg:w-[24rem] lg:h-[24rem] rounded-[32px] bg-gradient-to-br from-white/[0.07] via-purple-500/[0.04] to-fuchsia-500/[0.03] backdrop-blur-xl border border-white/[0.12] shadow-[0_0_60px_rgba(168,85,247,0.15),0_0_120px_rgba(168,85,247,0.05)] overflow-hidden">
+              {/* Inner glow edges */}
               <div className="absolute inset-0 rounded-[32px] pointer-events-none" style={{ boxShadow: 'inset 0 0 40px rgba(168,85,247,0.06)' }} />
 
+              {/* Glass highlights */}
               <div className="absolute w-[70%] h-[40%] rounded-full bg-gradient-to-br from-white/[0.1] via-white/[0.03] to-transparent blur-xl -top-2 -left-4 rotate-[-18deg]" />
               <div className="absolute w-[50%] h-[30%] rounded-full bg-gradient-to-tl from-white/[0.04] via-fuchsia-500/[0.02] to-transparent blur-lg bottom-2 -right-4 rotate-[22deg]" />
 
-              <motion.div
-                className="absolute w-[60%] h-[8%] rounded-full bg-gradient-to-r from-transparent via-white/[0.05] to-transparent blur-sm top-[15%] -right-[10%] rotate-[35deg]"
-                animate={{ opacity: [0.1, 0.4, 0.1] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              />
+              {/* Light streak - CSS animated */}
+              <div className="animate-pulse-opacity absolute w-[60%] h-[8%] rounded-full bg-gradient-to-r from-transparent via-white/[0.05] to-transparent blur-sm top-[15%] -right-[10%] rotate-[35deg]" style={{ '--dur': '5s' }} />
 
-              <motion.div
-                className="absolute inset-[1px] rounded-[31px] border border-white/[0.06] pointer-events-none"
-                animate={{ opacity: [0.3, 0.7, 0.3] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              />
+              {/* Border glow - CSS animated */}
+              <div className="animate-pulse-opacity absolute inset-[1px] rounded-[31px] border border-white/[0.06] pointer-events-none" style={{ '--dur': '4s', animationDelay: '0.5s' }} />
 
-              <motion.img
+              {/* Profile image - CSS animated */}
+              <img
                 src={creativeSrc}
                 alt="Ankit"
-                className="absolute inset-[8%] z-10 rounded-[20px] object-cover shadow-lg shadow-purple-900/40"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+                className="absolute inset-[8%] z-10 rounded-[20px] object-cover shadow-lg shadow-purple-900/40 animate-image-float"
               />
 
-              <motion.div
-                className="absolute inset-[6%] rounded-[24px] blur-md bg-gradient-to-br from-purple-500/15 via-fuchsia-500/10 to-purple-500/15"
-                animate={{ opacity: [0.15, 0.45, 0.15] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              />
+              {/* Neon accent ring behind image */}
+              <div className="animate-pulse-opacity absolute inset-[6%] rounded-[24px] blur-md bg-gradient-to-br from-purple-500/15 via-fuchsia-500/10 to-purple-500/15" style={{ '--dur': '5s', animationDelay: '1s' }} />
             </div>
 
-            {/* Orbiting droplets */}
+            {/* Orbiting droplets - CSS animated */}
             {orbitDroplets.map((d, i) => (
-              <motion.div
+              <div
                 key={i}
-                className={`absolute ${d.size} rounded-full bg-gradient-to-br from-white/[0.06] via-purple-500/[0.04] to-fuchsia-500/[0.03] backdrop-blur-md border border-white/[0.08] shadow-lg`}
-                style={{ top: d.top, bottom: d.bottom, left: d.left, right: d.right }}
-                animate={{ y: [0, d.yOff, 0], x: [0, d.xOff, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: d.delay }}
+                className={`absolute ${d.size} rounded-full bg-gradient-to-br from-white/[0.06] via-purple-500/[0.04] to-fuchsia-500/[0.03] border border-white/[0.08] shadow-lg animate-droplet`}
+                style={{
+                  top: d.top, bottom: d.bottom, left: d.left, right: d.right,
+                  '--dx': `${d.dx}px`, '--dy': `${d.dy}px`,
+                  '--dur': `${d.dur}s`, animationDelay: `${d.delay}s`,
+                }}
               />
             ))}
           </div>

@@ -143,3 +143,51 @@
   50% { opacity: 0.6; transform: scale(1.08); }
 }
 .animate-pulse-slow { animation: pulse-slow 8s ease-in-out infinite; }
+
+/* Banner decorative element animations - GPU-composited (transform/opacity only) */
+@keyframes bubble-float {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.15; }
+  25% { transform: translate(var(--dx, 10px), var(--dy, -15px)) scale(1.08); opacity: 0.4; }
+  50% { transform: translate(calc(var(--dx, 10px) * -0.6), calc(var(--dy, -15px) * 0.5)) scale(0.95); opacity: 0.2; }
+  75% { transform: translate(calc(var(--dx, 10px) * 0.3), calc(var(--dy, -15px) * -0.4)) scale(1.03); opacity: 0.35; }
+}
+.animate-bubble { animation: bubble-float var(--dur, 12s) ease-in-out infinite; animation-delay: var(--delay, 0s); will-change: transform; }
+
+@keyframes particle-float {
+  0%, 100% { transform: translateY(0) scale(0.5); opacity: 0.05; }
+  50% { transform: translateY(var(--y-off, -30px)) scale(1.2); opacity: 0.35; }
+}
+.animate-particle { animation: particle-float var(--dur, 6s) ease-in-out infinite; animation-delay: var(--delay, 0s); will-change: transform; }
+
+@keyframes ring-rotate {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(var(--s, 1.03)); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+.animate-ring { animation: ring-rotate var(--dur, 25s) linear infinite; will-change: transform; }
+.animate-ring-reverse { animation: ring-rotate var(--dur, 30s) linear infinite reverse; will-change: transform; }
+
+@keyframes blob-morph {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  33% { transform: rotate(15deg) scale(1.1); }
+  66% { transform: rotate(-10deg) scale(0.9); }
+}
+.animate-blob { animation: blob-morph var(--dur, 15s) ease-in-out infinite; animation-delay: var(--delay, 0s); will-change: transform; }
+
+@keyframes droplet-float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(var(--dx, 8px), var(--dy, -12px)); }
+}
+.animate-droplet { animation: droplet-float var(--dur, 6s) ease-in-out infinite; animation-delay: var(--delay, 0s); will-change: transform; }
+
+@keyframes image-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-image-float { animation: image-float 6s ease-in-out infinite; animation-delay: 0.3s; will-change: transform; }
+
+@keyframes pulse-opacity {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.4; }
+}
+.animate-pulse-opacity { animation: pulse-opacity var(--dur, 5s) ease-in-out infinite; will-change: opacity; }
