@@ -37,9 +37,7 @@ export default function Banner() {
   const textGradientRef = useRef(null)
   const logoRef = useRef(null)
   const ticking = useRef(false)
-  const isHoveringRef = useRef(false)
-  const torchHueRef = useRef(270)
-  const torchIntervalRef = useRef(null)
+
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -86,40 +84,11 @@ export default function Banner() {
       logo.style.setProperty('--tx', ((e.clientX - rect.left) / rect.width) * 100)
       logo.style.setProperty('--ty', ((e.clientY - rect.top) / rect.height) * 100)
     }
-    const handleEnter = () => {
-      isHoveringRef.current = true
-    }
-    const handleLeave = () => {
-      isHoveringRef.current = false
-      torchHueRef.current = 0
-      logo.style.setProperty('--h1', '270')
-      logo.style.setProperty('--h2', '300')
-      logo.style.setProperty('--h3', '330')
-      logo.style.setProperty('--h4', '190')
-    }
 
     logo.addEventListener('mousemove', handleLogoMove, { passive: true })
-    logo.addEventListener('mouseenter', handleEnter, { passive: true })
-    logo.addEventListener('mouseleave', handleLeave, { passive: true })
-
-    torchIntervalRef.current = setInterval(() => {
-      if (isHoveringRef.current) {
-        const base = (parseInt(torchHueRef.current) + 2) % 360
-        torchHueRef.current = base
-        if (logoRef.current) {
-          logoRef.current.style.setProperty('--h1', (270 + base) % 360)
-          logoRef.current.style.setProperty('--h2', (300 + base) % 360)
-          logoRef.current.style.setProperty('--h3', (330 + base) % 360)
-          logoRef.current.style.setProperty('--h4', (190 + base) % 360)
-        }
-      }
-    }, 50)
 
     return () => {
       logo.removeEventListener('mousemove', handleLogoMove)
-      logo.removeEventListener('mouseenter', handleEnter)
-      logo.removeEventListener('mouseleave', handleLeave)
-      if (torchIntervalRef.current) clearInterval(torchIntervalRef.current)
     }
   }, [])
 
