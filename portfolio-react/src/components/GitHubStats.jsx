@@ -60,7 +60,7 @@ export default function GitHubStats() {
         <motion.div className="p-8 glass rounded-2xl border-border-glass mb-10 flex items-center gap-6 max-sm:flex-col max-sm:text-center" {...fadeUp(0.1)}>
           <motion.img
             src={data?.avatar_url || 'https://avatars.githubusercontent.com/u/0'}
-            alt="GitHub Avatar"
+            alt="GitHub Avatar" loading="lazy"
             className="w-24 h-24 rounded-full border-3 border-accent-creative/40"
             whileHover={{ scale: 1.1, rotate: 5 }}
           />

@@ -84,7 +84,7 @@ export default function ProjectsSection() {
                     </span>
                   )}
                   {p.image ? (
-                    <img src={p.image} alt={p.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <img src={p.image} alt={p.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   ) : (
                     <Icon className="text-5xl text-text-primary/60 z-1 transition-all duration-400 group-hover:opacity-100 group-hover:scale-115" />
                   )}

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import creativeSrc from '../assets/bannerimg.png'
-import logoAnkit from '../assets/im_ankit_logo.svg'
+import logoAnkit from '../assets/im_ankit_logo.png'
 
 const floatingBubbles = Array.from({ length: 14 }, () => ({
   size: 20 + Math.random() * 60,
@@ -37,6 +37,9 @@ export default function Banner() {
   const textGradientRef = useRef(null)
   const logoRef = useRef(null)
   const ticking = useRef(false)
+  const isHoveringRef = useRef(false)
+  const torchHueRef = useRef(270)
+  const torchIntervalRef = useRef(null)
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -61,7 +64,6 @@ export default function Banner() {
 
   useEffect(() => {
     const el = textGradientRef.current
-    const logo = logoRef.current
     if (!el) return
     const update = () => {
       const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1)
@@ -69,11 +71,49 @@ export default function Banner() {
       el.style.setProperty('--text-h1', (270 + p * 160) % 360)
       el.style.setProperty('--text-h2', (320 + p * 100) % 360)
       el.style.setProperty('--text-h3', (300 + p * 130) % 360)
-      if (logo) logo.style.filter = `hue-rotate(${p * 160}deg)`
     }
     window.addEventListener('scroll', update, { passive: true })
     update()
     return () => window.removeEventListener('scroll', update)
+  }, [])
+
+  useEffect(() => {
+    const logo = logoRef.current
+    if (!logo) return
+
+    const handleLogoMove = (e) => {
+      const rect = logo.getBoundingClientRect()
+      logo.style.setProperty('--tx', ((e.clientX - rect.left) / rect.width) * 100)
+      logo.style.setProperty('--ty', ((e.clientY - rect.top) / rect.height) * 100)
+    }
+    const handleEnter = () => {
+      isHoveringRef.current = true
+    }
+    const handleLeave = () => {
+      isHoveringRef.current = false
+      torchHueRef.current = 270
+      logo.style.setProperty('--hue-torch', '0deg')
+    }
+
+    logo.addEventListener('mousemove', handleLogoMove, { passive: true })
+    logo.addEventListener('mouseenter', handleEnter, { passive: true })
+    logo.addEventListener('mouseleave', handleLeave, { passive: true })
+
+    torchIntervalRef.current = setInterval(() => {
+      if (isHoveringRef.current) {
+        torchHueRef.current = (torchHueRef.current + 2) % 360
+        if (logoRef.current) {
+          logoRef.current.style.setProperty('--hue-torch', `${torchHueRef.current}deg`)
+        }
+      }
+    }, 50)
+
+    return () => {
+      logo.removeEventListener('mousemove', handleLogoMove)
+      logo.removeEventListener('mouseenter', handleEnter)
+      logo.removeEventListener('mouseleave', handleLeave)
+      if (torchIntervalRef.current) clearInterval(torchIntervalRef.current)
+    }
   }, [])
 
   const scrollTo = (id) => (e) => {
@@ -166,6 +206,7 @@ export default function Banner() {
         <motion.div
           ref={textGradientRef}
           className="flex-1 text-center md:text-left max-md:mt-4"
+          style={{ '--text-h1': 270, '--text-h2': 320, '--text-h3': 300 }}
           initial={{ opacity: 0, x: -80 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: 'easeOut' }}
@@ -216,26 +257,25 @@ export default function Banner() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.01 }}
           >
-            <div className="logo-hover-ring">
-              <motion.div
-                ref={logoRef}
-                className="logo-gradient h-28 md:h-36 lg:h-56 xl:h-96 max-w-full"
-                style={{
-                  aspectRatio: '1536/1024',
-                  WebkitMaskImage: `url(${logoAnkit})`,
-                  WebkitMaskSize: 'contain',
-                  WebkitMaskRepeat: 'no-repeat',
-                  WebkitMaskPosition: 'center',
-                  maskImage: `url(${logoAnkit})`,
-                  maskSize: 'contain',
-                  maskRepeat: 'no-repeat',
-                  maskPosition: 'center',
-                }}
-                initial={{ opacity: 0, y: 60, scale: 0.6 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.7, delay: 0.4, ease: [0.17, 0.85, 0.45, 1.2] }}
-              />
-            </div>
+            <motion.div
+              ref={logoRef}
+              className="logo-gradient h-36 sm:h-40 md:h-48 lg:h-64 xl:h-96 max-w-full"
+              style={{
+                aspectRatio: '1536/1024',
+                WebkitMaskImage: `url(${logoAnkit})`,
+                WebkitMaskSize: 'contain',
+                WebkitMaskRepeat: 'no-repeat',
+                WebkitMaskPosition: 'center',
+                maskImage: `url(${logoAnkit})`,
+                maskSize: 'contain',
+                maskRepeat: 'no-repeat',
+                maskPosition: 'center',
+                filter: 'hue-rotate(var(--hue-torch, 0deg))',
+              }}
+              initial={{ opacity: 0, y: 60, scale: 0.6 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.4, ease: [0.17, 0.85, 0.45, 1.2] }}
+            />
           </motion.h1>
 
           {/* Role badges */}
@@ -336,7 +376,7 @@ export default function Banner() {
               {/* Profile image - CSS animated */}
               <img
                 src={creativeSrc}
-                alt="Ankit"
+                alt="Ankit" loading="lazy"
                 className="absolute inset-[8%] z-10 rounded-[20px] object-cover shadow-lg shadow-purple-900/40 animate-image-float"
               />
 

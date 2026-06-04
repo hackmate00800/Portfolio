@@ -8,29 +8,35 @@ const hoverSelectors = [
 ]
 
 export default function Cursor() {
-  const mouse = useMousePosition()
+  const mouseRef = useMousePosition()
   const ringRef = useRef(null)
   const ringPos = useRef({ x: -100, y: -100 })
+  const dotRef = useRef(null)
   const [hoverType, setHoverType] = useState('')
   const frameRef = useRef(null)
 
   useEffect(() => {
     const tick = () => {
-      ringPos.current.x += (mouse.x - ringPos.current.x) * 0.12
-      ringPos.current.y += (mouse.y - ringPos.current.y) * 0.12
+      const mx = mouseRef.current.x
+      const my = mouseRef.current.y
+      ringPos.current.x += (mx - ringPos.current.x) * 0.12
+      ringPos.current.y += (my - ringPos.current.y) * 0.12
       if (ringRef.current) {
         ringRef.current.style.left = ringPos.current.x + 'px'
         ringRef.current.style.top = ringPos.current.y + 'px'
+      }
+      if (dotRef.current) {
+        dotRef.current.style.left = mx + 'px'
+        dotRef.current.style.top = my + 'px'
       }
       frameRef.current = requestAnimationFrame(tick)
     }
     frameRef.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(frameRef.current)
-  }, [mouse])
+  }, [mouseRef])
 
   useEffect(() => {
     const handlers = []
-
     hoverSelectors.forEach(({ sel, type }) => {
       document.querySelectorAll(sel).forEach(el => {
         const enter = () => setHoverType(type)
@@ -40,7 +46,6 @@ export default function Cursor() {
         handlers.push({ el, enter, leave })
       })
     })
-
     return () => {
       handlers.forEach(({ el, enter, leave }) => {
         el.removeEventListener('mouseenter', enter)
@@ -64,8 +69,9 @@ export default function Cursor() {
 
   return (
     <div className="fixed top-0 left-0 pointer-events-none z-[9998] hidden md:block">
-      <div className="fixed w-[6px] h-[6px] bg-accent-creative rounded-full -translate-x-1/2 -translate-y-1/2 transition-all duration-200"
-        style={{ left: mouse.x, top: mouse.y }} />
+      <div ref={dotRef}
+        className="fixed w-[6px] h-[6px] bg-accent-creative rounded-full -translate-x-1/2 -translate-y-1/2 transition-all duration-200"
+        style={{ left: mouseRef.current.x, top: mouseRef.current.y }} />
       <div ref={ringRef}
         className={`fixed rounded-full -translate-x-1/2 -translate-y-1/2 border transition-all duration-300 ${ringSize} ${ringBorder}`}>
         {hoverType === 'split' && (

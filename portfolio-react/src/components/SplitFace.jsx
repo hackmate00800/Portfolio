@@ -13,21 +13,33 @@ const SplitFace = forwardRef(function SplitFace(_, ref) {
   const frameRef = useRef(null)
 
   useImperativeHandle(ref, () => ({
-    expandLeft: () => { targetPct.current = 100 },
-    expandRight: () => { targetPct.current = 0 },
-    resetPct: () => { if (!isDragging.current) targetPct.current = 50 },
+    expandLeft: () => { targetPct.current = 100; startLoopRef.current?.() },
+    expandRight: () => { targetPct.current = 0; startLoopRef.current?.() },
+    resetPct: () => { if (!isDragging.current) { targetPct.current = 50; startLoopRef.current?.() } },
   }))
+
+  const startLoopRef = useRef(null)
 
   useEffect(() => {
     const tick = () => {
-      currentPct.current += (targetPct.current - currentPct.current) * 0.08
+      const diff = targetPct.current - currentPct.current
+      if (Math.abs(diff) < 0.5) {
+        currentPct.current = targetPct.current
+        frameRef.current = null
+        return
+      }
+      currentPct.current += diff * 0.08
       const p = currentPct.current
       if (frontRef.current) frontRef.current.style.width = p + '%'
       if (dividerRef.current) dividerRef.current.style.left = p + '%'
       frameRef.current = requestAnimationFrame(tick)
     }
-    frameRef.current = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(frameRef.current)
+    startLoopRef.current = () => {
+      if (!frameRef.current && Math.abs(targetPct.current - currentPct.current) >= 0.5) {
+        frameRef.current = requestAnimationFrame(tick)
+      }
+    }
+    return () => { if (frameRef.current) cancelAnimationFrame(frameRef.current) }
   }, [])
 
   useEffect(() => {
@@ -39,6 +51,7 @@ const SplitFace = forwardRef(function SplitFace(_, ref) {
 
     const onStart = (e) => {
       isDragging.current = true
+      startLoopRef.current?.()
       e.preventDefault()
     }
 
@@ -72,7 +85,7 @@ const SplitFace = forwardRef(function SplitFace(_, ref) {
       {/* Back face — Logical Developer */}
       <div className="absolute inset-0 z-1 noise-overlay overflow-hidden">
         <motion.img
-          src={logicSrc} alt="Logical Developer"
+          src={logicSrc} alt="Logical Developer" loading="lazy"
           className="w-full h-full object-cover"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.6, ease: 'easeOut' }} />
@@ -82,7 +95,7 @@ const SplitFace = forwardRef(function SplitFace(_, ref) {
       {/* Front face — Creative Designer */}
       <div ref={frontRef} className="absolute inset-0 z-2 overflow-hidden noise-overlay" style={{ width: '50%' }}>
         <motion.img
-          src={creativeSrc} alt="Creative Designer"
+          src={creativeSrc} alt="Creative Designer" loading="lazy"
           className="absolute top-0 left-0 h-full object-cover"
           style={{ width: '420px', maxWidth: 'none' }}
           whileHover={{ scale: 1.05 }}

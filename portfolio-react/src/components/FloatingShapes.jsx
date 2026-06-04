@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 const shapes = [
   { w: 300, h: 300, t: '15%', l: '5%', color: 'bg-accent-creative', dur: 20, scrollFactor: 0.03 },
@@ -10,22 +10,27 @@ const shapes = [
 ]
 
 export default function FloatingShapes() {
-  const [offsets, setOffsets] = useState(shapes.map(() => ({ x: 0, y: 0 })))
+  const elsRef = useRef([])
   const scrollY = useRef(0)
+  const ticking = useRef(false)
 
   useEffect(() => {
     const handleMouse = (e) => {
-      const xF = (e.clientX / window.innerWidth - 0.5) * 2
-      const yF = (e.clientY / window.innerHeight - 0.5) * 2
-      setOffsets(shapes.map((s, i) => ({
-        x: xF * (i + 1) * 5,
-        y: yF * (i + 1) * 5 + scrollY.current * s.scrollFactor,
-      })))
+      if (!ticking.current) {
+        ticking.current = true
+        requestAnimationFrame(() => {
+          const xF = (e.clientX / window.innerWidth - 0.5) * 2
+          const yF = (e.clientY / window.innerHeight - 0.5) * 2
+          elsRef.current.forEach((el, i) => {
+            if (el) {
+              el.style.transform = `translate(${xF * (i + 1) * 5}px, ${yF * (i + 1) * 5 + scrollY.current * shapes[i].scrollFactor}px)`
+            }
+          })
+          ticking.current = false
+        })
+      }
     }
-
-    const handleScroll = () => {
-      scrollY.current = window.scrollY
-    }
+    const handleScroll = () => { scrollY.current = window.scrollY }
 
     window.addEventListener('mousemove', handleMouse, { passive: true })
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -38,16 +43,10 @@ export default function FloatingShapes() {
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       {shapes.map((s, i) => (
-        <div key={i}
+        <div key={i} ref={el => elsRef.current[i] = el}
           className={`absolute rounded-full opacity-4 ${s.color} animate-shape`}
           style={{
-            width: s.w,
-            height: s.h,
-            top: s.t,
-            bottom: s.b,
-            left: s.l,
-            right: s.r,
-            transform: `translate(${offsets[i]?.x || 0}px, ${offsets[i]?.y || 0}px)`,
+            width: s.w, height: s.h, top: s.t, bottom: s.b, left: s.l, right: s.r,
             animationDuration: `${s.dur}s`,
             animationDelay: `-${i * 3}s`,
             willChange: 'transform',
