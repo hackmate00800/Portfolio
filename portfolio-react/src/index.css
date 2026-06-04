@@ -407,6 +407,17 @@ html:not(.is-transitioning) body::after {
 .loader-completion .animate-ring-2 { animation-duration: 3s !important; }
 .loader-completion .animate-ring-3 { animation-duration: 0.8s !important; }
 
+/* CSS-only orbiting particles (no Canvas) */
+@keyframes orbit-particle {
+  from { transform: rotate(0deg) translateX(var(--r)); }
+  to { transform: rotate(360deg) translateX(var(--r)); }
+}
+.animate-orbit-particle {
+  animation: orbit-particle var(--s, 10s) linear infinite;
+  animation-delay: var(--d, 0s);
+  will-change: transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

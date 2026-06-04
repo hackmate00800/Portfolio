@@ -138,6 +138,37 @@ export default function Loader({ onComplete }) {
         </div>
       </div>
 
+      {/* CSS-only orbiting particles */}
+      <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+        {[
+          { r: 130, s: 14, c: '#a855f7', b: 'rgba(168,85,247,0.4)' },
+          { r: 110, s: 11, c: '#d946ef', b: 'rgba(217,70,239,0.4)' },
+          { r: 150, s: 17, c: '#06b6d4', b: 'rgba(6,182,212,0.3)' },
+          { r: 125, s: 9, c: '#c084fc', b: 'rgba(192,132,252,0.3)' },
+          { r: 145, s: 13, c: '#a855f7', b: 'rgba(168,85,247,0.3)' },
+          { r: 115, s: 16, c: '#d946ef', b: 'rgba(217,70,239,0.3)' },
+          { r: 135, s: 12, c: '#06b6d4', b: 'rgba(6,182,212,0.4)' },
+          { r: 105, s: 10, c: '#c084fc', b: 'rgba(192,132,252,0.4)' },
+          { r: 140, s: 15, c: '#a855f7', b: 'rgba(168,85,247,0.25)' },
+          { r: 120, s: 8, c: '#d946ef', b: 'rgba(217,70,239,0.25)' },
+          { r: 100, s: 18, c: '#06b6d4', b: 'rgba(6,182,212,0.35)' },
+          { r: 155, s: 20, c: '#c084fc', b: 'rgba(192,132,252,0.3)' },
+        ].map((p, i) => (
+          <div key={i}
+            className="absolute w-[3px] h-[3px] md:w-[4px] md:h-[4px] rounded-full animate-orbit-particle"
+            style={{
+              '--r': `${p.r}px`,
+              '--s': `${p.s}s`,
+              '--d': `${-i * 0.7}s`,
+              top: 'calc(50% - 2px)',
+              left: 'calc(50% - 2px)',
+              background: p.c,
+              boxShadow: `0 0 5px 1px ${p.b}`,
+            }}
+          />
+        ))}
+      </div>
+
       {/* Logo + text */}
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 pointer-events-none">
         <div className="relative w-32 sm:w-40 md:w-48" style={{ aspectRatio: '1536/1024' }}>
