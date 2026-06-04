@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { FiGithub, FiExternalLink, FiUser } from 'react-icons/fi'
-import { FaYoutube, FaPinterest } from 'react-icons/fa'
+import { FaYoutube, FaPinterest, FaTruck, FaIndustry } from 'react-icons/fa'
 
 const projects = [
   {
@@ -23,6 +23,22 @@ const projects = [
     tags: ['HTML', 'CSS', 'JavaScript'],
     icon: FiUser,
     gradient: 'from-[#6c5ce7] to-[#a29bfe]',
+  },
+  {
+    title: 'Mitra Packer Mover',
+    desc: 'Packers and movers service website with AI cost estimation, FAQ schema, and pan-India service coverage.',
+    tags: ['React', 'Vite', 'Tailwind CSS'],
+    icon: FaTruck,
+    gradient: 'from-[#f39c12] to-[#e67e22]',
+    label: 'Freelancing',
+  },
+  {
+    title: 'SR Industries',
+    desc: 'Industrial service provider website showcasing manufacturing capabilities and client portfolio.',
+    tags: ['React', 'Vite', 'Tailwind CSS'],
+    icon: FaIndustry,
+    gradient: 'from-[#2d3436] to-[#636e72]',
+    label: 'Freelancing',
   },
 ]
 
@@ -53,6 +69,11 @@ export default function ProjectsSection() {
                 {...fadeUp(i * 0.15)}>
                 <div className={`h-[180px] flex items-center justify-center bg-gradient-to-br ${p.gradient} relative overflow-hidden`}>
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/5 transition-colors duration-400" />
+                  {p.label && (
+                    <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-md text-[0.65rem] font-bold uppercase tracking-wider bg-white/15 text-white/90 border border-white/20 backdrop-blur-sm">
+                      {p.label}
+                    </span>
+                  )}
                   <Icon className="text-5xl text-white/60 z-1 transition-all duration-400 group-hover:opacity-100 group-hover:scale-115" />
                 </div>
                 <div className="p-5">
