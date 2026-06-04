@@ -11,7 +11,10 @@ export default function useTheme() {
   }, [theme])
 
   const toggle = useCallback(() => {
+    const html = document.documentElement
+    html.classList.add('is-transitioning')
     setTheme(prev => (prev === 'dark' ? 'light' : 'dark'))
+    setTimeout(() => html.classList.remove('is-transitioning'), 450)
   }, [])
 
   return { theme, toggle, mounted }
