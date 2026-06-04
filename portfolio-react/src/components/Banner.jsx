@@ -91,8 +91,11 @@ export default function Banner() {
     }
     const handleLeave = () => {
       isHoveringRef.current = false
-      torchHueRef.current = 270
-      logo.style.setProperty('--hue-torch', '0deg')
+      torchHueRef.current = 0
+      logo.style.setProperty('--h1', '270')
+      logo.style.setProperty('--h2', '300')
+      logo.style.setProperty('--h3', '330')
+      logo.style.setProperty('--h4', '190')
     }
 
     logo.addEventListener('mousemove', handleLogoMove, { passive: true })
@@ -101,9 +104,13 @@ export default function Banner() {
 
     torchIntervalRef.current = setInterval(() => {
       if (isHoveringRef.current) {
-        torchHueRef.current = (torchHueRef.current + 2) % 360
+        const base = (parseInt(torchHueRef.current) + 2) % 360
+        torchHueRef.current = base
         if (logoRef.current) {
-          logoRef.current.style.setProperty('--hue-torch', `${torchHueRef.current}deg`)
+          logoRef.current.style.setProperty('--h1', (270 + base) % 360)
+          logoRef.current.style.setProperty('--h2', (300 + base) % 360)
+          logoRef.current.style.setProperty('--h3', (330 + base) % 360)
+          logoRef.current.style.setProperty('--h4', (190 + base) % 360)
         }
       }
     }, 50)
@@ -270,7 +277,6 @@ export default function Banner() {
                 maskSize: 'contain',
                 maskRepeat: 'no-repeat',
                 maskPosition: 'center',
-                filter: 'hue-rotate(var(--hue-torch, 0deg))',
               }}
               initial={{ opacity: 0, y: 60, scale: 0.6 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}

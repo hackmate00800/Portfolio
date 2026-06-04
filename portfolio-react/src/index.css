@@ -242,23 +242,21 @@
 .logo-gradient {
   background: radial-gradient(
     circle at var(--tx, 50%) var(--ty, 50%),
-    hsl(270, 80%, 60%) 0%,
-    hsl(300, 70%, 55%) 30%,
-    hsl(330, 65%, 50%) 60%,
-    hsl(190, 80%, 55%) 100%
+    hsl(var(--h1, 270), 80%, 60%) 0%,
+    hsl(var(--h2, 300), 70%, 55%) 30%,
+    hsl(var(--h3, 330), 65%, 50%) 60%,
+    hsl(var(--h4, 190), 80%, 55%) 100%
   );
   cursor: pointer;
-  -webkit-box-reflect: below -4px linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.08) 100%);
 }
 [data-theme="light"] .logo-gradient {
   background: radial-gradient(
     circle at var(--tx, 50%) var(--ty, 50%),
-    hsl(270, 65%, 42%) 0%,
-    hsl(300, 55%, 38%) 30%,
-    hsl(330, 50%, 35%) 60%,
-    hsl(190, 65%, 38%) 100%
+    hsl(var(--h1, 270), 65%, 42%) 0%,
+    hsl(var(--h2, 300), 55%, 38%) 30%,
+    hsl(var(--h3, 330), 50%, 35%) 60%,
+    hsl(var(--h4, 190), 65%, 38%) 100%
   );
-  -webkit-box-reflect: below -4px linear-gradient(to bottom, transparent 30%, rgba(255,255,255,0.12) 100%);
 }
 
 /* Glassy liquid mirror text effect */
