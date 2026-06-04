@@ -110,7 +110,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div className={`fixed top-16 left-0 right-0 z-[999] bg-nav-bg/85 backdrop-blur-xl overflow-hidden transition-all duration-400 ${
-        hidden ? 'invisible' : ''
+        hidden ? 'hidden' : ''
       } ${
         menuOpen ? 'max-h-[500px] px-6 py-4 border-b border-border-glass' : 'max-h-0 px-6 py-0'
       }`}>

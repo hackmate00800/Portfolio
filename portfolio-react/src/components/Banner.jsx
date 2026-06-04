@@ -140,7 +140,7 @@ export default function Banner() {
       <div className="animate-ring-reverse absolute w-[350px] h-[350px] rounded-full border border-fuchsia-500/5 pointer-events-none" style={{ top: '25%', left: '58%', '--dur': '30s' }} />
 
       {/* Main content - two column layout */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 flex flex-col-reverse md:flex-row items-center gap-6 md:gap-20 py-10 md:py-0">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 flex flex-col-reverse md:flex-row items-center gap-6 md:gap-20 pt-16 pb-10 md:py-0">
 
         {/* Left column - Introduction text */}
         <motion.div
