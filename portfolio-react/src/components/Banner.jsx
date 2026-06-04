@@ -2,39 +2,60 @@ import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import creativeSrc from '../assets/creative.png'
 
-const bgParticles = Array.from({ length: 40 }, () => ({
+const floatingBubbles = Array.from({ length: 18 }, (_, i) => ({
+  id: i,
+  size: 20 + Math.random() * 60,
   x: Math.random() * 100,
   y: Math.random() * 100,
-  size: Math.random() * 3 + 1.5,
-  delay: Math.random() * 10,
-  duration: Math.random() * 8 + 6,
+  dur: 8 + Math.random() * 14,
+  delay: Math.random() * -10,
+  xDrift: (Math.random() - 0.5) * 40,
+  yDrift: (Math.random() - 0.5) * 40,
 }))
 
-const techDots = Array.from({ length: 12 }, (_, i) => ({
+const particles = Array.from({ length: 60 }, (_, i) => ({
   id: i,
-  left: `${10 + (i * 7.5) % 85}%`,
-  top: `${8 + (i * 9) % 84}%`,
-  delay: i * 0.5,
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: 1.5 + Math.random() * 3,
+  delay: Math.random() * 12,
+  dur: 4 + Math.random() * 8,
+  yOff: -(30 + Math.random() * 20),
 }))
 
-const orbitBubbles = [
-  { size: 'w-12 h-12', top: '-8%', right: '-4%', xOff: 10, yOff: -18, delay: 0.3 },
-  { size: 'w-9 h-9', bottom: '0%', left: '-5%', xOff: -10, yOff: 14, delay: 1 },
-  { size: 'w-7 h-7', top: '4%', left: '-7%', xOff: -6, yOff: -12, delay: 1.8 },
-  { size: 'w-8 h-8', bottom: '4%', right: '-5%', xOff: 8, yOff: -10, delay: 2.4 },
+const waveLines = [
+  { d: 'M0,50 Q50,0 100,50 T200,50 T300,50 T400,50', top: '15%', delay: 0, opacity: 0.06 },
+  { d: 'M0,30 Q40,60 80,30 T160,30 T240,30 T320,30', top: '30%', delay: 2, opacity: 0.04 },
+  { d: 'M0,70 Q60,20 120,70 T240,70 T360,70 T480,70', top: '55%', delay: 4, opacity: 0.05 },
+  { d: 'M0,40 Q30,80 60,40 T120,40 T180,40 T240,40', top: '75%', delay: 1, opacity: 0.03 },
+]
+
+const orbitDroplets = [
+  { size: 'w-11 h-11', top: '-3%', right: '2%', xOff: 12, yOff: -16, delay: 0.2 },
+  { size: 'w-8 h-8', bottom: '2%', left: '-2%', xOff: -10, yOff: 12, delay: 1.2 },
+  { size: 'w-6 h-6', top: '6%', left: '-5%', xOff: -6, yOff: -10, delay: 2.0 },
+  { size: 'w-9 h-9', bottom: '5%', right: '-3%', xOff: 8, yOff: -8, delay: 2.8 },
+  { size: 'w-5 h-5', top: '30%', right: '-5%', xOff: 14, yOff: 6, delay: 1.5 },
+  { size: 'w-7 h-7', bottom: '35%', left: '-6%', xOff: -12, yOff: -14, delay: 3.2 },
 ]
 
 export default function Banner() {
   const blobRef = useRef(null)
-  const bubbleRef = useRef(null)
+  const cardRef = useRef(null)
+  const mouseRef = useRef({ x: 0.5, y: 0.5 })
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 30
-      const y = (e.clientY / window.innerHeight - 0.5) * 30
-      if (blobRef.current) blobRef.current.style.transform = `translate(${x}px, ${y}px)`
-      if (bubbleRef.current) {
-        bubbleRef.current.style.transform = `translate(${x * 0.35}px, ${y * 0.35}px)`
+      const x = (e.clientX / window.innerWidth - 0.5) * 2
+      const y = (e.clientY / window.innerHeight - 0.5) * 2
+      mouseRef.current = { x, y }
+      if (blobRef.current) {
+        blobRef.current.style.transform = `translate(${x * 20}px, ${y * 20}px)`
+      }
+      if (cardRef.current) {
+        const rx = y * 8
+        const ry = x * -8
+        cardRef.current.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg)`
       }
     }
     window.addEventListener('mousemove', handleMouseMove)
@@ -42,165 +63,206 @@ export default function Banner() {
   }, [])
 
   return (
-    <section className="relative w-full h-dvh overflow-hidden bg-gradient-to-br from-[#120028] via-[#1f0542] to-[#0a0016] flex items-center">
-      {/* Central light ray */}
-      <div className="absolute top-[-15%] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-gradient-to-b from-purple-500/8 to-transparent rounded-full blur-[120px] animate-pulse-slow pointer-events-none" />
-
-      {/* Depth background blobs */}
-      <div ref={blobRef} className="absolute inset-0 transition-transform duration-300 ease-out pointer-events-none">
-        <div className="absolute w-[900px] h-[900px] rounded-full bg-[#7b2dbf]/15 blur-[160px] -top-48 -left-48 animate-pulse-slow" />
-        <div className="absolute w-[650px] h-[650px] rounded-full bg-[#5b1aa8]/20 blur-[130px] bottom-1/3 -right-32 animate-pulse-slow" style={{ animationDelay: '5s' }} />
-        <div className="absolute w-[550px] h-[550px] rounded-full bg-[#9b4de0]/12 blur-[110px] top-1/3 left-1/4 animate-pulse-slow" style={{ animationDelay: '9s' }} />
-        <div className="absolute w-[400px] h-[400px] rounded-full bg-[#3d0b78]/30 blur-[90px] -bottom-24 left-[20%] animate-pulse-slow" style={{ animationDelay: '3s' }} />
+    <section className="relative w-full h-dvh overflow-hidden bg-[#080012] flex items-center">
+      {/* Deep background layers */}
+      <div ref={blobRef} className="absolute inset-0 transition-transform duration-200 ease-out pointer-events-none">
+        <div className="absolute w-[1000px] h-[1000px] rounded-full bg-[#6d28d9]/10 blur-[180px] -top-64 -left-48 animate-pulse-slow" />
+        <div className="absolute w-[800px] h-[800px] rounded-full bg-[#4c1d95]/15 blur-[150px] -bottom-40 -right-32 animate-pulse-slow" style={{ animationDelay: '6s' }} />
+        <div className="absolute w-[600px] h-[600px] rounded-full bg-[#9333ea]/10 blur-[130px] top-1/3 left-1/3 animate-pulse-slow" style={{ animationDelay: '10s' }} />
+        <div className="absolute w-[500px] h-[500px] rounded-full bg-[#a21caf]/8 blur-[110px] top-1/4 right-1/4 animate-pulse-slow" style={{ animationDelay: '4s' }} />
+        <div className="absolute w-[700px] h-[700px] rounded-full bg-[#7c3aed]/8 blur-[140px] bottom-1/4 left-1/5 animate-pulse-slow" style={{ animationDelay: '8s' }} />
       </div>
 
-      {/* Glass gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0016]/70 via-transparent to-[#120028]/30 pointer-events-none" />
+      {/* Gradient overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0016]/40 via-transparent to-[#080012]/80 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#080012]/30 via-transparent to-[#080012]/30 pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#080012]/60 to-transparent pointer-events-none z-10" />
 
-      {/* Background particles */}
+      {/* Floating transparent bubbles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {bgParticles.map((p, i) => (
+        {floatingBubbles.map((b) => (
           <motion.div
-            key={i}
-            className="absolute rounded-full bg-white/25"
-            style={{ left: `${p.x}%`, top: `${p.y}%`, width: p.size, height: p.size }}
-            animate={{ y: [0, -35, 0], opacity: [0.15, 0.6, 0.15] }}
-            transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }}
+            key={b.id}
+            className="absolute rounded-full bg-gradient-to-br from-white/[0.03] via-fuchsia-500/[0.02] to-purple-600/[0.03] backdrop-blur-[2px] border border-white/[0.04]"
+            style={{
+              width: b.size,
+              height: b.size,
+              left: `${b.x}%`,
+              top: `${b.y}%`,
+            }}
+            animate={{
+              y: [0, b.yDrift, 0],
+              x: [0, b.xDrift, 0],
+              scale: [1, 1.08, 0.95, 1],
+              opacity: [0.15, 0.4, 0.2, 0.15],
+            }}
+            transition={{
+              duration: b.dur,
+              repeat: Infinity,
+              delay: b.delay,
+              ease: 'easeInOut',
+            }}
           />
         ))}
       </div>
 
-      {/* Tech dots */}
+      {/* Floating particles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {techDots.map((d) => (
+        {particles.map((p) => (
           <motion.div
-            key={d.id}
-            className="absolute w-1 h-1 bg-purple-400/30 rounded-full"
-            style={{ left: d.left, top: d.top }}
-            animate={{ opacity: [0, 1, 0], scale: [0, 1.5, 0] }}
-            transition={{ duration: 3, repeat: Infinity, delay: d.delay, ease: 'easeInOut' }}
+            key={p.id}
+            className="absolute rounded-full bg-white"
+            style={{
+              width: p.size,
+              height: p.size,
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+            }}
+            animate={{
+              y: [0, p.yOff, 0],
+              opacity: [0.05, 0.35, 0.05],
+              scale: [0.5, 1.2, 0.5],
+            }}
+            transition={{
+              duration: p.dur,
+              repeat: Infinity,
+              delay: p.delay,
+              ease: 'easeInOut',
+            }}
           />
         ))}
       </div>
 
-      {/* Abstract thin lines */}
+      {/* Abstract 3D wave curves */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div className="absolute w-[300px] h-px bg-gradient-to-r from-transparent via-purple-400/15 to-transparent top-[20%] left-[10%] rotate-[25deg]" animate={{ opacity: [0.1, 0.4, 0.1] }} transition={{ duration: 6, repeat: Infinity }} />
-        <motion.div className="absolute w-[200px] h-px bg-gradient-to-r from-transparent via-fuchsia-400/10 to-transparent bottom-[30%] right-[15%] rotate-[-15deg]" animate={{ opacity: [0.1, 0.3, 0.1] }} transition={{ duration: 7, repeat: Infinity, delay: 2 }} />
-        <motion.div className="absolute w-[250px] h-px bg-gradient-to-r from-transparent via-purple-400/12 to-transparent top-[60%] left-[5%] rotate-[40deg]" animate={{ opacity: [0.05, 0.35, 0.05] }} transition={{ duration: 8, repeat: Infinity, delay: 4 }} />
+        <svg className="absolute w-full h-full" viewBox="0 0 400 100" preserveAspectRatio="none">
+          {waveLines.map((w, i) => (
+            <motion.path
+              key={i}
+              d={w.d}
+              fill="none"
+              stroke="url(#waveGrad)"
+              strokeWidth="0.5"
+              vectorEffect="non-scaling-stroke"
+              style={{ position: 'absolute', top: w.top, left: 0, right: 0 }}
+              animate={{ opacity: [w.opacity, w.opacity * 2.5, w.opacity] }}
+              transition={{ duration: 6, repeat: Infinity, delay: w.delay, ease: 'easeInOut' }}
+            />
+          ))}
+          <defs>
+            <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="transparent" />
+              <stop offset="30%" stopColor="#a855f7" />
+              <stop offset="50%" stopColor="#d946ef" />
+              <stop offset="70%" stopColor="#a855f7" />
+              <stop offset="100%" stopColor="transparent" />
+            </linearGradient>
+          </defs>
+        </svg>
       </div>
 
-      {/* Code symbols */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {['{', '}', '/>', '=>', '[]', '/*', 'const', 'fn', '</', '()', '...', '#', '&&', '||'].map((sym, i) => (
-          <motion.span
-            key={sym}
-            className="absolute text-white/[0.06] text-sm md:text-base font-mono"
-            style={{ left: `${3 + (i * 7) % 92}%`, top: `${12 + (i * 11) % 76}%` }}
-            animate={{ y: [0, -15 - (i % 3) * 8, 0], opacity: [0.04, 0.15, 0.04] }}
-            transition={{ duration: 9 + (i % 5), repeat: Infinity, delay: i * 0.6, ease: 'easeInOut' }}
-          >
-            {sym}
-          </motion.span>
-        ))}
-      </div>
+      {/* Neon glow ring accents */}
+      <motion.div
+        className="absolute w-[500px] h-[500px] rounded-full border border-purple-500/5 pointer-events-none"
+        style={{ top: '20%', left: '55%' }}
+        animate={{ rotate: [0, 360], scale: [1, 1.05, 1] }}
+        transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
+      />
+      <motion.div
+        className="absolute w-[350px] h-[350px] rounded-full border border-fuchsia-500/5 pointer-events-none"
+        style={{ top: '25%', left: '58%' }}
+        animate={{ rotate: [360, 0], scale: [1.05, 0.95, 1.05] }}
+        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+      />
 
       {/* Main content */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-8 md:gap-16 py-10 md:py-0">
-        {/* Left - Profile bubble composition */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 flex flex-col md:flex-row items-center gap-6 md:gap-20 py-10 md:py-0">
+        {/* Left - Glassmorphism card with image */}
         <motion.div
-          className="flex-shrink-0 w-[45%] max-w-[300px] md:max-w-[360px] flex justify-center"
-          initial={{ opacity: 0, x: -80 }}
-          animate={{ opacity: 1, x: 0 }}
+          className="flex-shrink-0 w-[45%] max-w-[320px] md:max-w-[380px] lg:max-w-[420px] flex justify-center"
+          initial={{ opacity: 0, x: -80, scale: 0.95 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ duration: 1.2, ease: 'easeOut' }}
         >
-          <div ref={bubbleRef} className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 flex items-center justify-center transition-transform duration-200 ease-out">
-            {/* Outer ambient glow */}
+          <div ref={cardRef} className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[24rem] lg:h-[24rem] flex items-center justify-center transition-all duration-200 ease-out" style={{ transformStyle: 'preserve-3d' }}>
+            {/* Outer radial glow */}
             <motion.div
-              className="absolute w-[19rem] h-[19rem] md:w-[24rem] md:h-[24rem] lg:w-[28rem] lg:h-[28rem] rounded-full bg-purple-600/15 blur-[80px]"
-              animate={{ scale: [1, 1.12, 1], opacity: [0.2, 0.5, 0.2] }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute w-[20rem] h-[20rem] md:w-[25rem] md:h-[25rem] lg:w-[30rem] lg:h-[30rem] rounded-full bg-gradient-to-br from-purple-600/20 via-fuchsia-600/10 to-transparent blur-[100px]"
+              animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.5, 0.2] }}
+              transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
             />
 
-            {/* Main glass sphere */}
+            {/* Orbital ring behind */}
             <motion.div
-              className="absolute w-[16rem] h-[16rem] md:w-[20rem] md:h-[20rem] lg:w-[24rem] lg:h-[24rem] rounded-full bg-gradient-to-br from-white/[0.06] via-purple-500/[0.03] to-fuchsia-500/[0.05] backdrop-blur-2xl border border-white/[0.08] shadow-2xl shadow-purple-900/40"
-              animate={{ y: [0, -12, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute w-[18rem] h-[18rem] md:w-[22rem] md:h-[22rem] lg:w-[27rem] lg:h-[27rem] rounded-full border border-purple-500/10"
+              animate={{ rotate: [0, 360], scale: [1, 1.03, 1] }}
+              transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
             />
 
-            {/* Glass highlight crescents */}
-            <div className="absolute w-[10rem] h-[5rem] md:w-[13rem] md:h-[6.5rem] lg:w-[15rem] lg:h-[7.5rem] rounded-full bg-gradient-to-br from-white/[0.08] via-white/[0.02] to-transparent blur-lg -top-1 -left-2 rotate-[-18deg]" />
-            <div className="absolute w-[7rem] h-[4rem] md:w-[9rem] md:h-[5rem] lg:w-[11rem] lg:h-[6rem] rounded-full bg-gradient-to-tl from-white/[0.03] to-transparent blur-md bottom-2 -right-3 rotate-[22deg]" />
+            {/* Glassmorphism card */}
+            <div className="absolute w-[16rem] h-[16rem] md:w-[20rem] md:h-[20rem] lg:w-[24rem] lg:h-[24rem] rounded-[32px] bg-gradient-to-br from-white/[0.07] via-purple-500/[0.04] to-fuchsia-500/[0.03] backdrop-blur-xl border border-white/[0.12] shadow-[0_0_60px_rgba(168,85,247,0.15),0_0_120px_rgba(168,85,247,0.05)] overflow-hidden">
+              {/* Inner glow edges */}
+              <div className="absolute inset-0 rounded-[32px] pointer-events-none" style={{ boxShadow: 'inset 0 0 40px rgba(168,85,247,0.06)' }} />
 
-            {/* Light streak */}
-            <motion.div
-              className="absolute w-[8rem] h-[1.5rem] md:w-[10rem] md:h-[1.8rem] lg:w-[12rem] lg:h-[2rem] rounded-full bg-gradient-to-r from-transparent via-white/[0.04] to-transparent blur-sm top-6 -right-1 rotate-[38deg]"
-              animate={{ opacity: [0.1, 0.5, 0.1] }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-            />
+              {/* Glass highlight - top left crescent */}
+              <div className="absolute w-[70%] h-[40%] rounded-full bg-gradient-to-br from-white/[0.1] via-white/[0.03] to-transparent blur-xl -top-2 -left-4 rotate-[-18deg]" />
 
-            {/* Orbiting bubbles */}
-            {orbitBubbles.map((b, i) => (
+              {/* Glass highlight - bottom right crescent */}
+              <div className="absolute w-[50%] h-[30%] rounded-full bg-gradient-to-tl from-white/[0.04] via-fuchsia-500/[0.02] to-transparent blur-lg bottom-2 -right-4 rotate-[22deg]" />
+
+              {/* Light streak across top */}
+              <motion.div
+                className="absolute w-[60%] h-[8%] rounded-full bg-gradient-to-r from-transparent via-white/[0.05] to-transparent blur-sm top-[15%] -right-[10%] rotate-[35deg]"
+                animate={{ opacity: [0.1, 0.4, 0.1] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              />
+
+              {/* Inner border glow */}
+              <motion.div
+                className="absolute inset-[1px] rounded-[31px] border border-white/[0.06] pointer-events-none"
+                animate={{ opacity: [0.3, 0.7, 0.3] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+              />
+
+              {/* Profile image */}
+              <motion.img
+                src={creativeSrc}
+                alt="Ankit"
+                className="absolute inset-[8%] z-10 rounded-[20px] object-cover shadow-lg shadow-purple-900/40"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+              />
+
+              {/* Neon accent ring behind image */}
+              <motion.div
+                className="absolute inset-[6%] rounded-[24px] blur-md bg-gradient-to-br from-purple-500/15 via-fuchsia-500/10 to-purple-500/15"
+                animate={{ opacity: [0.15, 0.45, 0.15] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              />
+            </div>
+
+            {/* Orbiting droplets */}
+            {orbitDroplets.map((d, i) => (
               <motion.div
                 key={i}
-                className={`absolute ${b.size} rounded-full bg-gradient-to-br from-white/[0.06] to-purple-500/[0.05] backdrop-blur-md border border-white/[0.08] shadow-lg`}
-                style={{ top: b.top, bottom: b.bottom, left: b.left, right: b.right }}
-                animate={{ y: [0, b.yOff, 0], x: [0, b.xOff, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: b.delay }}
+                className={`absolute ${d.size} rounded-full bg-gradient-to-br from-white/[0.06] via-purple-500/[0.04] to-fuchsia-500/[0.03] backdrop-blur-md border border-white/[0.08] shadow-lg`}
+                style={{ top: d.top, bottom: d.bottom, left: d.left, right: d.right }}
+                animate={{ y: [0, d.yOff, 0], x: [0, d.xOff, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: d.delay }}
               />
             ))}
-
-            {/* Inner glass frame */}
-            <motion.div
-              className="absolute inset-[1.4rem] md:inset-[1.8rem] lg:inset-[2rem] rounded-full border-[2.5px] border-white/[0.18] shadow-lg shadow-purple-900/30 bg-white/[0.015]"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.1 }}
-            />
-
-            {/* Neon glow ring behind image */}
-            <motion.div
-              className="absolute inset-[1.8rem] md:inset-[2.2rem] lg:inset-[2.5rem] rounded-full blur-md bg-purple-500/10"
-              animate={{ opacity: [0.2, 0.6, 0.2] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            />
-
-            {/* Profile image */}
-            <motion.img
-              src={creativeSrc}
-              alt="Ankit"
-              className="absolute inset-[1.8rem] md:inset-[2.2rem] lg:inset-[2.5rem] z-10 rounded-full object-cover shadow-lg shadow-purple-900/50"
-              animate={{ y: [0, -14, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
-            />
-
-            {/* Foreground overlapping droplet (bottom-right) */}
-            <motion.div
-              className="absolute w-9 h-9 md:w-11 md:h-11 lg:w-12 lg:h-12 rounded-full bg-gradient-to-tl from-white/[0.07] to-purple-500/[0.04] backdrop-blur-md border border-white/[0.09] z-20"
-              animate={{ y: [0, -7, 0], x: [0, 5, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.7 }}
-              style={{ bottom: '-1%', right: '-2%' }}
-            />
-
-            {/* Foreground overlapping droplet (top-left) */}
-            <motion.div
-              className="absolute w-6 h-6 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-gradient-to-br from-white/[0.06] to-fuchsia-500/[0.03] backdrop-blur-sm border border-white/[0.07] z-20"
-              animate={{ y: [0, 8, 0], x: [0, -4, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 1.6 }}
-              style={{ top: '1%', left: '-3%' }}
-            />
           </div>
         </motion.div>
 
-        {/* Right - Text */}
+        {/* Right - Typography area */}
         <motion.div
-          className="flex-1 text-center md:text-left"
+          className="flex-1 text-center md:text-left max-lg:mt-4"
           initial={{ opacity: 0, x: 80 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
         >
           <motion.p
-            className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl text-white/90 leading-tight"
+            className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white/90 leading-tight drop-shadow-[0_0_20px_rgba(168,85,247,0.15)]"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.6 }}
@@ -210,7 +272,7 @@ export default function Banner() {
 
           <motion.h1
             className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-white tracking-wide mt-1 leading-none"
-            style={{ textShadow: '0 0 40px rgba(168,85,247,0.25), 2px 2px 0px rgba(0,0,0,0.3), 4px 4px 0px rgba(120,80,200,0.3)' }}
+            style={{ textShadow: '0 0 60px rgba(168,85,247,0.2), 0 0 120px rgba(168,85,247,0.1), 2px 2px 0px rgba(0,0,0,0.3), 4px 4px 0px rgba(120,80,200,0.2)' }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.8 }}
@@ -227,18 +289,35 @@ export default function Banner() {
             Developer <span className="text-purple-300/50 mx-2">•</span> Designer <span className="text-purple-300/50 mx-2">•</span> Problem Solver
           </motion.p>
 
-          {/* Neon accent line */}
+          {/* Neon gradient line */}
           <motion.div
-            className="w-20 h-[3px] bg-gradient-to-r from-purple-400 via-fuchsia-500 to-purple-400 rounded-full mt-6 md:mt-8 mx-auto md:mx-0 shadow-[0_0_12px_rgba(168,85,247,0.4)]"
+            className="w-24 h-[3px] bg-gradient-to-r from-purple-400 via-fuchsia-500 to-purple-400 rounded-full mt-6 md:mt-8 mx-auto md:mx-0 shadow-[0_0_15px_rgba(168,85,247,0.4),0_0_30px_rgba(168,85,247,0.2)]"
             initial={{ width: 0, opacity: 0 }}
-            animate={{ width: 80, opacity: 1 }}
+            animate={{ width: 96, opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.5 }}
           />
+
+          {/* Subtle decorative dots after text */}
+          <motion.div
+            className="flex gap-2 mt-6 md:mt-8 justify-center md:justify-start"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.8 }}
+          >
+            {[0, 1, 2].map((i) => (
+              <motion.div
+                key={i}
+                className="w-1.5 h-1.5 rounded-full bg-purple-400/40"
+                animate={{ scale: [1, 1.6, 1], opacity: [0.3, 0.7, 0.3] }}
+                transition={{ duration: 2, repeat: Infinity, delay: i * 0.4 }}
+              />
+            ))}
+          </motion.div>
         </motion.div>
       </div>
 
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#0a0a0f] to-transparent pointer-events-none" />
+      {/* Bottom fade to next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#0a0a0f] to-transparent pointer-events-none z-10" />
     </section>
   )
 }
