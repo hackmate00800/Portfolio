@@ -159,8 +159,8 @@ export default function Banner() {
           </motion.p>
 
           <motion.h1
-            className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-text-primary tracking-wide mt-1 leading-none"
-            style={{ textShadow: '0 0 60px rgba(168,85,247,0.2), 0 0 120px rgba(168,85,247,0.1), 2px 2px 0px rgba(0,0,0,0.3), 4px 4px 0px rgba(120,80,200,0.2)' }}
+            className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-liquid-glass tracking-wide mt-1 leading-none"
+            style={{ textShadow: '0 0 60px rgba(168,85,247,0.3), 0 0 120px rgba(168,85,247,0.15), 2px 2px 0px rgba(0,0,0,0.3), 4px 4px 0px rgba(120,80,200,0.2)' }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
@@ -175,10 +175,10 @@ export default function Banner() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.8 }}
           >
-            <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide glass bg-bg-glass border-border-glass bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
+            <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide bg-bg-glass/40 border-border-glass bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
               Full Stack Developer
             </span>
-            <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide glass bg-bg-glass border-border-glass bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide bg-bg-glass/40 border-border-glass bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
               Cybersecurity Enthusiast
             </span>
           </motion.div>

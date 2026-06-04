@@ -220,3 +220,49 @@
   transform: translateY(var(--parallax-y, 0px));
   will-change: transform;
 }
+
+/* Glassy liquid mirror text effect */
+@keyframes liquid-shine {
+  0%, 100% { background-position: 0% 50%; }
+  25% { background-position: 50% 0%; }
+  50% { background-position: 100% 50%; }
+  75% { background-position: 50% 100%; }
+}
+.text-liquid-glass {
+  background: linear-gradient(
+    135deg,
+    #7c3aed 0%,
+    #a855f7 15%,
+    #e9d5ff 30%,
+    #ffffff 42%,
+    #c084fc 50%,
+    #d946ef 58%,
+    #a855f7 70%,
+    #e9d5ff 82%,
+    #7c3aed 100%
+  );
+  background-size: 300% 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: liquid-shine 6s ease-in-out infinite;
+  -webkit-box-reflect: below -8px linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.15) 100%);
+}
+
+/* Glassy liquid mirror effect - light theme adjustments */
+[data-theme="light"] .text-liquid-glass {
+  background: linear-gradient(
+    135deg,
+    #9333ea 0%,
+    #a855f7 15%,
+    #e9d5ff 30%,
+    #ffffff 42%,
+    #c084fc 50%,
+    #d946ef 58%,
+    #a855f7 70%,
+    #e9d5ff 82%,
+    #9333ea 100%
+  );
+  background-size: 300% 300%;
+  -webkit-box-reflect: below -8px linear-gradient(to bottom, transparent 50%, rgba(255,255,255,0.2) 100%);
+}
