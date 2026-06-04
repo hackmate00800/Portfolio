@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import creativeSrc from '../assets/bannerimg.png'
+import logoAnkit from '../assets/im_ankit_logo.svg'
 
 const floatingBubbles = Array.from({ length: 14 }, () => ({
   size: 20 + Math.random() * 60,
@@ -34,6 +35,7 @@ export default function Banner() {
   const blobRef = useRef(null)
   const cardRef = useRef(null)
   const textGradientRef = useRef(null)
+  const logoRef = useRef(null)
   const ticking = useRef(false)
 
   useEffect(() => {
@@ -59,6 +61,7 @@ export default function Banner() {
 
   useEffect(() => {
     const el = textGradientRef.current
+    const logo = logoRef.current
     if (!el) return
     const update = () => {
       const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1)
@@ -66,6 +69,7 @@ export default function Banner() {
       el.style.setProperty('--text-h1', (270 + p * 160) % 360)
       el.style.setProperty('--text-h2', (320 + p * 100) % 360)
       el.style.setProperty('--text-h3', (300 + p * 130) % 360)
+      if (logo) logo.style.filter = `hue-rotate(${p * 160}deg)`
     }
     window.addEventListener('scroll', update, { passive: true })
     update()
@@ -207,22 +211,20 @@ export default function Banner() {
           </motion.div>
 
           <motion.h1
-            className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-scroll-gradient tracking-wide mt-1 leading-none overflow-visible"
+            className="relative mt-1"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.01 }}
           >
-            {"I'M ANKIT".split('').map((char, i) => (
-              <motion.span
-                key={i}
-                className="inline-block"
-                initial={{ opacity: 0, y: 60, scale: 0.3 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.45, delay: 0.5 + i * 0.06, ease: [0.17, 0.85, 0.45, 1.2] }}
-              >
-                {char === ' ' ? '\u00A0' : char}
-              </motion.span>
-            ))}
+            <motion.img
+              ref={logoRef}
+              src={logoAnkit}
+              alt="I'M ANKIT"
+              className="h-16 md:h-20 lg:h-24 xl:h-28 w-auto object-contain"
+              initial={{ opacity: 0, y: 40, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.4, ease: [0.17, 0.85, 0.45, 1.2] }}
+            />
           </motion.h1>
 
           {/* Role badges */}
