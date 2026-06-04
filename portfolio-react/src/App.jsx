@@ -18,6 +18,7 @@ import InstagramShowcase from './components/InstagramShowcase'
 import ContactSection from './sections/ContactSection'
 import SectionConnector from './components/SectionConnector'
 import Atmosphere from './components/Atmosphere'
+import ScrollGradient from './components/ScrollGradient'
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
       <Navbar />
       <FloatingShapes />
       <Atmosphere />
+      <ScrollGradient />
       <SocialDock />
 
       <main>
