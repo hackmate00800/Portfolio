@@ -76,7 +76,7 @@ const SplitFace = forwardRef(function SplitFace(_, ref) {
           className="w-full h-full object-cover"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.6, ease: 'easeOut' }} />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/30 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-bg-primary/60 pointer-events-none" />
       </div>
 
       {/* Front face — Creative Designer */}
@@ -87,15 +87,15 @@ const SplitFace = forwardRef(function SplitFace(_, ref) {
           style={{ width: '420px', maxWidth: 'none' }}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.6, ease: 'easeOut' }} />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/30 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-bg-primary/60 pointer-events-none" />
       </div>
 
       {/* Draggable Divider */}
       <div ref={dividerRef} id="splitDivider"
         className="absolute inset-y-0 z-5 touch-none"
         style={{ left: '50%', width: '3px', transform: 'translateX(-50%)', cursor: 'ew-resize' }}>
-        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[2px] bg-white/30 transition-all duration-300 group-hover:w-[3px] group-hover:bg-white/80" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/12 backdrop-blur-sm border-2 border-white/30 flex items-center justify-center text-white/80 text-xs transition-all duration-300 shadow-lg group-hover:w-11 group-hover:h-11 group-hover:border-white group-hover:bg-white/20 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]">
+        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[2px] bg-border-glass transition-all duration-300 group-hover:w-[3px] group-hover:bg-text-primary/60" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full glass backdrop-blur-sm border-2 border-border-glass flex items-center justify-center text-text-secondary text-xs transition-all duration-300 shadow-lg group-hover:w-11 group-hover:h-11 group-hover:border-text-primary/60 group-hover:bg-bg-glass group-hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]">
           <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" className="w-3 h-3">
             <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h.01M12 7h.01M16 7h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -104,10 +104,10 @@ const SplitFace = forwardRef(function SplitFace(_, ref) {
       </div>
 
       {/* Center text */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-6 flex items-center gap-2.5 bg-black/50 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/10 whitespace-nowrap pointer-events-none">
-        <span className="text-[0.7rem] font-semibold tracking-[1px] uppercase text-white/90">Creative Mind</span>
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-6 flex items-center gap-2.5 glass backdrop-blur-md px-5 py-2.5 rounded-full border-border-glass whitespace-nowrap pointer-events-none">
+        <span className="text-[0.7rem] font-semibold tracking-[1px] uppercase text-text-primary/90">Creative Mind</span>
         <span className="text-sm text-accent-creative font-bold">+</span>
-        <span className="text-[0.7rem] font-semibold tracking-[1px] uppercase text-white/90">Logical Thinking</span>
+        <span className="text-[0.7rem] font-semibold tracking-[1px] uppercase text-text-primary/90">Logical Thinking</span>
       </div>
     </div>
   )

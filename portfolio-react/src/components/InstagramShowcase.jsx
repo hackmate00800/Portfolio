@@ -55,21 +55,21 @@ export default function InstagramShowcase() {
               whileHover={{ scale: 1.03, y: -4 }}
               transition={{ type: 'spring', stiffness: 300 }}>
               <div className={`absolute inset-0 bg-gradient-to-br ${post.gradient} opacity-60 group-hover:opacity-80 transition-opacity duration-400`} />
-              <div className="absolute inset-0 bg-black/20" />
+              <div className="absolute inset-0 bg-bg-primary/40" />
 
               {/* Hover overlay */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-400 bg-black/40 backdrop-blur-sm">
-                <FaPlay className="text-white text-3xl drop-shadow-lg" />
-                <span className="text-white text-xs font-semibold tracking-wide">{post.label}</span>
-                <div className="flex items-center gap-4 text-white/80 text-xs">
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-400 bg-bg-primary/60 backdrop-blur-sm">
+                <FaPlay className="text-text-primary text-3xl drop-shadow-lg" />
+                <span className="text-text-primary text-xs font-semibold tracking-wide">{post.label}</span>
+                <div className="flex items-center gap-4 text-text-secondary text-xs">
                   <span className="flex items-center gap-1"><FaHeart size={12} /> 42</span>
                   <span className="flex items-center gap-1"><FaComment size={12} /> 12</span>
                 </div>
               </div>
 
               {/* Bottom label always visible */}
-              <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
-                <p className="text-white text-xs font-medium truncate">{post.label}</p>
+              <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-bg-primary/80 to-transparent">
+                <p className="text-text-primary text-xs font-medium truncate">{post.label}</p>
               </div>
             </motion.div>
           ))}

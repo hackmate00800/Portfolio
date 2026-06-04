@@ -10,6 +10,15 @@ export default function Particles() {
     let parts = []
     let frame
 
+    const getColor = () => {
+      const tmp = getComputedStyle(document.documentElement).getPropertyValue('--color-text-muted').trim()
+      if (tmp.startsWith('#')) {
+        const r = parseInt(tmp.slice(1, 3), 16); const g = parseInt(tmp.slice(3, 5), 16); const b = parseInt(tmp.slice(5, 7), 16)
+        return { r, g, b }
+      }
+      return { r: 136, g: 136, b: 160 }
+    }
+
     const resize = () => {
       canvas.width = canvas.offsetWidth
       canvas.height = canvas.offsetHeight
@@ -31,6 +40,7 @@ export default function Particles() {
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
+      const { r, g, b } = getColor()
       for (const p of parts) {
         p.x += p.vx
         p.y += p.vy
@@ -40,16 +50,20 @@ export default function Particles() {
         if (p.y > canvas.height) p.y = 0
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255,255,255,${p.alpha})`
+        ctx.fillStyle = `rgba(${r},${g},${b},${p.alpha})`
         ctx.fill()
       }
       frame = requestAnimationFrame(animate)
     }
     animate()
 
+    const observer = new MutationObserver(() => {})
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+
     return () => {
       cancelAnimationFrame(frame)
       window.removeEventListener('resize', resize)
+      observer.disconnect()
     }
   }, [])
 

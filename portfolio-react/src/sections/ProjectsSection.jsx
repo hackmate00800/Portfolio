@@ -77,16 +77,16 @@ export default function ProjectsSection() {
                 className="rounded-[16px] glass border-border-glass overflow-hidden transition-all duration-400 hover:-translate-y-2 hover:border-white/12 hover:shadow-2xl group"
                 {...fadeUp(i * 0.15)}>
                 <div className={`h-[180px] flex items-center justify-center bg-gradient-to-br ${p.gradient} relative overflow-hidden`}>
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/5 transition-colors duration-400" />
+                  <div className="absolute inset-0 bg-bg-primary/30 group-hover:bg-bg-primary/10 transition-colors duration-400" />
                   {p.label && (
-                    <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-md text-[0.65rem] font-bold uppercase tracking-wider bg-white/15 text-white/90 border border-white/20 backdrop-blur-sm">
+                    <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-md text-[0.65rem] font-bold uppercase tracking-wider glass text-text-primary border-border-glass backdrop-blur-sm">
                       {p.label}
                     </span>
                   )}
                   {p.image ? (
                     <img src={p.image} alt={p.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   ) : (
-                    <Icon className="text-5xl text-white/60 z-1 transition-all duration-400 group-hover:opacity-100 group-hover:scale-115" />
+                    <Icon className="text-5xl text-text-primary/60 z-1 transition-all duration-400 group-hover:opacity-100 group-hover:scale-115" />
                   )}
                 </div>
                 <div className="p-5">
@@ -101,7 +101,7 @@ export default function ProjectsSection() {
                     <a href="#" className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-bg-card text-text-secondary border border-border-glass transition-all duration-300 hover:bg-glass hover:text-text-primary">
                       <FiGithub size={13} /> Code
                     </a>
-                    <a href={p.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold gradient-accent text-white border-transparent transition-all duration-300 hover:opacity-90 hover:-translate-y-px hover:shadow-lg">
+                    <a href={p.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold gradient-accent text-text-primary border-transparent transition-all duration-300 hover:opacity-90 hover:-translate-y-px hover:shadow-lg">
                       <FiExternalLink size={13} /> Live
                     </a>
                   </div>

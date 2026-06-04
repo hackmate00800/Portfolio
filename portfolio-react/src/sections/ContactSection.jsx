@@ -152,7 +152,7 @@ export default function ContactSection() {
             </button>
 
             {success && (
-              <div className="flex items-center gap-2 p-4 mt-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold text-sm">
+              <div className="flex items-center gap-2 p-4 mt-4 rounded-xl bg-accent-creative/10 border border-accent-creative/30 text-accent-creative font-semibold text-sm">
                 <FiCheckCircle size={18} />
                 <span>Message sent successfully!</span>
               </div>

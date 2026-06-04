@@ -42,13 +42,13 @@ export default function GitHubStats() {
   const stats = [
     { label: 'Repositories', value: data?.public_repos ?? '-', icon: FaBookOpen, color: 'text-accent-creative', bg: 'bg-accent-creative/10' },
     { label: 'Followers', value: data?.followers ?? '-', icon: FaUsers, color: 'text-accent-logical', bg: 'bg-accent-logical/10' },
-    { label: 'Following', value: data?.following ?? '-', icon: FaStar, color: 'text-yellow-400', bg: 'bg-yellow-400/10' },
-    { label: 'Stars', value: repos.reduce((a, r) => a + (r.stargazers_count || 0), 0), icon: FaStar, color: 'text-purple-400', bg: 'bg-purple-400/10' },
+    { label: 'Following', value: data?.following ?? '-', icon: FaStar, color: 'text-accent-creative', bg: 'bg-accent-creative/10' },
+    { label: 'Stars', value: repos.reduce((a, r) => a + (r.stargazers_count || 0), 0), icon: FaStar, color: 'text-accent-logical', bg: 'bg-accent-logical/10' },
   ]
 
   return (
     <section id="github" className="relative py-24 px-6 overflow-hidden">
-      <div className="absolute w-[350px] h-[350px] rounded-full bg-purple-500/10 blur-[80px] top-1/3 -right-[10%] pointer-events-none animate-orb" style={{ animationDelay: '-8s' }} />
+      <div className="absolute w-[350px] h-[350px] rounded-full bg-accent-creative/8 blur-[80px] top-1/3 -right-[10%] pointer-events-none animate-orb" style={{ animationDelay: '-8s' }} />
       <div className="max-w-[1100px] mx-auto relative z-2">
         <motion.div className="mb-[60px]" {...fadeUp()}>
           <span className="font-secondary text-xs font-semibold text-accent-creative tracking-[3px] uppercase block mb-2">06</span>
@@ -100,7 +100,7 @@ export default function GitHubStats() {
               href={repo.html_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-5 glass rounded-xl border-border-glass transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(168,85,247,0.1)] group"
+              className="p-5 glass rounded-xl border-border-glass transition-all duration-300 hover:-translate-y-1 hover:border-accent-creative/30 hover:shadow-[0_0_30px_var(--color-accent-creative-glow)] group"
               {...fadeUp(0.3 + i * 0.08)}>
               <div className="flex items-start gap-3">
                 <FaBookOpen className="text-accent-creative mt-0.5 shrink-0" size={14} />

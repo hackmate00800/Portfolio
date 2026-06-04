@@ -15,7 +15,7 @@ export default function SectionConnector({ fromColor = 'bg-bg-primary', toColor 
   return (
     <div className={`relative w-full h-32 md:h-40 overflow-hidden ${fromColor}`}>
       {/* Gradient fade transition */}
-      <div className={`absolute inset-0 bg-gradient-to-b from-transparent ${toColor === 'bg-bg-secondary' ? 'to-[#12121a]' : 'to-[#0a0a0f]'} pointer-events-none`} />
+      <div className={`absolute inset-0 bg-gradient-to-b from-transparent ${toColor === 'bg-bg-secondary' ? 'to-bg-secondary' : 'to-bg-primary'} pointer-events-none`} />
 
       {/* Floating blobs at boundary */}
       {blobs.map((b, i) => (
@@ -63,14 +63,14 @@ export default function SectionConnector({ fromColor = 'bg-bg-primary', toColor 
       </div>
 
       {/* Glass edge */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border-glass to-transparent" />
 
       {/* Particles at boundary */}
       <div className="absolute inset-0 pointer-events-none">
         {[0.15, 0.35, 0.55, 0.75, 0.9].map((x, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 rounded-full bg-white/20"
+            className="absolute w-1 h-1 rounded-full bg-text-muted"
             style={{ left: `${x * 100}%`, top: `${20 + i * 12}%` }}
             animate={{ y: [0, -8, 0], opacity: [0.05, 0.2, 0.05] }}
             transition={{ duration: 3 + i, repeat: Infinity, delay: i * 0.5, ease: 'easeInOut' }}

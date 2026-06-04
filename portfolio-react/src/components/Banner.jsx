@@ -62,7 +62,7 @@ export default function Banner() {
   }
 
   return (
-    <section className="relative w-full h-dvh overflow-hidden bg-[#080012] flex items-center contain-layout">
+    <section className="relative w-full h-dvh overflow-hidden bg-bg-primary flex items-center contain-layout">
       {/* Deep background layers */}
       <div ref={blobRef} className="absolute inset-0 transition-transform duration-200 ease-out pointer-events-none will-change-transform">
         <div className="absolute w-[1000px] h-[1000px] rounded-full bg-[#6d28d9]/10 blur-[180px] -top-64 -left-48 animate-pulse-slow" />
@@ -73,16 +73,16 @@ export default function Banner() {
       </div>
 
       {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0016]/40 via-transparent to-[#080012]/80 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#080012]/30 via-transparent to-[#080012]/30 pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#080012]/60 to-transparent pointer-events-none z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-bg-primary/40 via-transparent to-bg-primary/80 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-bg-primary/30 via-transparent to-bg-primary/30 pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-bg-primary/60 to-transparent pointer-events-none z-10" />
 
       {/* Floating transparent bubbles - CSS animated */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {floatingBubbles.map((b, i) => (
           <div
             key={i}
-            className="absolute rounded-full bg-gradient-to-br from-white/[0.03] via-fuchsia-500/[0.02] to-purple-600/[0.03] border border-white/[0.04] animate-bubble"
+            className="absolute rounded-full bg-gradient-to-br from-white/[0.03] via-fuchsia-500/[0.02] to-purple-600/[0.03] border border-border-glass animate-bubble"
             style={{
               width: b.size,
               height: b.size,
@@ -102,7 +102,7 @@ export default function Banner() {
         {particles.map((p, i) => (
           <div
             key={i}
-            className="absolute rounded-full bg-white animate-particle"
+            className="absolute rounded-full bg-text-muted animate-particle"
             style={{
               width: p.size,
               height: p.size,
@@ -150,7 +150,7 @@ export default function Banner() {
           transition={{ duration: 1, ease: 'easeOut' }}
         >
           <motion.p
-            className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white/90 leading-tight drop-shadow-[0_0_20px_rgba(168,85,247,0.15)]"
+            className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-text-primary/90 leading-tight drop-shadow-[0_0_20px_rgba(168,85,247,0.15)]"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -159,7 +159,7 @@ export default function Banner() {
           </motion.p>
 
           <motion.h1
-            className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-white tracking-wide mt-1 leading-none"
+            className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-text-primary tracking-wide mt-1 leading-none"
             style={{ textShadow: '0 0 60px rgba(168,85,247,0.2), 0 0 120px rgba(168,85,247,0.1), 2px 2px 0px rgba(0,0,0,0.3), 4px 4px 0px rgba(120,80,200,0.2)' }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -175,17 +175,17 @@ export default function Banner() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.8 }}
           >
-            <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide bg-white/[0.04] border border-white/[0.08] bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
+            <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide glass bg-bg-glass border-border-glass bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
               Full Stack Developer
             </span>
-            <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide bg-white/[0.04] border border-white/[0.08] bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold tracking-wide glass bg-bg-glass border-border-glass bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
               Cybersecurity Enthusiast
             </span>
           </motion.div>
 
           {/* Description */}
           <motion.p
-            className="font-['Poppins',sans-serif] text-sm md:text-base lg:text-lg text-white/60 mt-4 md:mt-5 font-light leading-relaxed max-w-xl mx-auto md:mx-0"
+            className="font-['Poppins',sans-serif] text-sm md:text-base lg:text-lg text-text-secondary mt-4 md:mt-5 font-light leading-relaxed max-w-xl mx-auto md:mx-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1 }}
@@ -212,7 +212,7 @@ export default function Banner() {
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
               View Projects
             </a>
-            <a href="#contact" onClick={scrollTo('#contact')} className="relative inline-flex items-center gap-2 px-7 py-3 rounded-full font-['Poppins',sans-serif] text-sm font-semibold tracking-wide transition-all duration-300 bg-white/[0.04] border border-white/[0.15] text-white/80 hover:bg-white/[0.08] hover:border-purple-400/40 hover:text-white hover:scale-105 active:scale-95 will-change-transform">
+            <a href="#contact" onClick={scrollTo('#contact')} className="relative inline-flex items-center gap-2 px-7 py-3 rounded-full font-['Poppins',sans-serif] text-sm font-semibold tracking-wide transition-all duration-300 glass bg-bg-glass border-border-glass text-text-secondary hover:bg-bg-card hover:border-purple-400/40 hover:text-text-primary hover:scale-105 active:scale-95 will-change-transform">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
               Contact Me
             </a>
@@ -249,7 +249,7 @@ export default function Banner() {
             <div className="animate-blob absolute w-[12rem] h-[16rem] md:w-[15rem] md:h-[20rem] lg:w-[18rem] lg:h-[24rem] rounded-full bg-gradient-to-tr from-cyan-500/6 to-blue-500/4 blur-[70px]" style={{ bottom: '5%', right: '-8%', '--dur': '18s', '--delay': '3s', zIndex: -1 }} />
 
             {/* Glassmorphism card */}
-            <div className="absolute w-[16rem] h-[16rem] md:w-[20rem] md:h-[20rem] lg:w-[24rem] lg:h-[24rem] rounded-[32px] bg-gradient-to-br from-white/[0.07] via-purple-500/[0.04] to-fuchsia-500/[0.03] backdrop-blur-xl border border-white/[0.12] shadow-[0_0_60px_rgba(168,85,247,0.15),0_0_120px_rgba(168,85,247,0.05)] overflow-hidden">
+            <div className="absolute w-[16rem] h-[16rem] md:w-[20rem] md:h-[20rem] lg:w-[24rem] lg:h-[24rem] rounded-[32px] bg-bg-glass/60 backdrop-blur-xl border border-border-glass shadow-[0_0_60px_rgba(168,85,247,0.15),0_0_120px_rgba(168,85,247,0.05)] overflow-hidden">
               {/* Inner glow edges */}
               <div className="absolute inset-0 rounded-[32px] pointer-events-none" style={{ boxShadow: 'inset 0 0 40px rgba(168,85,247,0.06)' }} />
 
@@ -261,7 +261,7 @@ export default function Banner() {
               <div className="animate-pulse-opacity absolute w-[60%] h-[8%] rounded-full bg-gradient-to-r from-transparent via-white/[0.05] to-transparent blur-sm top-[15%] -right-[10%] rotate-[35deg]" style={{ '--dur': '5s' }} />
 
               {/* Border glow - CSS animated */}
-              <div className="animate-pulse-opacity absolute inset-[1px] rounded-[31px] border border-white/[0.06] pointer-events-none" style={{ '--dur': '4s', animationDelay: '0.5s' }} />
+              <div className="animate-pulse-opacity absolute inset-[1px] rounded-[31px] border border-border-glass pointer-events-none" style={{ '--dur': '4s', animationDelay: '0.5s' }} />
 
               {/* Profile image - CSS animated */}
               <img
@@ -278,7 +278,7 @@ export default function Banner() {
             {orbitDroplets.map((d, i) => (
               <div
                 key={i}
-                className={`absolute ${d.size} rounded-full bg-gradient-to-br from-white/[0.06] via-purple-500/[0.04] to-fuchsia-500/[0.03] border border-white/[0.08] shadow-lg animate-droplet`}
+                className={`absolute ${d.size} rounded-full bg-gradient-to-br from-white/[0.06] via-purple-500/[0.04] to-fuchsia-500/[0.03] border border-border-glass shadow-lg animate-droplet`}
                 style={{
                   top: d.top, bottom: d.bottom, left: d.left, right: d.right,
                   '--dx': `${d.dx}px`, '--dy': `${d.dy}px`,
@@ -291,7 +291,7 @@ export default function Banner() {
       </div>
 
       {/* Bottom fade to next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#0a0a0f] to-transparent pointer-events-none z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-bg-primary to-transparent pointer-events-none z-10" />
     </section>
   )
 }

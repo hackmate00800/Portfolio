@@ -43,8 +43,8 @@ export default function AboutSection() {
               {info.map((item, i) => (
                 <div key={i} className="flex flex-col gap-0.5">
                   <span className="text-[0.7rem] uppercase tracking-[1px] text-text-muted font-semibold">{item.label}</span>
-                  <span className={`text-sm font-semibold ${item.status ? 'text-emerald-400' : 'text-text-primary'}`}>
-                    {item.status && <span className="inline-block w-2 h-2 bg-emerald-400 rounded-full mr-2 align-middle animate-pulse-dot" />}
+                  <span className={`text-sm font-semibold ${item.status ? 'text-accent-creative' : 'text-text-primary'}`}>
+                    {item.status && <span className="inline-block w-2 h-2 bg-accent-creative rounded-full mr-2 align-middle animate-pulse-dot" />}
                     {item.value}
                   </span>
                 </div>
@@ -55,7 +55,7 @@ export default function AboutSection() {
           <div className="flex flex-col gap-4">
             {cards.map((card, i) => (
               <motion.div key={i}
-                className="p-6 rounded-[16px] glass border-border-glass transition-all duration-400 hover:-translate-y-1 hover:border-white/15 hover:shadow-xl relative overflow-hidden"
+                className="p-6 rounded-[16px] glass border-border-glass transition-all duration-400 hover:-translate-y-1 hover:border-accent-creative/20 hover:shadow-xl relative overflow-hidden"
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: 0.2 + i * 0.15 }}>
                 <div className={`absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r ${card.gradient}`} />
