@@ -221,26 +221,29 @@
   will-change: transform;
 }
 
-/* Scroll-driven ambient gradient overlay */
-.scroll-gradient {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  background:
-    radial-gradient(ellipse at 35% 40%, hsla(var(--hue1, 270), 75%, 55%, 0.07) 0%, transparent 60%),
-    radial-gradient(ellipse at 65% 60%, hsla(var(--hue2, 320), 65%, 50%, 0.05) 0%, transparent 55%),
-    radial-gradient(ellipse at 50% 80%, hsla(calc(var(--hue1, 270) + 40), 70%, 50%, 0.03) 0%, transparent 50%);
-  transition: background 0.4s ease;
+/* Scroll-driven gradient text effect */
+.text-scroll-gradient {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--text-h1, 270), 75%, 55%) 0%,
+    hsl(var(--text-h2, 320), 65%, 65%) 25%,
+    hsl(var(--text-h3, 300), 70%, 75%) 50%,
+    hsl(var(--text-h2, 320), 65%, 65%) 75%,
+    hsl(var(--text-h1, 270), 75%, 55%) 100%
+  );
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-box-reflect: below -8px linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.15) 100%);
+}
+
+/* Scroll-driven gradient text effect - light theme */
+[data-theme="light"] .text-scroll-gradient {
+  -webkit-box-reflect: below -8px linear-gradient(to bottom, transparent 50%, rgba(255,255,255,0.2) 100%);
 }
 
 /* Glassy liquid mirror text effect */
-@keyframes liquid-shine {
-  0%, 100% { background-position: 0% 50%; }
-  25% { background-position: 50% 0%; }
-  50% { background-position: 100% 50%; }
-  75% { background-position: 50% 100%; }
-}
 .text-liquid-glass {
   background: linear-gradient(
     135deg,

@@ -33,6 +33,7 @@ const orbitDroplets = [
 export default function Banner() {
   const blobRef = useRef(null)
   const cardRef = useRef(null)
+  const headingRef = useRef(null)
   const ticking = useRef(false)
 
   useEffect(() => {
@@ -54,6 +55,21 @@ export default function Banner() {
     }
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
     return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
+  useEffect(() => {
+    const el = headingRef.current
+    if (!el) return
+    const update = () => {
+      const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1)
+      const p = window.scrollY / maxScroll
+      el.style.setProperty('--text-h1', (270 + p * 160) % 360)
+      el.style.setProperty('--text-h2', (320 + p * 100) % 360)
+      el.style.setProperty('--text-h3', (300 + p * 130) % 360)
+    }
+    window.addEventListener('scroll', update, { passive: true })
+    update()
+    return () => window.removeEventListener('scroll', update)
   }, [])
 
   const scrollTo = (id) => (e) => {
@@ -159,7 +175,8 @@ export default function Banner() {
           </motion.p>
 
           <motion.h1
-            className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-liquid-glass tracking-wide mt-1 leading-none"
+            ref={headingRef}
+            className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-scroll-gradient tracking-wide mt-1 leading-none"
             style={{ textShadow: '0 0 60px rgba(168,85,247,0.3), 0 0 120px rgba(168,85,247,0.15), 2px 2px 0px rgba(0,0,0,0.3), 4px 4px 0px rgba(120,80,200,0.2)' }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
