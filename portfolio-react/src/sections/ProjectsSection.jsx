@@ -9,6 +9,7 @@ const projects = [
     tags: ['React', 'Node.js', 'MongoDB'],
     icon: FaYoutube,
     gradient: 'from-[#ff6b6b] to-[#ee5a24]',
+    link: 'https://funtime-eohve8tjj-hackmate-s-projects.vercel.app/login',
   },
   {
     title: 'Pixtract',
@@ -16,6 +17,7 @@ const projects = [
     tags: ['React', 'Express', 'PostgreSQL'],
     icon: FaPinterest,
     gradient: 'from-[#e84393] to-[#fd79a8]',
+    link: 'https://pixtract.onrender.com/login',
   },
   {
     title: 'Portfolio',
@@ -23,6 +25,7 @@ const projects = [
     tags: ['HTML', 'CSS', 'JavaScript'],
     icon: FiUser,
     gradient: 'from-[#6c5ce7] to-[#a29bfe]',
+    link: 'https://hackmateportfolio.vercel.app/',
   },
   {
     title: 'Mitra Packer Mover',
@@ -31,6 +34,7 @@ const projects = [
     icon: FaTruck,
     gradient: 'from-[#f39c12] to-[#e67e22]',
     label: 'Freelancing',
+    link: 'https://mitrapackermover.com',
   },
   {
     title: 'SR Industries',
@@ -39,6 +43,7 @@ const projects = [
     icon: FaIndustry,
     gradient: 'from-[#2d3436] to-[#636e72]',
     label: 'Freelancing',
+    link: 'https://srindustriesinida.org',
   },
 ]
 
@@ -88,7 +93,7 @@ export default function ProjectsSection() {
                     <a href="#" className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-bg-card text-text-secondary border border-border-glass transition-all duration-300 hover:bg-glass hover:text-text-primary">
                       <FiGithub size={13} /> Code
                     </a>
-                    <a href="#" className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold gradient-accent text-white border-transparent transition-all duration-300 hover:opacity-90 hover:-translate-y-px hover:shadow-lg">
+                    <a href={p.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold gradient-accent text-white border-transparent transition-all duration-300 hover:opacity-90 hover:-translate-y-px hover:shadow-lg">
                       <FiExternalLink size={13} /> Live
                     </a>
                   </div>
