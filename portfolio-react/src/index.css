@@ -244,6 +244,16 @@
   -webkit-box-reflect: below -8px linear-gradient(to bottom, transparent 50%, rgba(255,255,255,0.2) 100%);
 }
 
+/* Logo theme adaptation - removes orange bg */
+.logo-ankit {
+  mix-blend-mode: screen;
+  filter: contrast(1.15) brightness(1.15);
+}
+[data-theme="light"] .logo-ankit {
+  mix-blend-mode: multiply;
+  filter: contrast(1.2) brightness(0.85);
+}
+
 /* Glassy liquid mirror text effect */
 .text-liquid-glass {
   background: linear-gradient(

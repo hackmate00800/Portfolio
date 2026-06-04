@@ -220,7 +220,7 @@ export default function Banner() {
               ref={logoRef}
               src={logoAnkit}
               alt="I'M ANKIT"
-              className="h-16 md:h-20 lg:h-24 xl:h-28 w-auto object-contain"
+              className="h-16 md:h-20 lg:h-24 xl:h-28 w-auto object-contain logo-ankit"
               initial={{ opacity: 0, y: 40, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.4, ease: [0.17, 0.85, 0.45, 1.2] }}
