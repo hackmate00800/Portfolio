@@ -218,7 +218,7 @@ export default function Banner() {
           >
             <motion.div
               ref={logoRef}
-              className="bg-gradient-to-br from-purple-400 via-fuchsia-500 to-cyan-400 h-24 md:h-28 lg:h-32 xl:h-36"
+              className="logo-gradient h-24 md:h-28 lg:h-32 xl:h-36"
               style={{
                 aspectRatio: '1536/1024',
                 WebkitMaskImage: `url(${logoAnkit})`,
