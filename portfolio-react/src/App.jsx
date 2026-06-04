@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Cursor from './components/Cursor'
 import Loader from './components/Loader'
 import ScrollProgress from './components/ScrollProgress'
@@ -21,6 +21,11 @@ import Atmosphere from './components/Atmosphere'
 
 export default function App() {
   const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    const t = setTimeout(() => setLoaded(true), 6000)
+    return () => clearTimeout(t)
+  }, [])
 
   return (
     <>
