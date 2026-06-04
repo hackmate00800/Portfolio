@@ -166,22 +166,64 @@ export default function Banner() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: 'easeOut' }}
         >
-          <motion.p
-            className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-scroll-gradient leading-tight"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+          {/* Decorative sparkles */}
+          <motion.svg
+            className="absolute -top-2 -left-4 w-6 h-6 text-purple-400/60"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            initial={{ opacity: 0, scale: 0, rotate: -180 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
           >
-            Ram Ram!
-          </motion.p>
+            <path d="M12 0l1.5 9.5L23 7l-6.5 6 5.5 9.5L12 18l-10 4.5L7.5 13 1 7l9.5 2.5z" />
+          </motion.svg>
+          <motion.svg
+            className="absolute -top-1 -right-3 w-5 h-5 text-fuchsia-400/50 rotate-45"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            initial={{ opacity: 0, scale: 0, rotate: 45 }}
+            animate={{ opacity: 1, scale: 1, rotate: 45 }}
+            transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}
+          >
+            <path d="M12 0l1.5 9.5L23 7l-6.5 6 5.5 9.5L12 18l-10 4.5L7.5 13 1 7l9.5 2.5z" />
+          </motion.svg>
+
+          <motion.div className="relative inline-block">
+            <motion.p
+              className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-scroll-gradient leading-tight relative"
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
+            >
+              Ram Ram!
+              <motion.span
+                className="absolute -right-6 bottom-1 text-lg md:text-xl"
+                animate={{ opacity: [1, 0, 1] }}
+                transition={{ duration: 1, repeat: Infinity, delay: 1.5 }}
+              >
+                ✦
+              </motion.span>
+            </motion.p>
+          </motion.div>
 
           <motion.h1
-            className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-scroll-gradient tracking-wide mt-1 leading-none"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-scroll-gradient tracking-wide mt-1 leading-none overflow-visible"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.01 }}
           >
-            I&apos;M ANKIT
+            {"I'M ANKIT".split('').map((char, i) => (
+              <motion.span
+                key={i}
+                className="inline-block"
+                initial={{ opacity: 0, y: 60, rotateX: -90, filter: 'blur(8px)' }}
+                animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
+                transition={{ duration: 0.5, delay: 0.5 + i * 0.06, ease: [0.2, 0.9, 0.3, 1] }}
+                style={{ transformStyle: 'preserve-3d', perspective: '600px' }}
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            ))}
           </motion.h1>
 
           {/* Role badges */}
