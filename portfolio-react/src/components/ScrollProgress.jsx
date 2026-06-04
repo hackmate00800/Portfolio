@@ -1,11 +1,11 @@
 import useScrollProgress from '../hooks/useScrollProgress'
 
 export default function ScrollProgress() {
-  const progress = useScrollProgress()
+  const ref = useScrollProgress()
   return (
     <div
-      className="fixed top-0 left-0 h-[3px] z-[9999] gradient-accent"
-      style={{ width: `${progress}%`, transition: 'width 50ms linear' }}
+      ref={ref}
+      className="fixed top-0 left-0 h-[3px] z-[9999] gradient-accent origin-left will-change-transform"
     />
   )
 }

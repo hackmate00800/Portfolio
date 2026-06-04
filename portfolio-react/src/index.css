@@ -111,8 +111,8 @@
 .animate-blink { animation: blink 0.7s step-end infinite; }
 
 @keyframes scroll-line {
-  0% { top: -100%; }
-  100% { top: 100%; }
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 }
 .animate-scroll-line { animation: scroll-line 2s ease-in-out infinite; }
 
@@ -289,7 +289,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: liquid-shine 6s ease-in-out infinite;
-  -webkit-box-reflect: below -8px linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.15) 100%);
 }
 
 /* Glassy liquid mirror effect - light theme adjustments */

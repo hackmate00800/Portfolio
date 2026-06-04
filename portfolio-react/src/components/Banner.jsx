@@ -39,6 +39,7 @@ export default function Banner() {
   const logoRef = useRef(null)
   const glowRef = useRef(null)
   const glowTimeoutRef = useRef(null)
+  const glowTicking = useRef(false)
   const card3dRef = useRef(null)
 
 
@@ -84,16 +85,21 @@ export default function Banner() {
     if (!logo || !glow) return
 
     const handleMove = (e) => {
-      const rect = logo.getBoundingClientRect()
-      const x = ((e.clientX - rect.left) / rect.width) * 100
-      const y = ((e.clientY - rect.top) / rect.height) * 100
-      glow.style.setProperty('--gx', `${x}%`)
-      glow.style.setProperty('--gy', `${y}%`)
-      glow.style.opacity = '1'
-      if (glowTimeoutRef.current) {
-        clearTimeout(glowTimeoutRef.current)
-        glowTimeoutRef.current = null
-      }
+      if (glowTicking.current) return
+      glowTicking.current = true
+      requestAnimationFrame(() => {
+        const rect = logo.getBoundingClientRect()
+        const x = ((e.clientX - rect.left) / rect.width) * 100
+        const y = ((e.clientY - rect.top) / rect.height) * 100
+        glow.style.setProperty('--gx', `${x}%`)
+        glow.style.setProperty('--gy', `${y}%`)
+        glow.style.opacity = '1'
+        glowTicking.current = false
+        if (glowTimeoutRef.current) {
+          clearTimeout(glowTimeoutRef.current)
+          glowTimeoutRef.current = null
+        }
+      })
     }
 
     const handleLeave = () => {

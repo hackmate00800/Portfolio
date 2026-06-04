@@ -21,6 +21,10 @@ const SplitFace = forwardRef(function SplitFace(_, ref) {
   const startLoopRef = useRef(null)
 
   useEffect(() => {
+    if (containerRef.current) containerRef.current.style.setProperty('--split', '50')
+  }, [])
+  useEffect(() => {
+    const cont = containerRef.current
     const tick = () => {
       const diff = targetPct.current - currentPct.current
       if (Math.abs(diff) < 0.5) {
@@ -29,9 +33,7 @@ const SplitFace = forwardRef(function SplitFace(_, ref) {
         return
       }
       currentPct.current += diff * 0.08
-      const p = currentPct.current
-      if (frontRef.current) frontRef.current.style.width = p + '%'
-      if (dividerRef.current) dividerRef.current.style.left = p + '%'
+      if (cont) cont.style.setProperty('--split', currentPct.current)
       frameRef.current = requestAnimationFrame(tick)
     }
     startLoopRef.current = () => {
@@ -93,7 +95,7 @@ const SplitFace = forwardRef(function SplitFace(_, ref) {
       </div>
 
       {/* Front face — Creative Designer */}
-      <div ref={frontRef} className="absolute inset-0 z-2 overflow-hidden noise-overlay" style={{ width: '50%' }}>
+      <div ref={frontRef} className="absolute inset-0 z-2 overflow-hidden noise-overlay" style={{ clipPath: 'inset(0 calc(100% - var(--split, 50) * 1%) 0 0)' }}>
         <motion.img
           src={creativeSrc} alt="Creative Designer" loading="lazy"
           className="absolute top-0 left-0 h-full object-cover"
@@ -106,7 +108,7 @@ const SplitFace = forwardRef(function SplitFace(_, ref) {
       {/* Draggable Divider */}
       <div ref={dividerRef} id="splitDivider"
         className="absolute inset-y-0 z-5 touch-none"
-        style={{ left: '50%', width: '3px', transform: 'translateX(-50%)', cursor: 'ew-resize' }}>
+        style={{ left: '50%', width: '3px', transform: 'translateX(calc(-50% + (var(--split, 50) - 50) * 1%))', cursor: 'ew-resize' }}>
         <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[2px] bg-border-glass transition-all duration-300 group-hover:w-[3px] group-hover:bg-text-primary/60" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full glass backdrop-blur-sm border-2 border-border-glass flex items-center justify-center text-text-secondary text-xs transition-all duration-300 shadow-lg group-hover:w-11 group-hover:h-11 group-hover:border-text-primary/60 group-hover:bg-bg-glass group-hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]">
           <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" className="w-3 h-3">
