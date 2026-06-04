@@ -35,7 +35,6 @@ export default function Banner() {
   const blobRef = useRef(null)
   const cardRef = useRef(null)
   const textGradientRef = useRef(null)
-  const logoRef = useRef(null)
   const ticking = useRef(false)
 
 
@@ -75,22 +74,7 @@ export default function Banner() {
     return () => window.removeEventListener('scroll', update)
   }, [])
 
-  useEffect(() => {
-    const logo = logoRef.current
-    if (!logo) return
 
-    const handleLogoMove = (e) => {
-      const rect = logo.getBoundingClientRect()
-      logo.style.setProperty('--tx', ((e.clientX - rect.left) / rect.width) * 100)
-      logo.style.setProperty('--ty', ((e.clientY - rect.top) / rect.height) * 100)
-    }
-
-    logo.addEventListener('mousemove', handleLogoMove, { passive: true })
-
-    return () => {
-      logo.removeEventListener('mousemove', handleLogoMove)
-    }
-  }, [])
 
   const scrollTo = (id) => (e) => {
     e.preventDefault()
@@ -234,7 +218,6 @@ export default function Banner() {
             transition={{ duration: 0.01 }}
           >
             <div
-              ref={logoRef}
               className="logo-gradient h-36 sm:h-40 md:h-48 lg:h-64 xl:h-96 max-w-full"
               style={{
                 aspectRatio: '1536/1024',

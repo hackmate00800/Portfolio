@@ -238,26 +238,20 @@
   transition: background 0.3s ease;
 }
 
-/* Logo gradient mask — torch spotlight effect */
+/* Logo gradient mask */
 .logo-gradient {
   background: radial-gradient(
-    circle at var(--tx, 50%) var(--ty, 50%),
+    circle at 50% 50%,
     hsl(270, 80%, 60%) 0%,
     hsl(300, 70%, 55%) 30%,
     hsl(330, 65%, 50%) 60%,
     hsl(190, 80%, 55%) 100%
   );
-  cursor: pointer;
-  transition: transform 0.4s cubic-bezier(0.17, 0.85, 0.45, 1.2);
-  will-change: transform;
-}
-.logo-gradient:hover {
-  transform: scale(1.08);
 }
 
 [data-theme="light"] .logo-gradient {
   background: radial-gradient(
-    circle at var(--tx, 50%) var(--ty, 50%),
+    circle at 50% 50%,
     hsl(270, 65%, 42%) 0%,
     hsl(300, 55%, 38%) 30%,
     hsl(330, 50%, 35%) 60%,
