@@ -246,6 +246,7 @@
               filter 0.4s ease,
               background 0.3s ease;
   cursor: pointer;
+  -webkit-box-reflect: below -4px linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.08) 100%);
 }
 .logo-gradient:hover {
   transform: scale(1.12);
@@ -253,6 +254,7 @@
 }
 [data-theme="light"] .logo-gradient {
   background: linear-gradient(135deg, hsl(270, 65%, 42%), hsl(300, 55%, 38%), hsl(190, 65%, 38%));
+  -webkit-box-reflect: below -4px linear-gradient(to bottom, transparent 30%, rgba(255,255,255,0.12) 100%);
 }
 [data-theme="light"] .logo-gradient:hover {
   filter: brightness(1.1) drop-shadow(0 0 40px rgba(168,85,247,0.25)) drop-shadow(0 0 80px rgba(56,189,248,0.1));

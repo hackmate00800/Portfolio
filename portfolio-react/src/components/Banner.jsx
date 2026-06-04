@@ -219,7 +219,7 @@ export default function Banner() {
             <div className="logo-hover-ring">
               <motion.div
                 ref={logoRef}
-                className="logo-gradient h-20 md:h-28 lg:h-48 xl:h-80"
+                className="logo-gradient h-28 md:h-36 lg:h-56 xl:h-96 max-w-full"
                 style={{
                   aspectRatio: '1536/1024',
                   WebkitMaskImage: `url(${logoAnkit})`,
