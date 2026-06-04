@@ -1,0 +1,4 @@
+{
+  "rootDirectory": "portfolio-react",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
