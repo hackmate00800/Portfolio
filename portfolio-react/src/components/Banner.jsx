@@ -98,54 +98,103 @@ export default function Banner() {
 
       {/* Main content */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-10 md:gap-20 py-10 md:py-0">
-        {/* Left side - Profile photo */}
+        {/* Left side - Bubble profile composition */}
         <motion.div
           className="flex-shrink-0 w-[45%] max-w-[300px] md:max-w-[360px] flex justify-center"
           initial={{ opacity: 0, x: -60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: 'easeOut' }}
         >
-          <div className="relative w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 flex items-center justify-center">
-            {/* Outer glow ring */}
+          <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 flex items-center justify-center">
+            {/* === BACKGROUND LAYER — large soft purple bubbles === */}
             <motion.div
-              className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-400/30 via-fuchsia-500/20 to-purple-600/30 blur-xl"
-              animate={{ scale: [1, 1.08, 1], rotate: [0, 5, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full bg-gradient-to-br from-purple-500/20 to-fuchsia-600/15 blur-2xl"
+              animate={{ y: [0, -20, 0], scale: [1, 1.06, 1] }}
+              transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.div
+              className="absolute w-44 h-44 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full bg-gradient-to-tr from-purple-600/25 to-purple-400/10 blur-3xl -top-4 -right-4"
+              animate={{ y: [0, 16, 0], x: [0, -8, 0] }}
+              transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.div
+              className="absolute w-36 h-36 md:w-48 md:h-48 lg:w-52 lg:h-52 rounded-full bg-gradient-to-bl from-fuchsia-500/15 to-purple-700/20 blur-2xl -bottom-6 -left-4"
+              animate={{ y: [0, -14, 0], x: [0, 10, 0] }}
+              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             />
 
-            {/* Glowing ring */}
+            {/* === MIDDLE LAYER — glass bubbles around the image === */}
             <motion.div
-              className="absolute inset-1 rounded-full border-[3px] border-purple-400/30"
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+              className="absolute w-32 h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-full bg-white/[0.04] backdrop-blur-md border border-white/10 shadow-lg -top-8 right-2"
+              animate={{ y: [0, -12, 0], x: [0, 6, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+            />
+            <div className="absolute w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-white/[0.03] backdrop-blur-sm border border-white/8 -bottom-4 -right-6" />
+            <motion.div
+              className="absolute w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full bg-white/[0.05] backdrop-blur-sm border border-white/10 -bottom-2 left-2"
+              animate={{ y: [0, -10, 0], x: [0, -6, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
             />
             <motion.div
-              className="absolute inset-3 rounded-full border border-purple-300/20"
-              animate={{ rotate: [360, 0] }}
-              transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+              className="absolute w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full bg-gradient-to-br from-purple-400/10 to-fuchsia-500/10 backdrop-blur-md border border-white/10 top-4 -left-10"
+              animate={{ y: [0, 8, 0], x: [0, -4, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
             />
 
-            {/* White glass circle frame */}
+            {/* Small glowing bubbles */}
             <motion.div
-              className="absolute inset-4 rounded-full border-[5px] border-white/40 shadow-2xl shadow-purple-900/80 bg-white/5 backdrop-blur-sm"
-              animate={{ y: [0, -8, 0] }}
+              className="absolute w-6 h-6 md:w-8 md:h-8 rounded-full bg-purple-400/20 blur-sm -top-2 left-1/4"
+              animate={{ y: [0, -14, 0], opacity: [0.4, 0.9, 0.4] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+            />
+            <motion.div
+              className="absolute w-4 h-4 md:w-5 md:h-5 rounded-full bg-fuchsia-400/20 blur-sm top-1/3 -right-4"
+              animate={{ y: [0, 10, 0], opacity: [0.3, 0.8, 0.3] }}
+              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+            />
+            <motion.div
+              className="absolute w-5 h-5 md:w-6 md:h-6 rounded-full bg-purple-300/20 blur-sm bottom-1/4 -left-3"
+              animate={{ y: [0, -8, 0], opacity: [0.3, 0.7, 0.3] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+            />
+
+            {/* Light reflection highlights on bubbles */}
+            <div className="absolute w-24 h-10 bg-gradient-to-r from-white/[0.06] to-transparent rounded-full blur-md -top-4 left-6 rotate-[-20deg]" />
+            <motion.div
+              className="absolute w-16 h-6 bg-gradient-to-r from-white/[0.04] to-transparent rounded-full blur-sm top-8 right-8 rotate-[30deg]"
+              animate={{ opacity: [0.2, 0.6, 0.2] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
             />
 
-            {/* Inner subtle glow */}
+            {/* === FRONT LAYER — profile image with glass frame === */}
+            {/* White glass circle frame */}
             <motion.div
-              className="absolute inset-6 rounded-full bg-gradient-to-br from-white/10 to-transparent blur-sm"
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.15 }}
+              className="absolute inset-8 md:inset-10 lg:inset-12 rounded-full border-[5px] border-white/40 shadow-2xl shadow-purple-900/80 bg-white/5 backdrop-blur-sm"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+            />
+
+            {/* Inner glow */}
+            <motion.div
+              className="absolute inset-10 md:inset-12 lg:inset-14 rounded-full bg-gradient-to-br from-white/10 to-transparent blur-sm"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.15 }}
             />
 
             {/* Profile image */}
             <motion.img
               src={creativeSrc}
               alt="Ankit"
-              className="absolute inset-[18px] z-10 rounded-full object-cover shadow-lg shadow-purple-900/50"
-              animate={{ y: [0, -12, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+              className="absolute inset-[28px] md:inset-[34px] lg:inset-[40px] z-10 rounded-full object-cover shadow-lg shadow-purple-900/50"
+              animate={{ y: [0, -14, 0] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+            />
+
+            {/* Small bubble overlapping in front of the image (bottom-right edge) */}
+            <motion.div
+              className="absolute w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/[0.06] backdrop-blur-md border border-white/15 -bottom-2 -right-2 z-20"
+              animate={{ y: [0, -6, 0], x: [0, 4, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
             />
           </div>
         </motion.div>
