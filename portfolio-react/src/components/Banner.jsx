@@ -228,23 +228,25 @@ export default function Banner() {
             <path d="M12 0l1.5 9.5L23 7l-6.5 6 5.5 9.5L12 18l-10 4.5L7.5 13 1 7l9.5 2.5z" />
           </motion.svg>
 
-          <motion.div className="relative inline-block">
-            <motion.p
-              className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-scroll-gradient leading-tight relative"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
-            >
-              Ram Ram!
-              <motion.span
-                className="absolute -right-6 bottom-1 text-lg md:text-xl"
-                animate={{ opacity: [1, 0, 1] }}
-                transition={{ duration: 1, repeat: Infinity, delay: 1.5 }}
+          <div className="pt-0 md:pt-16 mb-0 md:-mb-16">
+            <motion.div className="relative inline-block">
+              <motion.p
+                className="font-['Caveat',cursive] text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-scroll-gradient leading-tight relative"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
               >
-                ✦
-              </motion.span>
-            </motion.p>
-          </motion.div>
+                Ram Ram!
+                <motion.span
+                  className="absolute -right-6 bottom-1 text-lg md:text-xl"
+                  animate={{ opacity: [1, 0, 1] }}
+                  transition={{ duration: 1, repeat: Infinity, delay: 1.5 }}
+                >
+                  ✦
+                </motion.span>
+              </motion.p>
+            </motion.div>
+          </div>
 
           <motion.div
             className="relative"
