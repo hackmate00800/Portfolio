@@ -60,7 +60,7 @@ const fadeUp = (delay = 0) => ({
 
 export default function ProjectsSection() {
   return (
-    <section id="projects" className="relative py-24 px-6 bg-bg-secondary overflow-hidden">
+    <section id="projects" className="relative py-24 px-6 bg-bg-secondary overflow-hidden scroll-mt-20">
       <div className="absolute w-[400px] h-[400px] rounded-full bg-accent-logical/15 blur-[80px] -bottom-[10%] -left-[5%] pointer-events-none animate-orb" style={{ animationDelay: '-10s' }} />
       <div className="max-w-[1100px] mx-auto relative z-2">
         <motion.div className="mb-[60px]" {...fadeUp()}>

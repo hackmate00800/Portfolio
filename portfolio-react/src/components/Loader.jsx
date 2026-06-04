@@ -7,11 +7,12 @@ const easeInOutCubic = (t) =>
 const prefersReduced =
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+const INFINITY_PATH = 'M50 30 C50 8,88 8,94 32 C100 52,78 62,58 48 C52 42,50 34,50 30 C50 8,12 8,6 32 C0 52,22 62,42 48 C48 42,50 34,50 30'
+
 export default function Loader({ onComplete }) {
   const [phase, setPhase] = useState(() => prefersReduced ? 'done' : 'loading')
   const [pct, setPct] = useState(0)
   const containerRef = useRef(null)
-  const glowRef = useRef(null)
   const frameRef = useRef(null)
   const doneRef = useRef(false)
   const onCompleteRef = useRef(onComplete)
@@ -44,16 +45,10 @@ export default function Loader({ onComplete }) {
   useEffect(() => {
     if (phase !== 'completion') return
     const container = containerRef.current
-    const glow = glowRef.current
     const start = performance.now()
     if (container) container.classList.add('loader-completion')
     const tick = (now) => {
       const t = Math.min((now - start) / 600, 1)
-      const eased = easeInOutCubic(t)
-      if (glow) {
-        glow.style.transform = `scale(${1 + eased * 0.25})`
-        glow.style.opacity = `${1 - eased * 0.3}`
-      }
       if (t < 1) {
         frameRef.current = requestAnimationFrame(tick)
       } else {
@@ -84,143 +79,112 @@ export default function Loader({ onComplete }) {
 
   if (phase === 'done') return null
 
+  const trailBias = 80
+  const dotOffset = 0
+  const t4Offset = trailBias
+  const t3Offset = Math.round(trailBias * 0.55)
+  const t2Offset = Math.round(trailBias * 0.3)
+  const t1Offset = Math.round(trailBias * 0.12)
+
   return (
     <div
       ref={containerRef}
       className="fixed inset-0 z-[10001] overflow-hidden bg-bg-primary"
+      style={{ color: 'var(--color-text-primary)' }}
     >
-      {/* Energy core */}
       <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-        <div className="relative w-[500px] h-[500px]">
-          <div
-            ref={glowRef}
-            className="absolute inset-0 rounded-full animate-core-pulse"
-            style={{
-              background: 'radial-gradient(circle at 50% 50%, rgba(168,85,247,0.12) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(217,70,239,0.08) 0%, transparent 60%), radial-gradient(circle at 50% 50%, rgba(6,182,212,0.05) 0%, transparent 70%)',
-              filter: 'blur(40px)',
-              willChange: 'transform, opacity',
-            }}
-          />
-          <div className="absolute inset-[10%] rounded-full animate-core-breath"
-            style={{
-              background: 'radial-gradient(circle at 50% 50%, rgba(168,85,247,0.08) 0%, transparent 50%)',
-              filter: 'blur(60px)',
-            }}
-          />
+        <div className="w-[240px] sm:w-[300px] md:w-[400px]">
+          <svg viewBox="0 0 100 60" className="w-full h-auto" style={{ overflow: 'visible' }}>
+            <defs>
+              <filter id="dotGlow">
+                <feGaussianBlur stdDeviation="2.5" />
+              </filter>
+              <filter id="trailGlow">
+                <feGaussianBlur stdDeviation="5" />
+              </filter>
+            </defs>
+
+            {/* Background ambient glow */}
+            <path d={INFINITY_PATH} stroke="currentColor" strokeWidth="14" fill="none"
+              opacity={0.035 + pct * 0.0005} filter="url(#trailGlow)" />
+
+            {/* Track */}
+            <path d={INFINITY_PATH} stroke="currentColor" strokeWidth="1.2" fill="none"
+              opacity={0.08 + pct * 0.0004} />
+
+            {/* Trail layer 4 — widest, faintest */}
+            <path d={INFINITY_PATH} stroke="currentColor" strokeWidth="2.8" fill="none"
+              strokeLinecap="round" pathLength="400"
+              strokeDasharray={`${t4Offset} ${400 - t4Offset}`}
+              opacity={0.06 + pct * 0.0003}
+              className="animate-inf-trail" />
+
+            {/* Trail layer 3 */}
+            <path d={INFINITY_PATH} stroke="currentColor" strokeWidth="2.2" fill="none"
+              strokeLinecap="round" pathLength="400"
+              strokeDasharray={`${t3Offset} ${400 - t3Offset}`}
+              opacity={0.12 + pct * 0.0005}
+              className="animate-inf-trail" />
+
+            {/* Trail layer 2 */}
+            <path d={INFINITY_PATH} stroke="currentColor" strokeWidth="1.8" fill="none"
+              strokeLinecap="round" pathLength="400"
+              strokeDasharray={`${t2Offset} ${400 - t2Offset}`}
+              opacity={0.22 + pct * 0.001}
+              className="animate-inf-trail" />
+
+            {/* Trail layer 1 — tight to dot */}
+            <path d={INFINITY_PATH} stroke="currentColor" strokeWidth="1.5" fill="none"
+              strokeLinecap="round" pathLength="400"
+              strokeDasharray={`${t1Offset} ${400 - t1Offset}`}
+              opacity={0.4 + pct * 0.002}
+              className="animate-inf-trail" />
+
+            {/* Dot glow */}
+            <path d={INFINITY_PATH} stroke="currentColor" strokeWidth="7" fill="none"
+              strokeLinecap="round" pathLength="400"
+              strokeDasharray={`${dotOffset + 0.5} ${400 - dotOffset - 0.5}`}
+              opacity={0.25 + pct * 0.002} filter="url(#dotGlow)"
+              className="animate-inf-dot" />
+
+            {/* Traveling dot */}
+            <path d={INFINITY_PATH} stroke="currentColor" strokeWidth="2.5" fill="none"
+              strokeLinecap="round" pathLength="400"
+              strokeDasharray={`${dotOffset + 1} ${400 - dotOffset - 1}`}
+              opacity={0.8 + pct * 0.002}
+              className="animate-inf-dot" />
+          </svg>
         </div>
       </div>
 
-      {/* Rings */}
-      <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-        <div className="absolute rounded-full border border-purple-500/20 animate-ring-1" style={{ width: 300, height: 300 }}>
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-purple-400/60 shadow-[0_0_6px_rgba(168,85,247,0.5)]" />
-        </div>
-        <div className="absolute rounded-full border border-fuchsia-500/15 animate-ring-2" style={{ width: 240, height: 240 }}>
-          <div className="absolute inset-[3px] rounded-full border border-dashed border-fuchsia-500/10" />
-          <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-fuchsia-400/60 shadow-[0_0_6px_rgba(217,70,239,0.5)]" />
-        </div>
-        <div className="absolute rounded-full animate-ring-3" style={{ width: 180, height: 180 }}>
-          <div className="absolute inset-0 rounded-full"
-            style={{
-              background: 'conic-gradient(from 0deg, transparent 0deg, rgba(6,182,212,0.25) 15deg, transparent 30deg, transparent 360deg)',
-              WebkitMaskImage: 'radial-gradient(circle, transparent 48%, black 49%, black 100%)',
-              maskImage: 'radial-gradient(circle, transparent 48%, black 49%, black 100%)',
-            }}
-          />
-          <div className="absolute inset-[2px] rounded-full border border-cyan-500/10" />
-        </div>
-      </div>
-
-      {/* Scan beam */}
-      <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
-        <div className="relative w-72 h-72 animate-scan-beam" style={{ opacity: 0.08 }}>
-          <div className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_10px_rgba(6,182,212,0.5)]" style={{ top: '-1px' }} />
-        </div>
-      </div>
-
-      {/* CSS-only orbiting particles */}
-      <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-        {[
-          { r: 130, s: 14, c: '#a855f7', b: 'rgba(168,85,247,0.4)' },
-          { r: 110, s: 11, c: '#d946ef', b: 'rgba(217,70,239,0.4)' },
-          { r: 150, s: 17, c: '#06b6d4', b: 'rgba(6,182,212,0.3)' },
-          { r: 125, s: 9, c: '#c084fc', b: 'rgba(192,132,252,0.3)' },
-          { r: 145, s: 13, c: '#a855f7', b: 'rgba(168,85,247,0.3)' },
-          { r: 115, s: 16, c: '#d946ef', b: 'rgba(217,70,239,0.3)' },
-          { r: 135, s: 12, c: '#06b6d4', b: 'rgba(6,182,212,0.4)' },
-          { r: 105, s: 10, c: '#c084fc', b: 'rgba(192,132,252,0.4)' },
-          { r: 140, s: 15, c: '#a855f7', b: 'rgba(168,85,247,0.25)' },
-          { r: 120, s: 8, c: '#d946ef', b: 'rgba(217,70,239,0.25)' },
-          { r: 100, s: 18, c: '#06b6d4', b: 'rgba(6,182,212,0.35)' },
-          { r: 155, s: 20, c: '#c084fc', b: 'rgba(192,132,252,0.3)' },
-        ].map((p, i) => (
-          <div key={i}
-            className="absolute w-[3px] h-[3px] md:w-[4px] md:h-[4px] rounded-full animate-orbit-particle"
-            style={{
-              '--r': `${p.r}px`,
-              '--s': `${p.s}s`,
-              '--d': `${-i * 0.7}s`,
-              top: 'calc(50% - 2px)',
-              left: 'calc(50% - 2px)',
-              background: p.c,
-              boxShadow: `0 0 5px 1px ${p.b}`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Logo + text */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 pointer-events-none">
-        <div className="relative w-32 sm:w-40 md:w-48" style={{ aspectRatio: '1536/1024' }}>
-          <div className="absolute inset-[-20%] rounded-full animate-core-glow"
-            style={{
-              background: 'radial-gradient(circle at 50% 50%, rgba(168,85,247,0.2) 0%, rgba(217,70,239,0.1) 30%, transparent 60%)',
-              filter: 'blur(15px)',
-            }}
-          />
-          <div className="absolute inset-0" style={{
-            background: 'radial-gradient(circle at 50% 50%, hsl(270,80%,60%) 0%, hsl(300,70%,55%) 30%, hsl(330,65%,50%) 60%, hsl(190,80%,55%) 100%)',
-            WebkitMaskImage: `url(${logoAnkit})`,
-            WebkitMaskSize: 'contain',
-            WebkitMaskRepeat: 'no-repeat',
-            WebkitMaskPosition: 'center',
-            maskImage: `url(${logoAnkit})`,
-            maskSize: 'contain',
-            maskRepeat: 'no-repeat',
-            maskPosition: 'center',
-            filter: `drop-shadow(0 0 ${20 + pct * 0.5}px rgba(168,85,247,${0.15 + pct * 0.005})) drop-shadow(0 0 ${10 + pct * 0.3}px rgba(217,70,239,${0.1 + pct * 0.003}))`,
-            willChange: 'filter',
-          }} />
-        </div>
-
-        <div className="text-2xl md:text-4xl font-bold font-primary text-white/90 tracking-tight tabular-nums">
+      {/* Loading text */}
+      <div className="absolute inset-0 flex flex-col items-center justify-end pb-[15%] sm:pb-[18%] pointer-events-none select-none">
+        <div className="text-3xl md:text-5xl font-bold font-primary tracking-tight tabular-nums"
+          style={{ color: 'var(--color-text-primary)', opacity: 0.75 + pct * 0.002 }}>
           {String(pct).padStart(3, '0')}%
         </div>
-
-        <div className="text-[10px] md:text-xs font-secondary text-white/40 tracking-[4px] uppercase">
+        <div className="text-[10px] md:text-xs font-secondary tracking-[4px] uppercase mt-3"
+          style={{ color: 'var(--color-text-primary)', opacity: 0.25 + pct * 0.001 }}>
           Initializing System...
         </div>
-
-        <svg className="w-10 h-10 md:w-12 md:h-12 -rotate-90" viewBox="0 0 40 40">
-          <circle cx="20" cy="20" r="17" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1.5" />
-          <circle cx="20" cy="20" r="17" fill="none" stroke="url(#progressGrad)" strokeWidth="1.5"
-            strokeLinecap="round" strokeDasharray={`${pct * 1.068} 106.8`}
-            style={{ transition: 'stroke-dasharray 0.1s ease' }}
-          />
-          <defs>
-            <linearGradient id="progressGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#a855f7" />
-              <stop offset="50%" stopColor="#d946ef" />
-              <stop offset="100%" stopColor="#06b6d4" />
-            </linearGradient>
-          </defs>
-        </svg>
       </div>
 
-      {/* Corner accents */}
-      <div className="absolute top-0 left-0 w-40 h-40 pointer-events-none" style={{ background: 'radial-gradient(circle at 0% 0%, rgba(168,85,247,0.06) 0%, transparent 60%)' }} />
-      <div className="absolute top-0 right-0 w-40 h-40 pointer-events-none" style={{ background: 'radial-gradient(circle at 100% 0%, rgba(217,70,239,0.05) 0%, transparent 60%)' }} />
-      <div className="absolute bottom-0 left-0 w-40 h-40 pointer-events-none" style={{ background: 'radial-gradient(circle at 0% 100%, rgba(6,182,212,0.04) 0%, transparent 60%)' }} />
+      {/* Logo watermark */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none"
+        style={{ opacity: 0.02 + pct * 0.0002 }}>
+        <div className="w-16 h-auto" style={{
+          aspectRatio: '1536/1024',
+          background: 'currentColor',
+          WebkitMaskImage: `url(${logoAnkit})`,
+          WebkitMaskSize: 'contain',
+          WebkitMaskRepeat: 'no-repeat',
+          WebkitMaskPosition: 'center',
+          maskImage: `url(${logoAnkit})`,
+          maskSize: 'contain',
+          maskRepeat: 'no-repeat',
+          maskPosition: 'center',
+        }} />
+      </div>
     </div>
   )
 }

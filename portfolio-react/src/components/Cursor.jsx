@@ -68,7 +68,7 @@ export default function Cursor() {
       : 'border-accent-logical'
 
   return (
-    <div className="fixed top-0 left-0 pointer-events-none z-[9998] hidden md:block">
+    <div className="fixed top-0 left-0 pointer-events-none z-[10001] hidden md:block">
       <div ref={dotRef}
         className="fixed w-[6px] h-[6px] bg-accent-creative rounded-full -translate-x-1/2 -translate-y-1/2 transition-all duration-200"
         style={{ left: mouseRef.current.x, top: mouseRef.current.y }} />

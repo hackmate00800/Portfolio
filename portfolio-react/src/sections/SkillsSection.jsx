@@ -66,7 +66,7 @@ function SkillGroup({ title, skills, index }) {
 
 export default function SkillsSection() {
   return (
-    <section id="skills" className="relative py-24 px-6 overflow-hidden">
+    <section id="skills" className="relative py-24 px-6 overflow-hidden scroll-mt-20">
       <div className="max-w-[1100px] mx-auto relative z-2">
         <motion.div className="mb-[60px]"
           initial={{ opacity: 0, y: 40 }}

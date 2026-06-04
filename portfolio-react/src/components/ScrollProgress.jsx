@@ -5,7 +5,7 @@ export default function ScrollProgress() {
   return (
     <div
       ref={ref}
-      className="fixed top-0 left-0 h-[3px] z-[9999] gradient-accent origin-left will-change-transform"
+      className="fixed top-0 left-0 h-[3px] z-[10000] gradient-accent origin-left pointer-events-none will-change-transform"
     />
   )
 }

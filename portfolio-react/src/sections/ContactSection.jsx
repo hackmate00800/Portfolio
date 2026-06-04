@@ -67,7 +67,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="relative py-24 px-6 bg-bg-secondary overflow-hidden">
+    <section id="contact" className="relative py-24 px-6 bg-bg-secondary overflow-hidden scroll-mt-20">
       <div className="absolute w-[300px] h-[300px] rounded-full bg-accent-creative/10 blur-[80px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none animate-orb" style={{ animationDelay: '-5s' }} />
       <div className="max-w-[1100px] mx-auto relative z-2">
         <motion.div className="mb-[60px]" {...fadeUp()}>

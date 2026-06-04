@@ -20,7 +20,7 @@ export default function HeroSection() {
   }
 
   return (
-    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20 pb-10 px-6 max-md:min-h-auto max-md:pt-24 max-md:pb-6 max-md:px-4">
+    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20 pb-10 px-6 max-md:min-h-auto max-md:pt-24 max-md:pb-6 max-md:px-4 scroll-mt-20">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute w-[500px] h-[500px] rounded-full bg-accent-creative/30 blur-[80px] -top-[10%] -left-[10%] animate-orb" />
         <div className="absolute w-[400px] h-[400px] rounded-full bg-accent-logical/30 blur-[80px] -bottom-[10%] -right-[10%] animate-orb" style={{ animationDelay: '-7s' }} />

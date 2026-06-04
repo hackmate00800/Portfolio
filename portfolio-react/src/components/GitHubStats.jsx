@@ -47,7 +47,7 @@ export default function GitHubStats() {
   ]
 
   return (
-    <section id="github" className="relative py-24 px-6 overflow-hidden">
+    <section id="github" className="relative py-24 px-6 overflow-hidden scroll-mt-20">
       <div className="absolute w-[350px] h-[350px] rounded-full bg-accent-creative/8 blur-[80px] top-1/3 -right-[10%] pointer-events-none animate-orb" style={{ animationDelay: '-8s' }} />
       <div className="max-w-[1100px] mx-auto relative z-2">
         <motion.div className="mb-[60px]" {...fadeUp()}>

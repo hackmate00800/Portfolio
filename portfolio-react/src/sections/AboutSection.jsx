@@ -22,7 +22,7 @@ const fadeUp = {
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative py-24 px-6 bg-bg-secondary overflow-hidden">
+    <section id="about" className="relative py-24 px-6 bg-bg-secondary overflow-hidden scroll-mt-20">
       <div className="absolute w-[350px] h-[350px] rounded-full bg-accent-creative/15 blur-[80px] top-1/4 -right-[5%] pointer-events-none animate-orb" style={{ animationDelay: '-3s' }} />
       <div className="max-w-[1100px] mx-auto relative z-2">
         <motion.div className="mb-[60px]" {...fadeUp}>
