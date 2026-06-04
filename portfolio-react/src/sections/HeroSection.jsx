@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { motion } from 'framer-motion'
-import { FiDownload, FiChevronDown } from 'react-icons/fi'
+import { FiChevronDown } from 'react-icons/fi'
 import SplitFace from '../components/SplitFace'
 import TextPanel from '../components/TextPanel'
 import TypingEffect from '../components/TypingEffect'
@@ -81,9 +81,7 @@ export default function HeroSection() {
           ))}
         </div>
 
-        <a href="#" className="flex items-center gap-2 px-6 py-2.5 rounded-full gradient-accent text-white text-sm font-semibold transition-all duration-300 shadow-lg hover:-translate-y-0.5 hover:shadow-xl">
-          <FiDownload size={14} /> Resume
-        </a>
+
 
         <div className="flex flex-col items-center gap-1.5 text-text-muted max-lg:hidden">
           <span className="text-[0.65rem] uppercase tracking-[2px] font-semibold">Scroll</span>
