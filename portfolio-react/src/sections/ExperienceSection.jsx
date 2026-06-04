@@ -80,7 +80,6 @@ export default function ExperienceSection() {
           {experiences.map((exp, idx) => (
             <motion.div key={idx} className="relative pb-12 last:pb-0" {...fadeUp}>
               <div className={`absolute left-[-24px] top-1 w-4 h-4 rounded-full ${exp.dotColor} border-3 border-bg-primary ${exp.borderColor} max-sm:left-[-17px] max-sm:w-3 max-sm:h-3`} />
-              <div className="text-xs font-semibold text-accent-logical mb-2 font-secondary">{exp.date}</div>
               <div className="p-6 rounded-[16px] glass border-border-glass transition-all duration-300 hover:border-white/12 hover:translate-x-1">
                 <h3 className="text-lg font-bold mb-1">{exp.role}</h3>
                 {exp.subtitle && (
