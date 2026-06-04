@@ -137,3 +137,9 @@
   50% { transform: translateY(4px); opacity: 1; }
 }
 .animate-scroll-bounce { animation: scrollBounce 2s ease-in-out infinite; }
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.08); }
+}
+.animate-pulse-slow { animation: pulse-slow 8s ease-in-out infinite; }
