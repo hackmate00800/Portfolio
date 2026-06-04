@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
-import creativeSrc from '../assets/creative.png'
+import creativeSrc from '../assets/bannerimg.png'
 
 const floatingBubbles = Array.from({ length: 18 }, (_, i) => ({
   id: i,
